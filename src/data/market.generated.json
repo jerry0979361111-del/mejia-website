@@ -1,0 +1,42 @@
+{
+  "asAt": "30 September 2026",
+  "source": "Cotality Home Value Index",
+  "sourceUrl": "https://discover.cotality.com/hubfs/Article-Reports/COTALITY%20HVI%20OCT%202026%20FINAL.pdf",
+  "updated": "2026-10-01",
+  "national": {
+    "month": -1.1,
+    "annual": 0
+  },
+  "cities": {
+    "sydney": {
+      "house": 1466060,
+      "unit": 867597,
+      "month": -1.4,
+      "annual": -7
+    },
+    "melbourne": {
+      "house": 915119,
+      "unit": 624740,
+      "month": -0.7,
+      "annual": -6.2
+    },
+    "brisbane": {
+      "house": 1146078,
+      "unit": 834627,
+      "month": -1.5,
+      "annual": 5.9
+    },
+    "adelaide": {
+      "house": 990531,
+      "unit": 674188,
+      "month": -1.3,
+      "annual": 6.5
+    },
+    "perth": {
+      "house": 1017734,
+      "unit": 714265,
+      "month": -1.2,
+      "annual": 10.1
+    }
+  }
+}

@@ -1,0 +1,58 @@
+---
+// 房產新聞與指南：文章列表（可依分類篩選）
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { categories } from '../../content.config';
+import { getInsights, insightUrl, insightCover, fmtDate } from '../../data/insights';
+
+const posts = await getInsights();
+const used = categories.filter((c) => posts.some((p) => p.data.分類 === c));
+---
+<BaseLayout title="房產新聞與指南｜Mejia 美家" description="澳洲房市觀點、買家指南、政策稅務與建案動態，美家顧問用中文把澳洲的規則講清楚。">
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="麵包屑"><a href="/">首頁</a><span aria-hidden="true">/</span><span>房產新聞與指南</span></nav>
+      <div class="eyebrow">Insights</div>
+      <h1>房產新聞與指南</h1>
+      <p class="lead">澳洲房市觀點、買家指南、政策稅務與建案動態，用中文把澳洲的規則講清楚。</p>
+    </div>
+  </section>
+
+  <section style="padding-top:clamp(36px,5vw,56px)">
+    <div class="wrap">
+      {used.length > 1 && (
+        <div class="tabs" id="cat-tabs" style="margin-bottom:28px">
+          <button class="tab on" data-cat="all">全部</button>
+          {used.map((c) => <button class="tab" data-cat={c}>{c}</button>)}
+        </div>
+      )}
+      {posts.length === 0 ? (
+        <div class="empty" style="display:block">文章準備中，敬請期待。</div>
+      ) : (
+        <div class="post-grid" id="posts">
+          {posts.map((p) => (
+            <a href={insightUrl(p)} class="post rv" data-cat={p.data.分類}>
+              <div class="ph"><img src={insightCover(p)} alt="" loading="lazy"></div>
+              <div class="body">
+                <span class="tag">{p.data.分類}{p.data.狀態 !== '已核准' && <em class="draft-tag">{p.data.狀態}</em>}</span>
+                <h3>{p.data.標題}</h3>
+                <p>{p.data.摘要}</p>
+                <time datetime={p.data.發布日期.toISOString()}>{fmtDate(p.data.發布日期)}</time>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <ContactSection />
+</BaseLayout>
+
+<script>
+  import { $$ } from '../../scripts/ui';
+  $$('#cat-tabs .tab').forEach((t) => t.addEventListener('click', () => {
+    $$('#cat-tabs .tab').forEach((x) => x.classList.toggle('on', x === t));
+    $$('#posts .post').forEach((p) => p.classList.toggle('hide', t.dataset.cat !== 'all' && p.dataset.cat !== t.dataset.cat));
+  }));
+</script>

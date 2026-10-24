@@ -1,0 +1,150 @@
+---
+// 物件地圖：所有公開建案的地圖。拖曳／縮放時，右側清單只列出畫面範圍內的建案。
+// 圖資：OpenStreetMap（免費、需標示來源）。地圖程式在進入畫面時才載入，不拖慢首頁。
+import { cities, cityName } from '../data/cities';
+import { projects, projectUrl, stageLabel, typeLabel } from '../data/projects';
+
+const points = projects
+  .filter((p) => p.geo)
+  .map((p) => ({
+    slug: p.slug, name: p.name, url: projectUrl(p), image: p.image, price: p.price, city: p.city,
+    loc: `${cityName(p.city)} · ${p.suburb}`, tags: `${stageLabel[p.stage]} · ${typeLabel[p.type]}`, geo: p.geo,
+  }));
+const cityButtons = cities.filter((c) => points.some((p) => p.city === c.id));
+---
+<section class="pmap-sec" id="map">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <div class="eyebrow">Project Map</div>
+        <h2>物件地圖</h2>
+        <p class="lead">拖曳、縮放地圖找你想住的區域，右側會列出範圍內的建案。</p>
+      </div>
+      <div class="tabs" id="pmap-tabs">
+        <button class="tab on" data-city="all">全部</button>
+        {cityButtons.map((c) => <button class="tab" data-city={c.id}>{c.zh}</button>)}
+      </div>
+    </div>
+    <div class="pmap rv">
+      <div class="pmap-map" id="pmap" data-points={JSON.stringify(points)} role="region" aria-label="建案地圖"></div>
+      <div class="pmap-list">
+        <div class="pmap-count" id="pmap-count" aria-live="polite">地圖範圍內 {points.length} 個建案</div>
+        {/* 先在伺服器端列出全部建案：地圖還沒載入或載入失敗時，清單也不會是空的 */}
+        <ul id="pmap-items">
+          {points.map((p, i) => (
+            <li><a href={p.url} data-i={i}>
+              <span class="th">{p.image && <img src={p.image} alt="" loading="lazy" />}</span>
+              <span class="tx"><span class="loc">{p.loc}</span><b>{p.name}</b><span class="meta">{p.tags}{p.price && ` · ${p.price}`}</span></span>
+            </a></li>
+          ))}
+        </ul>
+        <p class="pmap-empty" id="pmap-empty" style={points.length ? 'display:none' : undefined}>這個範圍沒有上架中的建案，試著拉遠地圖看看。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { $, $$ } from '../scripts/ui';
+  import { sync as syncFavs } from '../scripts/favorites';
+
+  type Point = { slug: string; name: string; url: string; image: string; price: string; city: string; loc: string; tags: string; geo: [number, number] };
+  const el = $('#pmap');
+  const points: Point[] = JSON.parse(el.dataset.points!);
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+
+  async function load() {
+    try {
+      return await Promise.all([import('leaflet'), import('leaflet/dist/leaflet.css')]);
+    } catch (err) {
+      // 分頁開著時網站重新部署，舊的地圖程式檔會不見：重新整理一次拿新版
+      const key = 'pmap-reloaded';
+      try {
+        if (!sessionStorage.getItem(key)) { sessionStorage.setItem(key, '1'); location.reload(); return null; }
+      } catch {}
+      throw err;
+    }
+  }
+
+  let started = false;
+  async function init() {
+    if (started) return;
+    started = true;
+    const mods = await load().catch(() => null);
+    if (!mods) { el.classList.add('pmap-failed'); return; }
+    try { sessionStorage.removeItem('pmap-reloaded'); } catch {}
+    const [{ default: L }] = mods;
+    // 手機上單指滑動要能捲頁面，所以關掉單指拖曳，改用雙指縮放／移動
+    const map = L.map(el, { scrollWheelZoom: false, zoomControl: true, dragging: !L.Browser.mobile }).setView([-31, 147], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+    // 滑鼠移到地圖上才啟用滾輪縮放，避免捲動頁面時卡在地圖
+    map.on('focus click', () => map.scrollWheelZoom.enable());
+    map.on('mouseout', () => map.scrollWheelZoom.disable());
+
+    const pin = L.divIcon({ className: 'pmap-pin', html: '<span></span>', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -26] });
+    const markers = points.map((p) => {
+      const m = L.marker(p.geo, { icon: pin, title: p.name, alt: p.name }).addTo(map);
+      m.bindPopup(
+        `<a class="pmap-pop" href="${p.url}">${p.image ? `<img src="${p.image}" alt="">` : ''}<span class="loc">${esc(p.loc)}</span><b>${esc(p.name)}</b>${p.price ? `<span class="price">${esc(p.price)}</span>` : ''}<span class="go">查看建案 →</span></a>`,
+        { maxWidth: 240, minWidth: 220 },
+      );
+      return m;
+    });
+
+    const all = () => L.latLngBounds(points.map((p) => p.geo));
+    // 程式移動地圖時（城市按鈕）不要清掉按鈕狀態；使用者自己拖曳／縮放才清掉
+    let auto = false;
+    map.on('movestart', () => { if (!auto) $$('#pmap-tabs .tab').forEach((x) => x.classList.remove('on')); });
+    map.on('moveend', () => { auto = false; });
+    const fit = (city: string) => {
+      const sel = points.filter((p) => city === 'all' || p.city === city);
+      if (!sel.length) return;
+      auto = true;
+      map.fitBounds(L.latLngBounds(sel.map((p) => p.geo)).pad(sel.length > 1 ? 0.4 : 0), { maxZoom: 13 });
+    };
+
+    function renderList() {
+      const b = map.getBounds();
+      const inView = points.map((p, i) => ({ p, i })).filter(({ p }) => b.contains(p.geo));
+      $('#pmap-count').textContent = `地圖範圍內 ${inView.length} 個建案`;
+      $('#pmap-empty').style.display = inView.length ? 'none' : 'block';
+      $('#pmap-items').innerHTML = inView.map(({ p, i }) => `
+        <li><a href="${p.url}" data-i="${i}">
+          <span class="th">${p.image ? `<img src="${p.image}" alt="" loading="lazy">` : ''}</span>
+          <span class="tx"><span class="loc">${esc(p.loc)}</span><b>${esc(p.name)}</b><span class="meta">${esc(p.tags)}${p.price ? ` · ${esc(p.price)}` : ''}</span></span>
+        </a><button type="button" class="fav pmap-fav" data-fav="${p.slug}" aria-pressed="false" aria-label="把 ${esc(p.name)} 加入最愛" title="加入最愛"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 2.9 1.4-1.8 3-2.9 5-2.9 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg></button></li>`).join('');
+      syncFavs();
+      // 滑過清單時，在地圖上標出對應的建案
+      $$('#pmap-items a').forEach((a) => {
+        const m = markers[+a.dataset.i!];
+        a.addEventListener('mouseenter', () => m.openPopup());
+        a.addEventListener('focus', () => m.openPopup());
+      });
+    }
+
+    map.on('moveend', renderList);
+    $$('#pmap-tabs .tab').forEach((t) => t.addEventListener('click', () => {
+      $$('#pmap-tabs .tab').forEach((x) => x.classList.toggle('on', x === t));
+      fit(t.dataset.city!);
+    }));
+    auto = true;
+    map.fitBounds(all().pad(0.15));
+    renderList();
+  }
+
+  // 進入畫面前才載入地圖；IntersectionObserver 沒觸發時（少數瀏覽器或網址直接帶 #map），用捲動位置再檢查一次
+  const near = () => { const r = el.getBoundingClientRect(); return r.top < innerHeight + 300 && r.bottom > -300; };
+  const check = () => { if (near()) { removeEventListener('scroll', check); init(); } };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => {
+      if (es.some((e) => e.isIntersecting)) { io.disconnect(); init(); }
+    }, { rootMargin: '300px' });
+    io.observe(el);
+  }
+  addEventListener('scroll', check, { passive: true });
+  addEventListener('load', check);
+  check();
+</script>

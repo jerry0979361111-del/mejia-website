@@ -1,0 +1,78 @@
+---
+// 建案列表：所有公開建案，可依城市、型態、狀態篩選；網址帶參數（?city=&type=&stage=）可直接開啟篩選結果
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PropertyCard from '../../components/PropertyCard.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { cities } from '../../data/cities';
+import { projects, typeLabel, stageLabel } from '../../data/projects';
+
+// 只列出有建案的城市
+const cityTabs = cities.filter((c) => projects.some((p) => p.city === c.id));
+const types = [...new Set(projects.map((p) => p.type))];
+---
+<BaseLayout title="新房項目｜Mejia 美家" description="雪梨、墨爾本、布里斯本、黃金海岸精選新建案，由美家團隊實地考察、與開發商直接對接。">
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="麵包屑"><a href="/">首頁</a><span aria-hidden="true">/</span><span>新房項目</span></nav>
+      <div class="eyebrow">Projects</div>
+      <h1>新房項目</h1>
+      <p class="lead">精選澳洲各大城市的新建案，由美家團隊實地考察、與開發商直接對接。想看樓書與房價表，留下聯絡方式即可索取。</p>
+    </div>
+  </section>
+
+  <section style="padding-top:clamp(36px,5vw,56px)">
+    <div class="wrap">
+      <div class="filters">
+        <div class="tabs" id="tabs">
+          <button class="tab on" data-city="all">全部</button>
+          {cityTabs.map((c) => <button class="tab" data-city={c.id}>{c.zh}</button>)}
+        </div>
+        <div class="selects">
+          <select id="f-type" aria-label="物件類型"><option value="all">全部類型</option>{types.map((t) => <option value={t}>{typeLabel[t]}</option>)}</select>
+          <select id="f-stage" aria-label="銷售狀態"><option value="all">全部狀態</option><option value="pre">{stageLabel.pre}</option><option value="now">{stageLabel.now}</option></select>
+        </div>
+      </div>
+      <p class="result-count" id="count" aria-live="polite">共 {projects.length} 個建案</p>
+      <div class="grid-prop even" id="grid">
+        {projects.map((p) => <PropertyCard project={p} />)}
+        <div class="empty" id="empty">這個條件目前沒有上架中的建案。<br>留下聯絡方式，有新案第一時間通知你。<br><br><a href="#contact" class="more">預約諮詢 <span class="arrow">→</span></a></div>
+      </div>
+    </div>
+  </section>
+
+  <ContactSection />
+</BaseLayout>
+
+<script>
+  import { $, $$ } from '../../scripts/ui';
+  const F = { city: 'all', type: 'all', stage: 'all' };
+  const typeSel = $<HTMLSelectElement>('#f-type'), stageSel = $<HTMLSelectElement>('#f-stage');
+
+  // 從網址讀入篩選條件（首頁搜尋列、城市清單會帶參數過來）
+  const q = new URLSearchParams(location.search);
+  for (const k of ['city', 'type', 'stage'] as const) { const v = q.get(k); if (v) F[k] = v; }
+
+  function apply() {
+    let shown = 0;
+    $$('#grid .card').forEach((c) => {
+      const ok = (F.city === 'all' || c.dataset.city === F.city)
+        && (F.type === 'all' || c.dataset.type === F.type)
+        && (F.stage === 'all' || c.dataset.stage === F.stage);
+      c.classList.toggle('hide', !ok);
+      if (ok) shown++;
+    });
+    $('#empty').style.display = shown ? 'none' : 'block';
+    $('#count').textContent = `共 ${shown} 個建案`;
+    $$('#tabs .tab').forEach((t) => t.classList.toggle('on', t.dataset.city === F.city));
+    typeSel.value = F.type;
+    stageSel.value = F.stage;
+    const p = new URLSearchParams();
+    for (const [k, v] of Object.entries(F)) if (v !== 'all') p.set(k, v);
+    history.replaceState(null, '', location.pathname + (p.size ? '?' + p : ''));
+  }
+
+  $$('#tabs .tab').forEach((t) => t.addEventListener('click', () => { F.city = t.dataset.city!; apply(); }));
+  typeSel.addEventListener('change', () => { F.type = typeSel.value; apply(); });
+  stageSel.addEventListener('change', () => { F.stage = stageSel.value; apply(); });
+  apply();
+</script>

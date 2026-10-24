@@ -1,0 +1,59 @@
+---
+// 我的收藏：列出使用者在這台裝置加入最愛的建案，並可一鍵把清單傳給顧問。
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PropertyCard from '../components/PropertyCard.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { projects } from '../data/projects';
+---
+<BaseLayout title="我的收藏｜Mejia 美家" description="你收藏的澳洲建案，一鍵傳給顧問索取樓書與房價表。">
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="麵包屑"><a href="/">首頁</a><span aria-hidden="true">/</span><span>我的收藏</span></nav>
+      <div class="eyebrow">Favorites</div>
+      <h1>我的收藏</h1>
+      <p class="lead">收藏會保存在這台裝置的瀏覽器裡。把清單傳給顧問，我們會整理這些建案的樓書、房價表與最新可售戶別給你；有降價或新案也會第一時間通知。</p>
+    </div>
+  </section>
+
+  <section style="padding-top:clamp(36px,5vw,56px)">
+    <div class="wrap">
+      <p class="result-count" id="fav-count" aria-live="polite"></p>
+      <div class="grid-prop even" id="fav-grid">
+        {projects.map((p) => <PropertyCard project={p} />)}
+        <div class="empty" id="fav-empty">還沒有收藏任何建案。<br>在建案卡片或建案頁按下 ♡ 就會出現在這裡。<br><br><a href="/projects/" class="more">去看建案 <span class="arrow">→</span></a></div>
+      </div>
+      <div style="text-align:center;margin-top:40px" id="fav-cta" hidden>
+        <a href="#contact" class="btn btn-primary">把收藏清單傳給顧問 <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <ContactSection />
+</BaseLayout>
+
+<script>
+  import { $, $$ } from '../scripts/ui';
+  import { getFavs } from '../scripts/favorites';
+
+  const form = $<HTMLFormElement>('#form');
+  const hidden = Object.assign(document.createElement('input'), { type: 'hidden', name: 'favorites' });
+  form.prepend(hidden);
+
+  function render() {
+    const favs = getFavs();
+    const names: string[] = [];
+    $$('#fav-grid .card').forEach((c) => {
+      const on = favs.includes(c.dataset.slug!);
+      c.classList.toggle('hide', !on);
+      c.classList.add('in');
+      if (on) names.push(c.querySelector('h3')!.textContent!.trim());
+    });
+    $('#fav-empty').style.display = names.length ? 'none' : 'block';
+    $('#fav-count').textContent = names.length ? `已收藏 ${names.length} 個建案` : '';
+    $('#fav-cta').hidden = !names.length;
+    hidden.value = names.join('、');
+    $('.lead-form h3').textContent = names.length ? `索取收藏建案資料（${names.length} 個）` : '立即索取資料';
+  }
+  document.addEventListener('favs:change', render);
+  render();
+</script>

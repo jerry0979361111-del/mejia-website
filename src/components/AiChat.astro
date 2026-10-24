@@ -1,0 +1,32 @@
+---
+// 右下角 AI 置產顧問。目前是固定問答，之後可接 Workers 後端回答 FAQ 與建案問題。
+import { chatAnswers } from '../data/content';
+---
+<button class="fab" id="fab" aria-controls="chat"><i></i><span>問問 AI 置產顧問</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a8 8 0 01-11.5 7.2L4 20l1-4.6A8 8 0 1121 12z"/></svg></button>
+<div class="chat" id="chat" role="dialog" aria-label="美家 AI 置產顧問">
+  <div class="chat-head"><div><b>美家 AI 置產顧問</b><small>常見問題快速回答</small></div><button id="chat-x" aria-label="關閉" style="color:#fff;font-size:22px;line-height:1">×</button></div>
+  <div class="chat-body" id="cb"><div class="msg bot">你好，我是美家的 AI 置產顧問。想了解澳洲買房的哪個部分？</div></div>
+  <div class="quick" id="quick">
+    {chatAnswers.map((c) => <button data-q={c.key}>{c.q}</button>)}
+  </div>
+</div>
+
+<script define:vars={{ answers: Object.fromEntries(chatAnswers.map((c) => [c.key, c.a])) }}>
+  const chat = document.getElementById('chat');
+  const cb = document.getElementById('cb');
+  document.getElementById('fab').onclick = () => chat.classList.toggle('open');
+  document.getElementById('chat-x').onclick = () => chat.classList.remove('open');
+  document.querySelectorAll('#quick button').forEach((b) => b.addEventListener('click', () => {
+    const me = document.createElement('div'); me.className = 'msg me'; me.textContent = b.textContent;
+    const bot = document.createElement('div'); bot.className = 'msg bot'; bot.textContent = '…';
+    cb.append(me, bot); cb.scrollTop = cb.scrollHeight;
+    setTimeout(() => {
+      bot.textContent = answers[b.dataset.q]; cb.scrollTop = cb.scrollHeight;
+      if (b.dataset.q === 'human') setTimeout(() => {
+        chat.classList.remove('open');
+        const contact = document.getElementById('contact');
+        if (contact) contact.scrollIntoView(); else location.href = '/#contact';
+      }, 1600);
+    }, 700);
+  }));
+</script>

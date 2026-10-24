@@ -1,0 +1,109 @@
+---
+// 顧問個人頁：只為 team.ts 裡有 profile 的顧問產生
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PropertyCard from '../../components/PropertyCard.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { team, teamUrl, type Member } from '../../data/team';
+import { projects } from '../../data/projects';
+import { siLine, siWhatsapp, siWechat, siInstagram, siFacebook, siYoutube, siThreads } from 'simple-icons';
+
+export function getStaticPaths() {
+  return team.filter((m) => m.profile).map((member) => ({ params: { slug: member.slug }, props: { member } }));
+}
+
+interface Props { member: Member }
+const { member: m } = Astro.props;
+const p = m.profile!;
+const picks = p.projects.map((s) => projects.find((x) => x.slug === s)).filter((x) => x !== undefined);
+const others = team.filter((x) => x.slug !== m.slug);
+const tel = p.contact.phone?.replace(/\s/g, '');
+// 品牌圖示：Simple Icons（CC0）
+const icons = { line: siLine, whatsapp: siWhatsapp, wechat: siWechat, instagram: siInstagram, facebook: siFacebook, youtube: siYoutube, threads: siThreads };
+const socials = (Object.keys(icons) as (keyof typeof icons)[])
+  .filter((k) => p.social[k] || (k === 'wechat' && p.social.wechatId))
+  .map((k) => ({ k, label: icons[k].title, path: icons[k].path, color: `#${icons[k].hex}`, url: p.social[k], copy: k === 'wechat' && !p.social.wechat ? p.social.wechatId : undefined }));
+---
+<BaseLayout title={`${m.name}｜${p.title}｜Mejia 美家`} description={p.quote} image={m.imgLg}>
+  <section class="page-head agent-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="麵包屑"><a href="/">首頁</a><span aria-hidden="true">/</span><a href="/#team">美家團隊</a><span aria-hidden="true">/</span><span>{m.name}</span></nav>
+      {p.draft && <p class="draft-flag">範本內容：此頁文字為示意，待顧問提供正式資料後更新</p>}
+      <div class="agent-hero">
+        <div class="agent-photo"><img src={m.imgLg} alt={m.name} width="400" height="400"></div>
+        <div>
+          <div class="eyebrow">{m.role}</div>
+          <h1>{m.name}<span>{p.title}</span></h1>
+          <p class="agent-quote">「{p.quote}」</p>
+          <div class="agent-cta">
+            <a href="#contact" class="btn btn-primary">預約 {m.name} 諮詢 <span class="arrow">→</span></a>
+            {tel && <a href={`tel:${tel}`} class="btn btn-line">致電 {p.contact.phone}</a>}
+          </div>
+          {socials.length > 0 && (
+            <div class="agent-social" aria-label={`${m.name} 的社群與通訊軟體`}>
+              {socials.map((x) => x.copy ? (
+                <button type="button" class="soc" style={`--brand:${x.color}`} data-copy={x.copy} aria-label={`複製 ${m.name} 的微信 ID：${x.copy}`} title={`微信 ID：${x.copy}（點一下複製）`}>
+                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d={x.path} /></svg>
+                </button>
+              ) : (
+                <a href={x.url} target="_blank" rel="noopener" class="soc" style={`--brand:${x.color}`} aria-label={`${m.name} 的 ${x.label}`} title={x.label}>
+                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d={x.path} /></svg>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap agent-grid">
+      <div class="rv">
+        <h2 class="agent-h2">關於 {m.name}</h2>
+        {p.bio.map((para) => <p class="agent-bio">{para}</p>)}
+      </div>
+      <aside class="agent-side rv">
+        <dl class="facts">
+          <div><dt>專長</dt><dd>{p.specialties.join('、')}</dd></div>
+          <div><dt>語言</dt><dd>{p.languages.join('、')}</dd></div>
+          <div><dt>資歷</dt><dd>{p.credentials.join('、')}</dd></div>
+          {p.contact.phone && <div><dt>澳洲電話</dt><dd><a href={`tel:${p.contact.phone.replace(/\s/g, '')}`}>{p.contact.phone}</a></dd></div>}
+          {p.contact.phoneTw && <div><dt>台灣電話</dt><dd><a href={`tel:${p.contact.phoneTw.replace(/\s/g, '')}`}>{p.contact.phoneTw}</a></dd></div>}
+          {p.contact.email && <div><dt>Email</dt><dd><a href={`mailto:${p.contact.email}`}>{p.contact.email}</a></dd></div>}
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  {picks.length > 0 && (
+    <section style="padding-top:0">
+      <div class="wrap">
+        <div class="sec-head rv"><div><div class="eyebrow">Recommended</div><h2>{m.name} 推薦建案</h2></div><a href="/projects/" class="more">看全部建案 <span class="arrow">→</span></a></div>
+        <div class="grid-prop even">{picks.map((x) => <PropertyCard project={x} />)}</div>
+      </div>
+    </section>
+  )}
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head rv"><div><div class="eyebrow">Our Team</div><h2>其他顧問</h2></div></div>
+      <div class="team-row rv">
+        {others.map((x) => x.profile
+          ? <a href={teamUrl(x)} class="member"><div class="ph"><img src={x.img} alt={x.name} loading="lazy"></div><b>{x.name}</b><span>{x.role}</span></a>
+          : <div class="member"><div class="ph"><img src={x.img} alt={x.name} loading="lazy"></div><b>{x.name}</b><span>{x.role}</span></div>)}
+      </div>
+    </div>
+  </section>
+
+  <ContactSection agent={m.name} />
+</BaseLayout>
+
+<script>
+  import { $$, toast } from '../../scripts/ui';
+  // 微信沒有個人網址：點圖示複製 ID
+  $$<HTMLButtonElement>('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
+    const id = b.dataset.copy!;
+    try { await navigator.clipboard.writeText(id); toast(`已複製微信 ID：${id}，請到微信「新增朋友」貼上搜尋`); }
+    catch { toast(`微信 ID：${id}`); }
+  }));
+</script>

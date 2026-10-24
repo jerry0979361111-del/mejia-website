@@ -1,0 +1,37 @@
+---
+// 購房七步驟（可點選）。首頁與之後的 /process/ 頁共用。
+import { steps } from '../data/content';
+---
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><div class="eyebrow">How It Works</div><h2>澳洲購房七步驟</h2><p class="lead">點選任一步驟查看說明。</p></div>
+    </div>
+    <div class="steps rv" id="steps">
+      {steps.map((s, i) => (
+        <div class:list={['step', { on: i === 0 }]} data-i={i} role="button" tabindex="0">
+          <div class="dot">{String(i + 1).padStart(2, '0')}</div>
+          <div><h3>{s.no}</h3><p>{s.sub}</p></div>
+        </div>
+      ))}
+    </div>
+    <div class="step-detail rv" id="sd" aria-live="polite">
+      <div class="big">01</div><div><h4>{steps[0].title}</h4><p>{steps[0].body}</p></div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ steps }}>
+  const sd = document.getElementById('sd');
+  const all = [...document.querySelectorAll('#steps .step')];
+  const setStep = (i) => {
+    all.forEach((s, k) => s.classList.toggle('on', k === i));
+    sd.querySelector('.big').textContent = String(i + 1).padStart(2, '0');
+    sd.querySelector('h4').textContent = steps[i].title;
+    sd.querySelector('p').textContent = steps[i].body;
+  };
+  all.forEach((s) => {
+    s.addEventListener('click', () => setStep(+s.dataset.i));
+    s.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStep(+s.dataset.i); } });
+  });
+</script>

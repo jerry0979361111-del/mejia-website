@@ -1,0 +1,94 @@
+[
+  {
+    "slug": "the-oscar",
+    "name": "The Oscar",
+    "city": "brisbane",
+    "suburb": "Brisbane CBD",
+    "type": "apt",
+    "stage": "pre",
+    "use": "投資",
+    "price": "1 房+書房 A$86 萬起",
+    "desc": "布里斯本最高住宅地標，Meriton 與 DBI 打造的 78 層塔樓，正對 City Botanic Gardens 與布里斯本河，步行 220 公尺到 Cross River Rail 新站。",
+    "developer": "Meriton",
+    "address": "204 Alice Street, Brisbane QLD 4000",
+    "geo": [
+      -27.47258,
+      153.02971
+    ],
+    "completion": "",
+    "featured": true,
+    "image": "/img/projects/the-oscar.webp",
+    "landscape": false,
+    "gallery": [],
+    "notionUpdated": "2026-10-01T01:40:00.000Z"
+  },
+  {
+    "slug": "iconica",
+    "name": "Iconica",
+    "city": "goldcoast",
+    "suburb": "Surfers Paradise",
+    "type": "apt",
+    "stage": "pre",
+    "use": "投資",
+    "price": "2 房 A$156 萬起",
+    "desc": "正對衝浪者天堂海灘第一排的海景雙塔，Meriton 與 DBI 建築團隊打造，整層頂級會所與無邊際泳池，步行可達輕軌站。",
+    "developer": "Meriton",
+    "address": "152 Esplanade, Surfers Paradise QLD 4217",
+    "geo": [
+      -27.99209,
+      153.43007
+    ],
+    "completion": "",
+    "featured": true,
+    "image": "/img/projects/iconica.webp",
+    "landscape": true,
+    "gallery": [],
+    "notionUpdated": "2026-10-01T01:40:00.000Z"
+  },
+  {
+    "slug": "first-light",
+    "name": "First Light",
+    "city": "melbourne",
+    "suburb": "South Melbourne",
+    "type": "apt",
+    "stage": "pre",
+    "use": "學區房",
+    "price": "A$265 萬起",
+    "desc": "Domain Precinct 的酒店式豪宅，全球首見 Nu by YOO 酒店與私人住宅同棟共構，全案僅 35 戶，Léo Terrando 建築設計、義大利 Boffi 廚具，緊鄰 ANZAC 地鐵新站。",
+    "developer": "DCF Property",
+    "address": "28 Albert Road, South Melbourne VIC 3205",
+    "geo": [
+      -37.83356,
+      144.97121
+    ],
+    "completion": "",
+    "featured": true,
+    "image": "/img/projects/first-light.webp",
+    "landscape": true,
+    "gallery": [],
+    "notionUpdated": "2026-10-01T01:40:00.000Z"
+  },
+  {
+    "slug": "the-one",
+    "name": "The One",
+    "city": "melbourne",
+    "suburb": "Southbank",
+    "type": "apt",
+    "stage": "pre",
+    "use": "投資",
+    "price": "1 房 A$70 萬起",
+    "desc": "PDG 投資約 A$15 億打造的 71 層水岸地標，正對 Yarra 河、位於 CBD 與 Southbank 交會點，COX + ODO 建築設計，目前開放優先登記。",
+    "developer": "PDG",
+    "address": "1-29 Queens Bridge Street, Southbank VIC 3006",
+    "geo": [
+      -37.8241,
+      144.9606
+    ],
+    "completion": "",
+    "featured": true,
+    "image": "/img/projects/the-one.webp",
+    "landscape": false,
+    "gallery": [],
+    "notionUpdated": "2026-10-01T01:40:00.000Z"
+  }
+]

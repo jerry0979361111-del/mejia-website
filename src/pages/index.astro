@@ -1,0 +1,218 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PropertyCard from '../components/PropertyCard.astro';
+import Process from '../components/Process.astro';
+import Calculator from '../components/Calculator.astro';
+import ContactSection from '../components/ContactSection.astro';
+import ProjectMap from '../components/ProjectMap.astro';
+import { cities, projectCities } from '../data/cities';
+import { featuredLayout } from '../data/projects';
+import { medians, medianSource, foreignDuty, wan, marketUpdated, marketSummary } from '../data/market';
+const cityNames = Object.fromEntries(cities.map((c) => [c.id, c.zh]));
+import { news } from '../data/content';
+import { team, teamUrl } from '../data/team';
+
+const featured = featuredLayout();
+const stats: { to: number; plus?: boolean; unit: string; text: string }[] = [
+  { to: 5, unit: '大城市', text: '雪梨、墨爾本、布里斯本、黃金海岸、珀斯' },
+  { to: 2, unit: '地據點', text: '台北與昆士蘭同步服務，溝通不必等時差' },
+  { to: 10, plus: true, unit: '顧問', text: '房產律師、會計師專業團隊，中文全程對接' },
+  { to: 7, unit: '步流程', text: '從意向書到交屋，每一步都有人帶' },
+];
+const features = [
+  { icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', title: '台澳雙團隊，零時差', text: '台北與昆士蘭同步服務，問題當天回覆，不用熬夜等消息。' },
+  { icon: '<path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/>', title: '持牌專業團隊', text: '即時掌握市場第一手資訊，與開發商直接對接。' },
+  { icon: '<path d="M4 7h16M4 12h16M4 17h10"/>', title: '貸款、法務、稅務一站整合', text: 'FIRB 申請、律師、貸款經紀、會計師，都由美家協調安排。' },
+  { icon: '<path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9z"/>', title: '交屋後代租代管', text: '找房客、收租、維修、報稅，人在台灣也能安心持有。' },
+];
+---
+<BaseLayout>
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="wrap hero-inner">
+      <div class="eyebrow">Mejia Property · Taiwan × Australia</div>
+      <h1>買的不只是房子，<br>是<em>你想過的生活</em>。</h1>
+      <p>台灣、澳洲二地團隊，服務零時差。從選房、貸款、法務到交屋後的租賃管理，美家陪你走完每一步。</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">瀏覽熱銷建案 <span class="arrow">→</span></a>
+        <a href="#contact" class="btn btn-ghost">免費房產估價</a>
+      </div>
+      <div class="search" role="search">
+        <label>城市
+          <select id="s-city"><option value="all">全部城市</option>{projectCities.map((c) => <option value={c.id}>{c.zh}</option>)}</select>
+        </label>
+        <label>物件類型
+          <select id="s-type"><option value="all">不限</option><option value="apt">公寓</option><option value="town">連排別墅</option></select>
+        </label>
+        <label>狀態
+          <select id="s-stage"><option value="all">不限</option><option value="pre">預售</option><option value="now">現房</option></select>
+        </label>
+        <button class="btn btn-primary" id="s-go">搜尋建案</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="wrap">
+      {stats.map((s) => <div class="stat"><div class="num" data-to={s.to}>0{s.plus && <span class="plus">+</span>}<small>{s.unit}</small></div><p>{s.text}</p></div>)}
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div>
+          <div class="eyebrow">Featured Projects</div>
+          <h2>熱銷房產物件</h2>
+          <p class="lead">精選澳洲各大城市的新建案，由美家團隊實地考察、與開發商直接對接。</p>
+        </div>
+        <div class="tabs" id="tabs">
+          <button class="tab on" data-city="all">全部</button>
+          {projectCities.map((c) => <button class="tab" data-city={c.id}>{c.zh}</button>)}
+        </div>
+      </div>
+      <div class="grid-prop" id="grid">
+        {featured.map(({ project, wide }) => <PropertyCard project={project} wide={wide} />)}
+        <div class="empty" id="empty">這個條件目前沒有上架中的精選建案。<br>留下聯絡方式，有新案第一時間通知你。<br><br><a href="#contact" class="more">預約諮詢 <span class="arrow">→</span></a></div>
+      </div>
+      <div style="text-align:center;margin-top:52px" class="rv"><a href="/projects/" class="btn btn-line">查看全部建案 <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+
+  <ProjectMap />
+
+
+  <section id="why">
+    <div class="wrap why-grid">
+      <div class="why-img rv">
+        <img src="/img/sydney.webp" alt="澳洲雪梨" loading="lazy">
+        <div class="why-quote">「澳洲房地產，不是買與不買的選擇，而是『你想過怎樣的生活？』的延伸。」</div>
+      </div>
+      <div class="rv">
+        <div class="eyebrow">Why Mejia</div>
+        <h2>不只是顧問，<br>是陪你圓夢的人</h2>
+        <p class="lead">從第一次諮詢到拿到鑰匙，再到交屋後的出租管理，同一個團隊全程負責。</p>
+        <ul class="feat">
+          {features.map((f) => (
+            <li>
+              <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" set:html={f.icon} /></div>
+              <div><h3>{f.title}</h3><p>{f.text}</p></div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Process />
+
+  <section class="cities" id="cities">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><div class="eyebrow">Where to Live</div><h2>五座城市，五種生活</h2></div>
+        <p class="lead" style="margin-top:0">先想清楚要過什麼樣的日子，再決定買在哪裡。</p>
+      </div>
+      <p class="market-note rv"><span>本月市場</span>{marketSummary(cityNames)}</p>
+      <div class="city-list rv">
+        {cities.map((c, i) => (
+          <div class="city" data-go={c.id} role="button" tabindex="0">
+            <span class="no">{String(i + 1).padStart(2, '0')}</span>
+            <div class="name"><span>{c.en}</span>{c.zh}</div>
+            <div class="city-body">
+              <p>{c.intro}</p>
+              {medians[c.id] ? (
+                <dl class="city-stats">
+                  <div><dt>獨棟中位價</dt><dd>{wan(medians[c.id]!.house)}</dd></div>
+                  <div><dt>公寓中位價</dt><dd>{wan(medians[c.id]!.unit)}</dd></div>
+                  <div><dt>海外買家稅費<small>初算</small></dt><dd>約 {wan(foreignDuty(c.id, medians[c.id]!.unit).total)}</dd></div>
+                  {medians[c.id]!.annual !== null && <div><dt>近 12 個月</dt><dd class:list={[medians[c.id]!.annual! >= 0 ? 'up' : 'down']}>{medians[c.id]!.annual! > 0 ? '+' : ''}{medians[c.id]!.annual}%</dd></div>}
+                </dl>
+              ) : (
+                <dl class="city-stats"><div><dt>中位價與稅費</dt><dd class="muted">資料確認中</dd></div></dl>
+              )}
+            </div>
+            <span class="go">→</span>
+          </div>
+        ))}
+      </div>
+      <p class="note rv">中位價與漲跌：<a href={medianSource.url} target="_blank" rel="noopener">{medianSource.name}</a>（{medianSource.period}，每月自動更新）。海外買家稅費初算＝以公寓中位價計算之一般印花稅＋海外買家附加印花稅（新州 9%、維州 8%、昆州 8%、西澳 7%），未含首購／預售優惠、FIRB 申請費、律師費與貸款費用，僅供參考，實際以各州稅務局與律師核算為準。資料更新：{marketUpdated}。</p>
+    </div>
+  </section>
+  <Calculator />
+
+  <section class="news" id="news">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><div class="eyebrow">Insights</div><h2>房產新聞與指南</h2></div>
+        <a href="/insights/" class="more" data-demo="文章列表頁製作中">看全部文章 <span class="arrow">→</span></a>
+      </div>
+      <div class="news-grid">
+        <a href="/insights/" class="n-feature rv" data-demo="文章內頁製作中">
+          <div class="ph"><img src={news.feature.img} alt="" loading="lazy"></div>
+          <div class="body"><span class="tag">{news.feature.tag}</span><h3>{news.feature.title}</h3><p>{news.feature.excerpt}</p></div>
+        </a>
+        <div class="n-list">
+          {news.list.map((n) => (
+            <a href="/insights/" class="n-item rv" data-demo="文章內頁製作中"><div class="ph"><img src={n.img} alt="" loading="lazy"></div><div><span class="tag">{n.tag}</span><h3>{n.title}</h3></div></a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><div class="eyebrow">Our Team</div><h2>美家團隊</h2></div>
+        <a href="#contact" class="more">指定顧問諮詢 <span class="arrow">→</span></a>
+      </div>
+      <div class="team-row rv">
+        {team.map((m) => m.profile
+          ? <a href={teamUrl(m)} class="member"><div class="ph"><img src={m.img} alt={m.name} loading="lazy"></div><b>{m.name}</b><span>{m.role}</span></a>
+          : <div class="member"><div class="ph"><img src={m.img} alt={m.name} loading="lazy"></div><b>{m.name}</b><span>{m.role}</span></div>)}
+      </div>
+    </div>
+  </section>
+
+  <ContactSection />
+</BaseLayout>
+
+<script>
+  import { $, $$ } from '../scripts/ui';
+
+  // 數字計數動畫
+  const cio = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    cio.unobserve(e.target);
+    const el = e.target as HTMLElement, to = +el.dataset.to!, node = el.firstChild!;
+    let n = 0;
+    const t = setInterval(() => { node.nodeValue = String(++n); if (n >= to) clearInterval(t); }, 130);
+  }), { threshold: 0.6 });
+  $$('.num').forEach((e) => cio.observe(e));
+
+  // 精選建案的城市分頁
+  const sel = (id: string) => $<HTMLSelectElement>('#' + id);
+  $$('#tabs .tab').forEach((t) => t.addEventListener('click', () => {
+    const city = t.dataset.city!;
+    let shown = 0;
+    $$('#grid .card').forEach((c) => {
+      const ok = city === 'all' || c.dataset.city === city;
+      c.classList.toggle('hide', !ok);
+      if (ok) shown++;
+    });
+    $('#empty').style.display = shown ? 'none' : 'block';
+    $$('#tabs .tab').forEach((x) => x.classList.toggle('on', x === t));
+  }));
+  // 搜尋列：帶條件跳到建案列表頁
+  $('#s-go').addEventListener('click', () => {
+    const q = new URLSearchParams();
+    for (const k of ['city', 'type', 'stage']) { const v = sel('s-' + k).value; if (v !== 'all') q.set(k, v); }
+    location.href = '/projects/' + (q.size ? '?' + q : '');
+  });
+  // 城市清單：之後改連到城市頁，目前先跳到該城市的建案列表
+  $$('.city').forEach((c) => {
+    const go = () => { location.href = '/projects/?city=' + c.dataset.go; };
+    c.addEventListener('click', go);
+    c.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+  });
+</script>

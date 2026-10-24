@@ -1,0 +1,69 @@
+---
+// 房貸月付試算。首頁與之後的 /calculator/ 頁共用。利率、匯率來自 src/data/market.ts
+import { rates, marketUpdated } from '../data/market';
+const def = rates.presets[0];
+---
+<section id="calc">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><div class="eyebrow">Calculator</div><h2>房貸月付試算</h2><p class="lead">拉動滑桿即時計算，澳幣與台幣同步顯示。利率可一鍵帶入澳洲或台灣最新行情。</p></div>
+    </div>
+    <div class="calc-grid rv">
+      <div class="calc-form">
+        <div class="field"><div class="top"><label for="price">房屋總價（澳幣）</label><output id="o-price"></output></div><input type="range" id="price" min="400000" max="3000000" step="10000" value="850000"></div>
+        <div class="field"><div class="top"><label for="dep">頭期款比例</label><output id="o-dep"></output></div><input type="range" id="dep" min="10" max="60" step="5" value="30"></div>
+        <div class="field"><div class="top"><label for="rate">貸款年利率</label><output id="o-rate"></output></div><input type="range" id="rate" min="1.5" max="10" step="0.01" value={def.value}>
+          <div class="rate-presets" role="group" aria-label="利率快速帶入">
+            {rates.presets.map((r, i) => <button type="button" class:list={['rate-chip', { on: i === 0 }]} data-rate={r.value} title={r.note}>{r.label} <b>{r.value}%</b></button>)}
+          </div>
+        </div>
+        <div class="field"><div class="top"><label for="yr">貸款年期</label><output id="o-yr"></output></div><input type="range" id="yr" min="10" max="30" step="5" value="30"></div>
+        <div class="field" style="margin-bottom:0"><div class="top"><label for="fx">匯率（1 澳幣 = 新台幣）</label><output id="o-fx"></output></div><input type="range" id="fx" min="18" max="26" step="0.1" value={rates.fx.value}></div>
+      </div>
+      <div class="calc-out">
+        <span class="label">每月還款（本息平均攤還）</span>
+        <div class="main" id="r-m"></div>
+        <div class="sub" id="r-mt"></div>
+        <div class="rows">
+          <div><span>頭期款</span><b id="r-dep"></b></div>
+          <div><span>貸款金額</span><b id="r-loan"></b></div>
+          <div><span>總利息支出</span><b id="r-int"></b></div>
+        </div>
+        <p class="note">利率參考：{rates.rba.label} {rates.rba.value}%（{rates.rba.date}）；{rates.presets.map((r) => `${r.label} ${r.value}%（${r.note}）`).join('；')}。匯率 {rates.fx.value}（{rates.fx.date}）。資料更新：{marketUpdated}。試算結果僅供參考，未含印花稅、FIRB 申請費、律師費等交易成本；實際利率與成數依銀行核定為準。</p>
+        <a href="/#contact" class="btn btn-primary" style="margin-top:22px;align-self:flex-start">請顧問幫我算完整成本 <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { $, $$ } from '../scripts/ui';
+  const aud = (n: number) => 'A$ ' + Math.round(n).toLocaleString('en-AU');
+  const twd = (n: number) => '約 NT$ ' + Math.round(n).toLocaleString('zh-TW');
+  const val = (id: string) => +$<HTMLInputElement>('#' + id).value;
+
+  function calc() {
+    const P = val('price'), d = val('dep') / 100, r = val('rate') / 100 / 12, n = val('yr') * 12, fx = val('fx');
+    const loan = P * (1 - d), m = (loan * r) / (1 - Math.pow(1 + r, -n));
+    $('#o-price').textContent = aud(P);
+    $('#o-dep').textContent = d * 100 + '%';
+    $('#o-rate').textContent = val('rate').toFixed(2) + '%';
+    $('#o-yr').textContent = val('yr') + ' 年';
+    $('#o-fx').textContent = fx.toFixed(1);
+    $('#r-m').textContent = aud(m);
+    $('#r-mt').textContent = twd(m * fx) + ' ／月';
+    $('#r-dep').textContent = aud(P * d);
+    $('#r-loan').textContent = aud(loan);
+    $('#r-int').textContent = aud(m * n - loan);
+  }
+  $$('#calc input').forEach((i) => i.addEventListener('input', calc));
+  // 利率快速帶入
+  const rateInput = $<HTMLInputElement>('#rate');
+  $$('.rate-chip').forEach((b) => b.addEventListener('click', () => {
+    rateInput.value = b.dataset.rate!;
+    $$('.rate-chip').forEach((x) => x.classList.toggle('on', x === b));
+    calc();
+  }));
+  rateInput.addEventListener('input', () => $$('.rate-chip').forEach((x) => x.classList.toggle('on', x.dataset.rate === rateInput.value)));
+  calc();
+</script>

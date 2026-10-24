@@ -1,0 +1,26 @@
+---
+// 建案卡片（整張可點，連到建案內頁；右上角可加入最愛）。首頁精選、建案列表、收藏頁都共用。
+import type { Project } from '../data/projects';
+import { typeLabel, stageLabel, projectUrl } from '../data/projects';
+import { cityName } from '../data/cities';
+import FavButton from './FavButton.astro';
+
+interface Props { project: Project; wide?: boolean }
+const { project: p, wide = false } = Astro.props;
+---
+<article class:list={['card', 'rv', { wide }]} data-city={p.city} data-type={p.type} data-stage={p.stage} data-slug={p.slug}>
+  <div class="ph">
+    {p.image && <img src={p.image} alt="" loading="lazy">}
+    <div class="badges"><span class="badge hot">{stageLabel[p.stage]}</span><span class="badge">{typeLabel[p.type]}</span></div>
+  </div>
+  <div class="body">
+    <div class="loc">{cityName(p.city)} · {p.suburb.toUpperCase()}</div>
+    <h3><a href={projectUrl(p)} class="card-link">{p.name}</a></h3>
+    <p class="desc">{p.desc}</p>
+    <div class="meta">
+      {p.price && <span>起價 <b>{p.price}</b></span>}
+      {p.use && <span>用途 <b>{p.use}</b></span>}
+    </div>
+  </div>
+  <FavButton slug={p.slug} name={p.name} />
+</article>

@@ -1,0 +1,56 @@
+---
+// 聯絡區塊與索取資料表單。
+// TODO（表單後端階段）：改成 POST 到 /api/lead（Cloudflare Pages Function + D1），寄 Email 與 LINE 通知，並加 Turnstile。
+import { site } from '../data/site';
+import { cities } from '../data/cities';
+
+interface Props { project?: string; agent?: string }
+const { project, agent } = Astro.props;
+---
+<section class="contact" id="contact">
+  <div class="wrap contact-grid">
+    <div class="rv">
+      <div class="eyebrow">Get in Touch</div>
+      <h2>聊聊你的澳洲計畫</h2>
+      <p class="lead" style="color:rgba(255,255,255,.7)">留下聯絡方式，顧問會在一個工作天內與你聯繫，並提供樓書、房型圖與最新價格表。</p>
+      <div class="offices">
+        {site.offices.map((o) => <div class="office"><b>{o.title}</b><p>{o.lines.map((l, i) => <>{i > 0 && <br />}{l}</>)}</p></div>)}
+        <div class="office"><b>Email</b><p><a href={`mailto:${site.email}`}>{site.email}</a></p></div>
+      </div>
+    </div>
+    <form class="lead-form rv" id="form" novalidate>
+      <h3>{agent ? `預約 ${agent} 諮詢` : project ? `索取 ${project} 資料` : '立即索取資料'}</h3>
+      <p class="hint">樓書 · 房型圖 · 房價表</p>
+      {project && <input type="hidden" name="project" value={project}>}
+      {agent && <input type="hidden" name="agent" value={agent}>}
+      <div class="row2">
+        <label class="inp"><span>姓名 *</span><input required name="name" autocomplete="name" placeholder="王小明"></label>
+        <label class="inp"><span>電話或 LINE ID *</span><input required name="tel" autocomplete="tel" placeholder="0912 345 678"></label>
+      </div>
+      <label class="inp"><span>Email</span><input type="email" name="email" autocomplete="email" placeholder="you@example.com"></label>
+      <span style="display:block;font-size:13px;color:var(--muted);margin-bottom:8px">有興趣的城市（可複選）</span>
+      <div class="chips">
+        {cities.map((c) => <label class="chip"><input type="checkbox" name="c" value={c.zh}><span>{c.zh}</span></label>)}
+      </div>
+      <label class="inp"><span>置產目的</span>
+        <select name="goal"><option>自住</option><option>投資收租</option><option>子女留學</option><option>移民規劃</option><option>還在了解</option></select>
+      </label>
+      <label class="consent"><input type="checkbox" name="updates" value="yes" checked><span>有降價、新案或收藏建案更新時通知我</span></label>
+      <button class="btn btn-primary" type="submit">送出，請顧問聯繫我 <span class="arrow">→</span></button>
+      <p class="privacy">送出即表示同意隱私權政策。我們不會將你的資料提供給第三方。</p>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { $, toast } from '../scripts/ui';
+  const form = $<HTMLFormElement>('#form');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = form.elements.namedItem('name') as HTMLInputElement;
+    const tel = form.elements.namedItem('tel') as HTMLInputElement;
+    if (!name.value.trim() || !tel.value.trim()) { toast('請填寫姓名與聯絡方式'); return; }
+    form.reset();
+    toast('已收到，顧問會在一個工作天內與你聯繫。（預覽版：表單尚未連接後端）');
+  });
+</script>

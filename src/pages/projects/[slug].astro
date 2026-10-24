@@ -1,0 +1,134 @@
+---
+// 建案內頁：只顯示 Notion 的公開欄位（規則見 CLAUDE.md）
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PropertyCard from '../../components/PropertyCard.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import FavButton from '../../components/FavButton.astro';
+import { cityName } from '../../data/cities';
+import { projects, typeLabel, stageLabel, type Project } from '../../data/projects';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+interface Props { project: Project }
+const { project: p } = Astro.props;
+
+const completion = p.completion
+  ? new Date(p.completion).toLocaleDateString('zh-TW', { year: 'numeric', month: 'long' })
+  : '';
+const facts: [string, string][] = [
+  ['城市', `${cityName(p.city)} · ${p.suburb}`],
+  ['物件類型', typeLabel[p.type]],
+  ['銷售狀態', stageLabel[p.stage]],
+  ['適合用途', p.use],
+  ['開發商', p.developer],
+  ['預計完工', completion],
+  ['地址', p.address],
+].filter(([, v]) => v) as [string, string][];
+
+const related = projects.filter((x) => x.city === p.city && x.slug !== p.slug).slice(0, 3);
+---
+<BaseLayout title={`${p.name}｜${cityName(p.city)}新建案｜Mejia 美家`} description={p.desc} image={p.image || undefined}>
+  <section style="padding-top:clamp(28px,4vw,44px)">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="麵包屑">
+        <a href="/">首頁</a><span aria-hidden="true">/</span>
+        <a href="/projects/">新房項目</a><span aria-hidden="true">/</span>
+        <a href={`/projects/?city=${p.city}`}>{cityName(p.city)}</a><span aria-hidden="true">/</span>
+        <span>{p.name}</span>
+      </nav>
+      {p.image && <div class="pj-hero"><img src={p.image} alt={p.name}></div>}
+
+      <div class="pj-grid">
+        <div>
+          <div class="pj-loc">{cityName(p.city)} · {p.suburb.toUpperCase()}</div>
+          <h1>{p.name}</h1>
+          <div class="pj-badges"><span class="badge hot">{stageLabel[p.stage]}</span><span class="badge">{typeLabel[p.type]}</span>{p.use && <span class="badge">{p.use}</span>}</div>
+          <p class="pj-desc">{p.desc}</p>
+          <dl class="facts">
+            {facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+          </dl>
+          {p.gallery.length > 0 && (
+            <div class="gallery">
+              <h2 class="gallery-title">建案相簿 <span>{p.gallery.length} 張</span></h2>
+              <div class="gallery-grid">
+                {p.gallery.map((g, i) => (
+                  <button type="button" class="gallery-item" data-i={i} aria-label={`放大第 ${i + 1} 張照片`}>
+                    <img src={g.src} alt={`${p.name} 照片 ${i + 1}`} loading="lazy" width={g.w} height={g.h}>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <aside class="pj-side">
+          <div class="label">價格</div>
+          <div class="price">{p.price || '價格請洽顧問'}</div>
+          <a href="#contact" class="btn btn-primary">索取樓書與房價表 <span class="arrow">→</span></a>
+          <FavButton slug={p.slug} name={p.name} variant="full" />
+          <a href={`tel:${site.tel.replace(/\s/g, '')}`} class="btn btn-line">致電 {site.tel}</a>
+          <p class="note">價格依開發商最新房價表為準，實際可售戶別與優惠請洽顧問。海外買家另需留意 FIRB 與各州附加印花稅。</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section style="padding-top:0">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <div><div class="eyebrow">More in {cityName(p.city)}</div><h2>{cityName(p.city)}其他建案</h2></div>
+          <a href={`/projects/?city=${p.city}`} class="more">看全部{cityName(p.city)}建案 <span class="arrow">→</span></a>
+        </div>
+        <div class="grid-prop even">{related.map((x) => <PropertyCard project={x} />)}</div>
+      </div>
+    </section>
+  )}
+
+  <ContactSection project={p.name} />
+
+  {p.gallery.length > 0 && (
+    <dialog class="lightbox" id="lightbox" aria-label={`${p.name} 相簿`}>
+      <img id="lb-img" alt="">
+      <div class="lb-bar"><span id="lb-n"></span></div>
+      <button type="button" class="lb-btn lb-prev" id="lb-prev" aria-label="上一張">‹</button>
+      <button type="button" class="lb-btn lb-next" id="lb-next" aria-label="下一張">›</button>
+      <button type="button" class="lb-close" id="lb-close" aria-label="關閉">×</button>
+    </dialog>
+  )}
+</BaseLayout>
+
+<script>
+  // 相簿放大檢視：點縮圖開啟；← → 鍵或左右滑動切換；Esc 或點背景關閉
+  const dlg = document.getElementById('lightbox') as HTMLDialogElement | null;
+  if (dlg) {
+    const items = [...document.querySelectorAll<HTMLButtonElement>('.gallery-item')];
+    const img = document.getElementById('lb-img') as HTMLImageElement;
+    let cur = 0;
+    const show = (i: number) => {
+      cur = (i + items.length) % items.length;
+      const src = items[cur].querySelector('img')!;
+      img.src = src.src;
+      img.alt = src.alt;
+      document.getElementById('lb-n')!.textContent = `${cur + 1} / ${items.length}`;
+    };
+    items.forEach((b, i) => b.addEventListener('click', () => { show(i); dlg.showModal(); }));
+    document.getElementById('lb-prev')!.addEventListener('click', () => show(cur - 1));
+    document.getElementById('lb-next')!.addEventListener('click', () => show(cur + 1));
+    document.getElementById('lb-close')!.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(cur - 1);
+      if (e.key === 'ArrowRight') show(cur + 1);
+    });
+    let x0 = 0;
+    dlg.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    dlg.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
+    });
+  }
+</script>

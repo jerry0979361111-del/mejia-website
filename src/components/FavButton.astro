@@ -1,0 +1,9 @@
+---
+// 加入最愛按鈕。variant="icon" 用在卡片右上角；variant="full" 用在建案內頁。
+interface Props { slug: string; name: string; variant?: 'icon' | 'full' }
+const { slug, name, variant = 'icon' } = Astro.props;
+---
+<button type="button" class:list={['fav', `fav-${variant}`]} data-fav={slug} aria-pressed="false" aria-label={`把 ${name} 加入最愛`} title="加入最愛">
+  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 2.9 1.4-1.8 3-2.9 5-2.9 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>
+  {variant === 'full' && <span class="fav-label">加入最愛</span>}
+</button>

@@ -1,0 +1,68 @@
+---
+// 文章內頁
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { getInsights, insightSlug, insightUrl, insightCover, fmtDate, type Insight } from '../../data/insights';
+
+export async function getStaticPaths() {
+  const posts = await getInsights();
+  return posts.map((post) => ({ params: { slug: insightSlug(post) }, props: { post, posts } }));
+}
+
+interface Props { post: Insight; posts: Insight[] }
+const { post, posts } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const more = posts.filter((p) => p.id !== post.id).slice(0, 3);
+---
+<BaseLayout title={`${d.標題}｜Mejia 美家`} description={d.摘要} image={insightCover(post)}>
+  <article>
+    <section class="post-head">
+      <div class="wrap narrow">
+        <nav class="crumbs" aria-label="麵包屑"><a href="/">首頁</a><span aria-hidden="true">/</span><a href="/insights/">房產新聞與指南</a><span aria-hidden="true">/</span><span>{d.分類}</span></nav>
+        {d.狀態 !== '已核准' && (
+          <div class="review-box">
+            <b>審稿預覽：{d.狀態}</b>（只在本機顯示，正式網站看不到）
+            {d.審稿意見 && <p>審稿意見：{d.審稿意見}</p>}
+          </div>
+        )}
+        <span class="tag">{d.分類}</span>
+        <h1>{d.標題}</h1>
+        <p class="post-lead">{d.摘要}</p>
+        <div class="post-meta"><time datetime={d.發布日期.toISOString()}>{fmtDate(d.發布日期)}</time><span>Mejia 美家編輯部</span></div>
+      </div>
+    </section>
+    <div class="wrap narrow">
+      <div class="post-cover"><img src={insightCover(post)} alt=""></div>
+      <div class="prose">
+        <Content />
+      </div>
+      {d.參考來源.length > 0 && (
+        <aside class="sources">
+          <h2>參考來源</h2>
+          <ol>{d.參考來源.map((s) => <li>{s.網址 ? <a href={s.網址} target="_blank" rel="noopener">{s.名稱}</a> : s.名稱}</li>)}</ol>
+        </aside>
+      )}
+      <p class="note">本文為一般資訊整理，不構成投資、稅務或法律建議；實際情況請洽美家顧問與專業律師、會計師。</p>
+    </div>
+  </article>
+
+  {more.length > 0 && (
+    <section>
+      <div class="wrap">
+        <div class="sec-head"><div><div class="eyebrow">More Insights</div><h2>延伸閱讀</h2></div><a href="/insights/" class="more">看全部文章 <span class="arrow">→</span></a></div>
+        <div class="post-grid">
+          {more.map((p) => (
+            <a href={insightUrl(p)} class="post">
+              <div class="ph"><img src={insightCover(p)} alt="" loading="lazy"></div>
+              <div class="body"><span class="tag">{p.data.分類}</span><h3>{p.data.標題}</h3><time>{fmtDate(p.data.發布日期)}</time></div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <ContactSection />
+</BaseLayout>
