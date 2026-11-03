@@ -17,7 +17,7 @@
 ## 常用指令
 - `npm run dev`：本機預覽 http://localhost:4321
 - `npm run build`：建置到 `dist/`
-- `npm run sync`：從 Notion 同步建案（需要 `.env` 的 `NOTION_TOKEN`），產生 `src/data/projects.generated.json` 與 `public/img/projects/`
+- `npm run sync`：從 Notion 同步建案（`.env` 的 `NOTION_TOKEN`；雲端環境沒有金鑰時由代理注入授權，指令前加 `NODE_USE_ENV_PROXY=1`），產生 `src/data/projects.generated.json` 與 `public/img/projects/`
 - `npm run deploy`：同步 Notion → 建置 → 部署到 Cloudflare
 - `npm run market`：從 Cotality 月報更新房價數據（`src/data/market.generated.json`）；與上期差距 >15% 會以代碼 2 結束、不更新
 - `npm run monthly`：每月排程用，`market` + `deploy`（Cotality PDF 以發布月命名，OCT＝9/30 數據）
@@ -44,7 +44,7 @@
 
 ## 建案資料來源（Notion）
 - Notion「澳洲房地產建案資料庫」：https://app.notion.com/p/13280ab9d400417ba12125a3d9c2d0d7
-- 網站只顯示「網站上架」或「首頁精選」有勾、且「禁止公開」**沒有勾**的建案（邏輯在 `scripts/sync-notion.mjs`）。**「禁止公開」優先於一切**：勾了就絕對不能出現在任何頁面、sitemap、搜尋結果或 AI 顧問回答裡（目前為 ORIA Spring Hill、100 Leichhardt、Greenview）
+- 網站顯示所有「禁止公開」**沒有勾**的建案（「網站上架」不再作為條件；「首頁精選」只決定是否放首頁）（邏輯在 `scripts/sync-notion.mjs`）。**「禁止公開」優先於一切**：勾了就絕對不能出現在任何頁面、sitemap、搜尋結果或 AI 顧問回答裡（目前為 ORIA Spring Hill、100 Leichhardt、Greenview）
 - 只讀這些欄位：建案名、城市、區域、建物型態、銷售狀態、房型用途、網站起價、網站簡介、封面照、圖庫、首頁精選、開發商、預計完工、地址（地址轉座標存在 `scripts/geocode-cache.json`）
 - 不讀「價格帶」、「Drive連結」與頁面內文第 7 節（競品比較）、第 8 節（銷售輔助區）——這些是內部資料
 

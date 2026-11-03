@@ -2,7 +2,7 @@
 // 用法：npm run sync（.env 裡的 NOTION_TOKEN；沒有的話假設由外部代理注入 Notion 授權，例如雲端工作環境）
 //
 // 公開規則（見 CLAUDE.md）：
-//   (網站上架 或 首頁精選) 且 禁止公開沒有勾 → 才會寫進網站
+//   禁止公開沒有勾 → 全部寫進網站（「網站上架」不再作為條件；首頁精選只決定是否放首頁）
 //   只讀公開欄位；價格帶、Drive連結、頁面內文都不讀
 //
 // 產出：src/data/projects.generated.json、public/img/projects/<slug>.webp
@@ -82,8 +82,9 @@ async function nominatim(q) {
   if (wait > 0) await new Promise((r) => setTimeout(r, wait));
   lastGeo = Date.now();
   const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=au&q=${encodeURIComponent(q)}`;
-  const res = await fetch(url, { headers: { 'User-Agent': 'MejiaWebsite/1.0 (admin@mejia.au)', 'Accept-Language': 'en' } });
-  const [hit] = res.ok ? await res.json() : [];
+  // 連不到 Nominatim 時不中斷同步，該建案先不放地圖
+  const res = await fetch(url, { headers: { 'User-Agent': 'MejiaWebsite/1.0 (admin@mejia.au)', 'Accept-Language': 'en' } }).catch(() => null);
+  const [hit] = res?.ok ? await res.json() : [];
   return hit ? [Number(Number(hit.lat).toFixed(5)), Number(Number(hit.lon).toFixed(5))] : null;
 }
 async function geocode(address, suburb, city) {
@@ -96,7 +97,7 @@ async function geocode(address, suburb, city) {
 }
 
 const rows = await queryAll();
-const isPublic = (p) => (checked(p['網站上架']) || checked(p['首頁精選'])) && !checked(p['禁止公開']);
+const isPublic = (p) => !checked(p['禁止公開']);
 const publicRows = rows.filter((r) => isPublic(r.properties));
 
 await rm(IMG_DIR, { recursive: true, force: true });

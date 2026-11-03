@@ -10,7 +10,7 @@ const { project: p, wide = false } = Astro.props;
 ---
 <article class:list={['card', 'rv', { wide }]} data-city={p.city} data-type={p.type} data-stage={p.stage} data-slug={p.slug}>
   <div class="ph">
-    {p.image && <img src={p.image} alt="" loading="lazy">}
+    {p.image ? <img src={p.image} alt="" loading="lazy"> : <div class="ph-empty" aria-hidden="true"><span>{p.name}</span></div>}
     <div class="badges"><span class="badge hot">{stageLabel[p.stage]}</span><span class="badge">{typeLabel[p.type]}</span></div>
   </div>
   <div class="body">
