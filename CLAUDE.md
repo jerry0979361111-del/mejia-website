@@ -6,7 +6,11 @@
 ## 技術架構
 - Astro 5 產生靜態網站，部署到 Cloudflare Workers 靜態資產（即新版 Cloudflare Pages，名稱 `mejia-website`，設定在 `wrangler.jsonc`）
 - 不要加 `@astrojs/cloudflare` adapter；`wrangler pages ...` 指令已被 Cloudflare 導向 Workers，一律用 `wrangler deploy`
-- 之後的後端：同一個 Worker 加上 `main` 腳本處理 `/api/*`＋ D1 存表單名單、Resend 寄信、LINE 通知、Turnstile 防垃圾
+- 後端：`worker/index.ts` 只處理 `/api/*`（`run_worker_first`），其餘由 `dist/` 靜態服務
+  - `POST /api/lead`：Turnstile 驗證 → 寫入 D1 `mejia-leads` 的 `leads` 表（schema 在 `migrations/`）→ Resend 寄信、LINE 推播
+  - 設定在 `wrangler.jsonc` 的 `vars`（NOTIFY_EMAIL、MAIL_FROM、LINE_TO）；金鑰用 `npx wrangler secret put`（TURNSTILE_SECRET、RESEND_API_KEY、LINE_CHANNEL_TOKEN）。Turnstile 的公開 site key 填在 `src/data/site.ts`
+  - 本機測試：`.dev.vars` 寫 `ALLOW_NO_TURNSTILE=1`，`npx wrangler d1 migrations apply mejia-leads --local`，`npm run build && npx wrangler dev`
+  - 改了 `wrangler.jsonc` 要重跑 `npx wrangler types worker/worker-configuration.d.ts`
 - 大量圖片與樓書 PDF 之後放 Cloudflare R2
 - 不使用 CSS 框架；樣式集中在 `src/styles/global.css`
 
@@ -20,7 +24,7 @@
 
 ## 目錄
 - `src/data/`：所有內容（公司資訊、選單、城市、建案、步驟、團隊、文章）。改內容先改這裡，不要寫死在頁面裡
-- `src/components/`：共用元件（Header、Footer、AiChat、PropertyCard、Process、Calculator、ContactSection）
+- `src/components/`：共用元件（Header、Footer、AiChat、PropertyCard、Process、Calculator、ContactSection、PageHead、ServicePage）
 - `src/layouts/BaseLayout.astro`：所有頁面的外框與 SEO meta
 - `src/scripts/ui.ts`：`$`、`$$`、`toast` 小工具
 - `src/data/market.ts`：印花稅級距、利率、匯率（手動維護）；房價中位數與漲跌讀 `market.generated.json`（自動）
@@ -57,9 +61,9 @@
 | `/services/leasing/`、`/services/valuation/` | 代租代管、免費估價 |
 | `/contact/`、`/privacy/`、404 | 聯絡、隱私權政策 |
 
-子頁面完成時：把 `src/data/site.ts` 的 `nav` 從首頁錨點改成子頁網址，並移除首頁對應連結上的 `data-demo`。
+以上子頁面都已完成。標「初稿」（`draft-flag`）的頁面文字上線前要請顧問與律師確認：`/process/` 的 FIRB 說明、`/faq/`（`content.ts` 的 `faqDraft`）、`/services/*`、`/privacy/`。
 
 ## 上線前檢查
-- `src/data/site.ts` 的 `noindex` 改成 `false`，`public/robots.txt` 改成允許收錄並加 sitemap
+- `src/data/site.ts` 的 `noindex` 改成 `false`，`public/robots.txt` 改成允許收錄並加 `Sitemap: https://mejia.au/sitemap-index.xml`（sitemap 已由 `@astrojs/sitemap` 產生）
 - 舊站網址全部在 `public/_redirects` 設 301 轉址
 - 表單接上後端並實測收到通知

@@ -10,6 +10,8 @@ export const site = {
     { title: '台灣｜澳大利亞美家國際股份有限公司', lines: ['台北市文山區羅斯福路五段 88 號', '+886 2 2932 1111'] },
     { title: '澳洲｜Mejia Property Co Pty Ltd', lines: ['PO Box 763, Runaway Bay, QLD 4216', '+61 433 024 808'] },
   ],
+  // Cloudflare Turnstile 的 site key（公開）。留空時表單不顯示驗證框，只適合本機測試
+  turnstileSiteKey: '',
   taxId: '9364-1830',
   abn: '17 673 000 881',
 };

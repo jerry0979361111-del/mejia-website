@@ -503,6 +503,10 @@ a.member{display:block}
   .fab span{display:none}
   .fab{padding:16px}
 }
+/* 表單防垃圾：隱藏欄位與 Turnstile */
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.cf-turnstile{margin:6px 0 14px}
+
 /* ── 子頁面：城市、FAQ、服務、試算、關於 ── */
 .city-stats-lg{gap:18px clamp(28px,5vw,64px);margin-top:0;padding:28px 32px;background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
 .city-stats-lg dt{font-size:13px}

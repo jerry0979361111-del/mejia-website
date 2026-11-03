@@ -1,6 +1,5 @@
 ---
-// 聯絡區塊與索取資料表單。
-// TODO（表單後端階段）：改成 POST 到 /api/lead（Cloudflare Pages Function + D1），寄 Email 與 LINE 通知，並加 Turnstile。
+// 聯絡區塊與索取資料表單。送到 /api/lead（worker/index.ts）：Turnstile 驗證 → D1 → Email／LINE 通知。
 import { site } from '../data/site';
 import { cities } from '../data/cities';
 
@@ -18,11 +17,13 @@ const { project, agent } = Astro.props;
         <div class="office"><b>Email</b><p><a href={`mailto:${site.email}`}>{site.email}</a></p></div>
       </div>
     </div>
-    <form class="lead-form rv" id="form" novalidate>
+    <form class="lead-form rv" id="form" action="/api/lead" method="post" novalidate data-tel={site.tel}>
       <h3>{agent ? `預約 ${agent} 諮詢` : project ? `索取 ${project} 資料` : '立即索取資料'}</h3>
       <p class="hint">樓書 · 房型圖 · 房價表</p>
       {project && <input type="hidden" name="project" value={project}>}
       {agent && <input type="hidden" name="agent" value={agent}>}
+      <input type="hidden" name="page">
+      <label class="hp" aria-hidden="true">網站<input name="website" tabindex="-1" autocomplete="off"></label>
       <div class="row2">
         <label class="inp"><span>姓名 *</span><input required name="name" autocomplete="name" placeholder="王小明"></label>
         <label class="inp"><span>電話或 LINE ID *</span><input required name="tel" autocomplete="tel" placeholder="0912 345 678"></label>
@@ -36,21 +37,42 @@ const { project, agent } = Astro.props;
         <select name="goal"><option>自住</option><option>投資收租</option><option>子女留學</option><option>移民規劃</option><option>還在了解</option></select>
       </label>
       <label class="consent"><input type="checkbox" name="updates" value="yes" checked><span>有降價、新案或收藏建案更新時通知我</span></label>
+      {site.turnstileSiteKey && <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey} data-language="zh-tw" data-size="flexible"></div>}
       <button class="btn btn-primary" type="submit">送出，請顧問聯繫我 <span class="arrow">→</span></button>
       <p class="privacy">送出即表示同意<a href="/privacy/">隱私權政策</a>。我們不會將你的資料提供給第三方。</p>
     </form>
   </div>
 </section>
 
+{site.turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
 <script>
   import { $, toast } from '../scripts/ui';
   const form = $<HTMLFormElement>('#form');
-  form.addEventListener('submit', (e) => {
+  const btn = $<HTMLButtonElement>('button[type=submit]', form);
+  const errors: Record<string, string> = {
+    captcha: '請先完成下方的驗證再送出',
+    required: '請填寫姓名與聯絡方式',
+    email: 'Email 格式好像不太對，請再確認一次',
+  };
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = form.elements.namedItem('name') as HTMLInputElement;
     const tel = form.elements.namedItem('tel') as HTMLInputElement;
-    if (!name.value.trim() || !tel.value.trim()) { toast('請填寫姓名與聯絡方式'); return; }
-    form.reset();
-    toast('已收到，顧問會在一個工作天內與你聯繫。（預覽版：表單尚未連接後端）');
+    if (!name.value.trim() || !tel.value.trim()) { toast(errors.required); return; }
+    (form.elements.namedItem('page') as HTMLInputElement).value = location.pathname;
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+      const out = await res.json().catch(() => ({ ok: false }));
+      if (!out.ok) { toast(errors[out.error] ?? `送出失敗，請稍後再試，或直接來電 ${form.dataset.tel}`); return; }
+      form.reset();
+      toast('已收到，顧問會在一個工作天內與你聯繫。');
+    } catch {
+      toast(`送出失敗，請檢查網路後再試，或直接來電 ${form.dataset.tel}`);
+    } finally {
+      btn.disabled = false;
+      (window as any).turnstile?.reset();
+    }
   });
 </script>

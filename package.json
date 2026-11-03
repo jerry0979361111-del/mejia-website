@@ -15,6 +15,7 @@
     "monthly": "npm run market && npm run deploy"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "astro": "^5.13.0",
     "leaflet": "^1.9.4"
   },
