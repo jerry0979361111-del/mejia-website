@@ -16,7 +16,7 @@
   ],
   // 非機密設定。金鑰用 `npx wrangler secret put <名稱>`：TURNSTILE_SECRET、RESEND_API_KEY、LINE_CHANNEL_TOKEN
   "vars": {
-    "NOTIFY_EMAIL": "admin@mejia.au",
+    "NOTIFY_EMAIL": "jerry0979361111@gmail.com",
     "MAIL_FROM": "",
     "LINE_TO": ""
   },

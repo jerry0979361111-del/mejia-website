@@ -5,11 +5,14 @@ import PageHead from '../components/PageHead.astro';
 import Process from '../components/Process.astro';
 import ContactSection from '../components/ContactSection.astro';
 import { steps } from '../data/content';
-import { duty } from '../data/market';
+import { duty, stateOf } from '../data/market';
+import { cities } from '../data/cities';
+
+const states = [...new Set(cities.map((c) => stateOf[c.id]))];
 
 const costs = [
   ['印花稅', '過戶時繳納的州稅，依房價級距計算；預售屋多在交屋時繳納。'],
-  ['海外買家附加印花稅', `加在一般印花稅之外：${Object.entries(duty).map(([s, d]) => `${s} ${Math.round(d.foreign * 100)}%`).join('、')}。`],
+  ['海外買家附加印花稅', `加在一般印花稅之外：${states.map((s) => `${s} ${Math.round(duty[s].foreign * 100)}%`).join('、')}。`],
   ['FIRB 申請費', '依房價級距計算、每年調整，以 FIRB 官網當期公告為準。'],
   ['律師費', '審閱合同、處理過戶與信託帳戶，依案件與律師而定。'],
   ['貸款相關費用', '銀行手續費、估價費等，依貸款機構而定。'],

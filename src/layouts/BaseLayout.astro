@@ -5,6 +5,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import AiChat from '../components/AiChat.astro';
 import { site } from '../data/site';
+import { cityList } from '../data/cities';
 
 interface Props {
   title?: string;
@@ -13,7 +14,7 @@ interface Props {
 }
 const {
   title = `${site.name}｜${site.tagline}`,
-  description = '台灣、澳洲二地團隊，專注雪梨、墨爾本、布里斯本、黃金海岸、珀斯新建案買賣、貸款法務與交屋後租賃管理。',
+  description = `台灣、澳洲二地團隊，專注${cityList}新建案買賣、貸款法務與交屋後租賃管理。`,
   image = '/img/prop-ripley-square-north-terraces.jpg',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);

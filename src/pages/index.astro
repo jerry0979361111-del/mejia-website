@@ -5,7 +5,7 @@ import Process from '../components/Process.astro';
 import Calculator from '../components/Calculator.astro';
 import ContactSection from '../components/ContactSection.astro';
 import ProjectMap from '../components/ProjectMap.astro';
-import { cities, projectCities } from '../data/cities';
+import { cities, projectCities, cityList, cityCountZh } from '../data/cities';
 import { featuredLayout } from '../data/projects';
 import { medians, medianSource, foreignDuty, wan, marketUpdated, marketSummary } from '../data/market';
 const cityNames = Object.fromEntries(cities.map((c) => [c.id, c.zh]));
@@ -14,7 +14,7 @@ import { team, teamUrl } from '../data/team';
 
 const featured = featuredLayout();
 const stats: { to: number; plus?: boolean; unit: string; text: string }[] = [
-  { to: 5, unit: '大城市', text: '雪梨、墨爾本、布里斯本、黃金海岸、珀斯' },
+  { to: cities.length, unit: '大城市', text: cityList },
   { to: 2, unit: '地據點', text: '台北與昆士蘭同步服務，溝通不必等時差' },
   { to: 10, plus: true, unit: '顧問', text: '房產律師、會計師專業團隊，中文全程對接' },
   { to: 7, unit: '步流程', text: '從意向書到交屋，每一步都有人帶' },
@@ -103,7 +103,7 @@ const stats: { to: number; plus?: boolean; unit: string; text: string }[] = [
   <section class="cities" id="cities">
     <div class="wrap">
       <div class="sec-head rv">
-        <div><div class="eyebrow">Where to Live</div><h2>五座城市，五種生活</h2></div>
+        <div><div class="eyebrow">Where to Live</div><h2>{cityCountZh}座城市，{cityCountZh}種生活</h2></div>
         <p class="lead" style="margin-top:0">先想清楚要過什麼樣的日子，再決定買在哪裡。</p>
       </div>
       <p class="market-note rv"><span>本月市場</span>{marketSummary(cityNames)}</p>
@@ -129,7 +129,7 @@ const stats: { to: number; plus?: boolean; unit: string; text: string }[] = [
           </div>
         ))}
       </div>
-      <p class="note rv">中位價與漲跌：<a href={medianSource.url} target="_blank" rel="noopener">{medianSource.name}</a>（{medianSource.period}，每月自動更新）。海外買家稅費初算＝以公寓中位價計算之一般印花稅＋海外買家附加印花稅（新州 9%、維州 8%、昆州 8%、西澳 7%），未含首購／預售優惠、FIRB 申請費、律師費與貸款費用，僅供參考，實際以各州稅務局與律師核算為準。資料更新：{marketUpdated}。</p>
+      <p class="note rv">中位價與漲跌：<a href={medianSource.url} target="_blank" rel="noopener">{medianSource.name}</a>（{medianSource.period}，每月自動更新）。海外買家稅費初算＝以公寓中位價計算之一般印花稅＋海外買家附加印花稅（新州 9%、維州 8%、昆州 8%），未含首購／預售優惠、FIRB 申請費、律師費與貸款費用，僅供參考，實際以各州稅務局與律師核算為準。資料更新：{marketUpdated}。</p>
     </div>
   </section>
   <Calculator />
