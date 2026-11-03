@@ -14,12 +14,12 @@ export const site = {
   abn: '17 673 000 881',
 };
 
-// 主選單。子頁面完成後，把 href 從首頁錨點改成子頁網址（例如 '/projects/'）。
+// 主選單
 export const nav = [
   { label: '新房項目', href: '/projects/' },
   { label: '城市導覽', href: '/#cities' },
-  { label: '購房流程', href: '/#process' },
-  { label: '試算工具', href: '/#calc' },
-  { label: '房產指南', href: '/#news' },
-  { label: '關於美家', href: '/#team' },
+  { label: '購房流程', href: '/process/' },
+  { label: '試算工具', href: '/calculator/' },
+  { label: '房產指南', href: '/insights/' },
+  { label: '關於美家', href: '/about/' },
 ];

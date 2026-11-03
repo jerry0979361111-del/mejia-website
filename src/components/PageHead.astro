@@ -1,0 +1,18 @@
+---
+// 子頁面共用的頁首：麵包屑＋英文小標＋標題＋導言。draft 會標示「內容待確認」。
+interface Props { title: string; eyebrow: string; lead?: string; crumbs?: { label: string; href: string }[]; draft?: string }
+const { title, eyebrow, lead, crumbs = [], draft } = Astro.props;
+---
+<section class="page-head">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="麵包屑">
+      <a href="/">首頁</a><span aria-hidden="true">/</span>
+      {crumbs.map((c) => <><a href={c.href}>{c.label}</a><span aria-hidden="true">/</span></>)}
+      <span>{title}</span>
+    </nav>
+    {draft && <p class="draft-flag">{draft}</p>}
+    <div class="eyebrow">{eyebrow}</div>
+    <h1>{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+  </div>
+</section>

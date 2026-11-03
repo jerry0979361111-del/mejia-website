@@ -9,7 +9,7 @@ import { cities, projectCities } from '../data/cities';
 import { featuredLayout } from '../data/projects';
 import { medians, medianSource, foreignDuty, wan, marketUpdated, marketSummary } from '../data/market';
 const cityNames = Object.fromEntries(cities.map((c) => [c.id, c.zh]));
-import { news } from '../data/content';
+import { news, features } from '../data/content';
 import { team, teamUrl } from '../data/team';
 
 const featured = featuredLayout();
@@ -18,12 +18,6 @@ const stats: { to: number; plus?: boolean; unit: string; text: string }[] = [
   { to: 2, unit: '地據點', text: '台北與昆士蘭同步服務，溝通不必等時差' },
   { to: 10, plus: true, unit: '顧問', text: '房產律師、會計師專業團隊，中文全程對接' },
   { to: 7, unit: '步流程', text: '從意向書到交屋，每一步都有人帶' },
-];
-const features = [
-  { icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', title: '台澳雙團隊，零時差', text: '台北與昆士蘭同步服務，問題當天回覆，不用熬夜等消息。' },
-  { icon: '<path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/>', title: '持牌專業團隊', text: '即時掌握市場第一手資訊，與開發商直接對接。' },
-  { icon: '<path d="M4 7h16M4 12h16M4 17h10"/>', title: '貸款、法務、稅務一站整合', text: 'FIRB 申請、律師、貸款經紀、會計師，都由美家協調安排。' },
-  { icon: '<path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9z"/>', title: '交屋後代租代管', text: '找房客、收租、維修、報稅，人在台灣也能安心持有。' },
 ];
 ---
 <BaseLayout>
@@ -35,7 +29,7 @@ const features = [
       <p>台灣、澳洲二地團隊，服務零時差。從選房、貸款、法務到交屋後的租賃管理，美家陪你走完每一步。</p>
       <div class="hero-cta">
         <a href="#projects" class="btn btn-primary">瀏覽熱銷建案 <span class="arrow">→</span></a>
-        <a href="#contact" class="btn btn-ghost">免費房產估價</a>
+        <a href="/services/valuation/" class="btn btn-ghost">免費房產估價</a>
       </div>
       <div class="search" role="search">
         <label>城市
@@ -144,16 +138,16 @@ const features = [
     <div class="wrap">
       <div class="sec-head rv">
         <div><div class="eyebrow">Insights</div><h2>房產新聞與指南</h2></div>
-        <a href="/insights/" class="more" data-demo="文章列表頁製作中">看全部文章 <span class="arrow">→</span></a>
+        <a href="/insights/" class="more">看全部文章 <span class="arrow">→</span></a>
       </div>
       <div class="news-grid">
-        <a href="/insights/" class="n-feature rv" data-demo="文章內頁製作中">
+        <a href="/insights/" class="n-feature rv">
           <div class="ph"><img src={news.feature.img} alt="" loading="lazy"></div>
           <div class="body"><span class="tag">{news.feature.tag}</span><h3>{news.feature.title}</h3><p>{news.feature.excerpt}</p></div>
         </a>
         <div class="n-list">
           {news.list.map((n) => (
-            <a href="/insights/" class="n-item rv" data-demo="文章內頁製作中"><div class="ph"><img src={n.img} alt="" loading="lazy"></div><div><span class="tag">{n.tag}</span><h3>{n.title}</h3></div></a>
+            <a href="/insights/" class="n-item rv"><div class="ph"><img src={n.img} alt="" loading="lazy"></div><div><span class="tag">{n.tag}</span><h3>{n.title}</h3></div></a>
           ))}
         </div>
       </div>
@@ -209,9 +203,9 @@ const features = [
     for (const k of ['city', 'type', 'stage']) { const v = sel('s-' + k).value; if (v !== 'all') q.set(k, v); }
     location.href = '/projects/' + (q.size ? '?' + q : '');
   });
-  // 城市清單：之後改連到城市頁，目前先跳到該城市的建案列表
+  // 城市清單：連到城市頁
   $$('.city').forEach((c) => {
-    const go = () => { location.href = '/projects/?city=' + c.dataset.go; };
+    const go = () => { location.href = '/cities/' + c.dataset.go + '/'; };
     c.addEventListener('click', go);
     c.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
   });

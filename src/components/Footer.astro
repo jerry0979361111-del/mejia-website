@@ -10,7 +10,7 @@ const projectCities = cities.filter((c) => projects.some((p) => p.city === c.id)
     <div class="foot">
       <div><img src="/img/logo.webp" alt="Mejia"><p>{site.tagline}。<br>專注雪梨、墨爾本、布里斯本、黃金海岸、珀斯房產買賣、租賃管理與土地開發。</p></div>
       <div><h4>新房項目</h4><ul>{projectCities.map((c) => <li><a href={`/projects/?city=${c.id}`}>{c.zh}</a></li>)}<li><a href="/projects/">全部建案</a></li></ul></div>
-      <div><h4>服務</h4><ul><li><a href="/#contact">代租代售</a></li><li><a href="/#contact">免費房產估價</a></li><li><a href="/#calc">試算工具</a></li><li><a href="/#news">房產週報</a></li><li><a href="/#process">FAQ</a></li></ul></div>
+      <div><h4>服務</h4><ul><li><a href="/services/leasing/">代租代管</a></li><li><a href="/services/valuation/">免費房產估價</a></li><li><a href="/calculator/">試算工具</a></li><li><a href="/process/">購房流程</a></li><li><a href="/insights/">房產新聞與指南</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/about/">關於美家</a></li><li><a href="/contact/">聯絡我們</a></li><li><a href="/privacy/">隱私權政策</a></li></ul></div>
       <div><h4>追蹤美家</h4><ul><li>Facebook · Instagram · YouTube</li><li>LINE · WeChat</li><li style="margin-top:14px">統編 {site.taxId}</li><li>ABN {site.abn}</li></ul></div>
     </div>
     <div class="copy"><span>© {new Date().getFullYear()} {site.name} – {site.tagline} All Rights Reserved</span><span>{site.email}</span></div>

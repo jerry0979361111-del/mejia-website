@@ -1,0 +1,30 @@
+---
+// 服務頁共用版面（代租代管、免費估價），內容來自 src/data/content.ts 的 services
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from './PageHead.astro';
+import ContactSection from './ContactSection.astro';
+import { services } from '../data/content';
+
+interface Props { kind: keyof typeof services }
+const s = services[Astro.props.kind];
+---
+<BaseLayout title={`${s.title}｜Mejia 美家`} description={s.lead}>
+  <PageHead title={s.title} eyebrow={s.eyebrow} lead={s.lead} crumbs={[{ label: '服務', href: '/about/' }]} draft="服務內容為初稿，上線前請確認實際服務範圍與收費" />
+
+  <section>
+    <div class="wrap">
+      <div class="svc-grid">
+        {s.items.map((it, i) => (
+          <div class="svc rv">
+            <div class="no">{String(i + 1).padStart(2, '0')}</div>
+            <h3>{it.title}</h3>
+            <p>{it.text}</p>
+          </div>
+        ))}
+      </div>
+      <div style="text-align:center;margin-top:48px" class="rv"><a href="#contact" class="btn btn-primary">留下物件資訊，請顧問聯繫我 <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+
+  <ContactSection />
+</BaseLayout>

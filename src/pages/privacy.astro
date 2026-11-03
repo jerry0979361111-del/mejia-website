@@ -1,0 +1,39 @@
+---
+// 隱私權政策（初稿，上線前請律師確認是否符合台灣個資法與澳洲 Privacy Act）
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import { site } from '../data/site';
+---
+<BaseLayout title="隱私權政策｜Mejia 美家" description="Mejia 美家如何蒐集、使用與保護你的個人資料。">
+  <PageHead title="隱私權政策" eyebrow="Privacy Policy" draft="初稿，上線前請律師確認" />
+
+  <section>
+    <div class="wrap prose" style="max-width:820px">
+      <p>{site.name}（{site.offices.map((o) => o.title.split('｜')[1]).join('、')}，以下稱「美家」）重視你的隱私。本政策說明我們透過本網站蒐集哪些個人資料、如何使用與保護。</p>
+
+      <h2>我們蒐集的資料</h2>
+      <ul>
+        <li>你在表單填寫的資料：姓名、電話或 LINE ID、Email、有興趣的城市、置產目的、想詢問的建案或顧問。</li>
+        <li>你在本網站「加入收藏」的建案：只存在你自己的瀏覽器，美家看不到。</li>
+        <li>一般網站使用紀錄：例如瀏覽的頁面與裝置類型，用於改善網站。</li>
+      </ul>
+
+      <h2>使用目的</h2>
+      <ul>
+        <li>由顧問與你聯繫，提供樓書、房型圖、價格表與購屋諮詢。</li>
+        <li>你同意接收時，通知你建案降價、新案與收藏建案的更新。</li>
+        <li>為了提供你要求的服務，必要時轉介給合作的律師、貸款經紀或會計師，並事先告知你。</li>
+      </ul>
+      <p>我們不會將你的個人資料出售或提供給與上述目的無關的第三方。</p>
+
+      <h2>保存與安全</h2>
+      <p>資料保存在具存取控管的系統中，只有負責的顧問能查閱；不再需要時會刪除。</p>
+
+      <h2>你的權利</h2>
+      <p>你可以隨時要求查閱、更正、停止使用或刪除你的個人資料，也可以取消接收通知。請寫信到 <a href={`mailto:${site.email}`}>{site.email}</a>。</p>
+
+      <h2>政策更新</h2>
+      <p>本政策如有修改，會公告在本頁。</p>
+    </div>
+  </section>
+</BaseLayout>

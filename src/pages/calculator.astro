@@ -1,0 +1,68 @@
+---
+// 試算工具：房貸月付＋海外買家交易成本（印花稅）
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Calculator from '../components/Calculator.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { cities } from '../data/cities';
+import { marketUpdated } from '../data/market';
+---
+<BaseLayout title="房貸與交易成本試算｜Mejia 美家" description="澳洲房貸月付試算，以及海外買家印花稅、附加印花稅初算。">
+  <PageHead title="試算工具" eyebrow="Calculator" lead="先算月付，再算買房當下要準備的稅費。澳幣、台幣同步顯示。" />
+
+  <Calculator />
+
+  <section class="cities" id="cost">
+    <div class="wrap">
+      <div class="sec-head rv"><div><div class="eyebrow">Transaction Cost</div><h2>海外買家印花稅試算</h2><p class="lead">選城市、輸入房價，初算一般印花稅與海外買家附加印花稅。</p></div></div>
+      <div class="calc-grid rv">
+        <div class="calc-form">
+          <div class="field"><div class="top"><label>城市</label></div>
+            <div class="cost-city" role="group" aria-label="選擇城市">
+              {cities.map((c, i) => <button type="button" class:list={['rate-chip', { on: i === 0 }]} data-city={c.id}>{c.zh}</button>)}
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:0"><div class="top"><label for="c-price">房屋總價（澳幣）</label><output id="o-c-price"></output></div><input type="range" id="c-price" min="400000" max="3000000" step="10000" value="850000"></div>
+        </div>
+        <div class="calc-out cost-out">
+          <span class="label">預估稅費合計</span>
+          <div class="main" id="c-total"></div>
+          <div class="sub" id="c-total-twd"></div>
+          <div class="rows">
+            <div><span>一般印花稅</span><b id="c-base"></b></div>
+            <div><span id="c-sur-label">海外附加印花稅</span><b id="c-sur"></b></div>
+          </div>
+          <p class="note">一般稅率初算，未含首購／預售優惠、FIRB 申請費、律師費與貸款費用；實際以各州稅務局與律師核算為準。稅率資料更新：{marketUpdated}。匯率沿用上方房貸試算的設定。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ContactSection />
+</BaseLayout>
+
+<script>
+  import { $, $$ } from '../scripts/ui';
+  import { foreignDuty } from '../data/market';
+  import type { CityId } from '../data/cities';
+  const aud = (n: number) => 'A$ ' + Math.round(n).toLocaleString('en-AU');
+  const price = $<HTMLInputElement>('#c-price');
+  let city = $$('.cost-city button')[0].dataset.city as CityId;
+  function calc() {
+    const P = +price.value, d = foreignDuty(city, P), fx = +$<HTMLInputElement>('#fx').value;
+    $('#o-c-price').textContent = aud(P);
+    $('#c-base').textContent = aud(d.base);
+    $('#c-sur-label').textContent = `海外附加印花稅（${Math.round(d.rate * 100)}%）`;
+    $('#c-sur').textContent = aud(d.surcharge);
+    $('#c-total').textContent = aud(d.total);
+    $('#c-total-twd').textContent = '約 NT$ ' + Math.round(d.total * fx).toLocaleString('zh-TW');
+  }
+  $$('.cost-city button').forEach((b) => b.addEventListener('click', () => {
+    city = b.dataset.city as CityId;
+    $$('.cost-city button').forEach((x) => x.classList.toggle('on', x === b));
+    calc();
+  }));
+  price.addEventListener('input', calc);
+  $('#fx').addEventListener('input', calc);
+  calc();
+</script>

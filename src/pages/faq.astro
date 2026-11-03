@@ -1,0 +1,30 @@
+---
+// 常見問題
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { faqs, faqDraft } from '../data/content';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.flatMap((g) => g.items).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<BaseLayout title="常見問題｜海外買家在澳洲買房｜Mejia 美家" description="台灣人在澳洲買房的常見問題：FIRB、頭期款、印花稅、貸款與交屋後管理。">
+  <PageHead title="常見問題" eyebrow="FAQ" lead="台灣買家最常問的問題，整理在這裡。找不到答案，直接問顧問最快。" draft={faqDraft ? '內容為初稿，上線前請顧問與律師確認' : undefined} />
+
+  <section>
+    <div class="wrap" style="max-width:880px">
+      {faqs.map((g) => (
+        <div class="faq-group rv">
+          <h2>{g.group}</h2>
+          {g.items.map((f) => <details class="faq"><summary>{f.q}</summary><p>{f.a}</p></details>)}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <ContactSection />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</BaseLayout>

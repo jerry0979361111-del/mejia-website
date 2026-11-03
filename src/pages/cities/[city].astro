@@ -1,0 +1,76 @@
+---
+// 城市頁：城市介紹、房價中位數、海外買家稅費初算、該城市的上架建案
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHead from '../../components/PageHead.astro';
+import PropertyCard from '../../components/PropertyCard.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { cities, type CityId } from '../../data/cities';
+import { projects } from '../../data/projects';
+import { medians, medianSource, foreignDuty, stateOf, wan, marketUpdated } from '../../data/market';
+
+export function getStaticPaths() {
+  return cities.map((city) => ({ params: { city: city.id }, props: { city } }));
+}
+
+interface Props { city: (typeof cities)[number] }
+const { city } = Astro.props;
+const m = medians[city.id as CityId];
+const list = projects.filter((p) => p.city === city.id);
+const sign = (n: number | null) => (n === null ? '—' : `${n > 0 ? '+' : ''}${n}%`);
+const dutyRows = m
+  ? ([['公寓中位價', m.unit], ['獨棟中位價', m.house]] as const).map(([label, v]) => ({ label, v, ...foreignDuty(city.id, v) }))
+  : [];
+---
+<BaseLayout title={`${city.zh}房產｜${city.en}｜Mejia 美家`} description={`${city.zh}（${city.en}）${city.intro}房價中位數、海外買家稅費初算與上架中的新建案。`}>
+  <PageHead title={city.zh} eyebrow={`${city.en} · ${stateOf[city.id]}`} lead={city.intro} crumbs={[{ label: '城市導覽', href: '/#cities' }]} />
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head rv"><div><div class="eyebrow">Market</div><h2>{city.zh}房價概況</h2></div></div>
+      {m ? (
+        <>
+          <dl class="city-stats city-stats-lg rv">
+            <div><dt>獨棟中位價</dt><dd>{wan(m.house)}</dd></div>
+            <div><dt>公寓中位價</dt><dd>{wan(m.unit)}</dd></div>
+            <div><dt>近 1 個月</dt><dd class:list={[(m.month ?? 0) >= 0 ? 'up' : 'down']}>{sign(m.month)}</dd></div>
+            <div><dt>近 12 個月</dt><dd class:list={[(m.annual ?? 0) >= 0 ? 'up' : 'down']}>{sign(m.annual)}</dd></div>
+          </dl>
+          <div class="prose rv" style="margin-top:40px">
+            <h3>海外買家印花稅初算</h3>
+            <table>
+              <thead><tr><th>以中位價計算</th><th>房價</th><th>一般印花稅</th><th>海外附加稅（{Math.round(dutyRows[0].rate * 100)}%）</th><th>合計</th></tr></thead>
+              <tbody>{dutyRows.map((r) => <tr><td>{r.label}</td><td>{wan(r.v)}</td><td>{wan(r.base)}</td><td>{wan(r.surcharge)}</td><td><strong>{wan(r.total)}</strong></td></tr>)}</tbody>
+            </table>
+          </div>
+          <p class="note rv">中位價與漲跌：<a href={medianSource.url} target="_blank" rel="noopener">{medianSource.name}</a>（{medianSource.period}）。稅費為一般稅率初算，未含首購／預售優惠、FIRB 申請費、律師費與貸款費用，實際以各州稅務局與律師核算為準。資料更新：{marketUpdated}。想試算其他價格，請用<a href="/calculator/">試算工具</a>。</p>
+        </>
+      ) : (
+        <p class="lead rv">{city.zh}的房價數據來源確認中，想了解行情請直接<a href="#contact" class="more">詢問顧問</a>。</p>
+      )}
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><div class="eyebrow">Projects</div><h2>{city.zh}上架建案</h2></div>
+        {list.length > 0 && <a href={`/projects/?city=${city.id}`} class="more">用條件篩選 <span class="arrow">→</span></a>}
+      </div>
+      {list.length > 0 ? (
+        <div class="grid-prop even">{list.map((p) => <PropertyCard project={p} />)}</div>
+      ) : (
+        <div class="empty" style="display:block">{city.zh}目前沒有上架中的建案。<br>留下聯絡方式，有新案第一時間通知你。</div>
+      )}
+    </div>
+  </section>
+
+  <section class="cities" style="padding:clamp(40px,5vw,64px) 0">
+    <div class="wrap">
+      <div class="tabs" style="justify-content:center">
+        {cities.map((c) => <a href={`/cities/${c.id}/`} class:list={['tab', { on: c.id === city.id }]}>{c.zh}</a>)}
+      </div>
+    </div>
+  </section>
+
+  <ContactSection />
+</BaseLayout>

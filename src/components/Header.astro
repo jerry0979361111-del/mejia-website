@@ -14,14 +14,14 @@ import { nav, site } from '../data/site';
           <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 2.9 1.4-1.8 3-2.9 5-2.9 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>
           <span class="n" data-fav-count hidden>0</span>
         </a>
-        <a href="/#contact" class="btn btn-primary">預約諮詢</a>
+        <a href="/contact/" class="btn btn-primary">預約諮詢</a>
         <button class="burger" id="burger" aria-label="選單" aria-expanded="false" aria-controls="mm"><span></span><span></span><span></span></button>
       </div>
     </div>
     <nav class="mobile-menu" id="mm">
       {nav.map((n) => <a href={n.href}>{n.label}</a>)}
       <a href="/favorites/">我的收藏</a>
-      <a href="/#contact">預約諮詢</a>
+      <a href="/contact/">預約諮詢</a>
     </nav>
   </div>
 </header>

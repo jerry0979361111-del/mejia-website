@@ -1,0 +1,58 @@
+---
+// 關於美家：服務特色、團隊、據點
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { site } from '../data/site';
+import { features } from '../data/content';
+import { team, teamUrl } from '../data/team';
+---
+<BaseLayout title="關於美家｜Mejia 美家" description="Mejia 美家：台灣、澳洲二地團隊，陪你從選房、貸款、法務走到交屋後的租賃管理。">
+  <PageHead title="關於美家" eyebrow="About Mejia" lead="台灣、澳洲二地團隊，服務零時差。從選房、貸款、法務到交屋後的租賃管理，同一個團隊全程負責。" />
+
+  <section id="why">
+    <div class="wrap why-grid">
+      <div class="why-img rv">
+        <img src="/img/sydney.webp" alt="澳洲雪梨" loading="lazy">
+        <div class="why-quote">「澳洲房地產，不是買與不買的選擇，而是『你想過怎樣的生活？』的延伸。」</div>
+      </div>
+      <div class="rv">
+        <div class="eyebrow">Why Mejia</div>
+        <h2>不只是顧問，<br>是陪你圓夢的人</h2>
+        <ul class="feat">
+          {features.map((f) => (
+            <li>
+              <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" set:html={f.icon} /></div>
+              <div><h3>{f.title}</h3><p>{f.text}</p></div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cities">
+    <div class="wrap">
+      <div class="sec-head rv"><div><div class="eyebrow">Our Team</div><h2>美家團隊</h2></div></div>
+      <div class="team-row rv">
+        {team.map((m) => m.profile
+          ? <a href={teamUrl(m)} class="member"><div class="ph"><img src={m.img} alt={m.name} loading="lazy"></div><b>{m.name}</b><span>{m.role}</span></a>
+          : <div class="member"><div class="ph"><img src={m.img} alt={m.name} loading="lazy"></div><b>{m.name}</b><span>{m.role}</span></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head rv"><div><div class="eyebrow">Offices</div><h2>公司資訊</h2></div></div>
+      <dl class="facts rv" style="max-width:760px">
+        {site.offices.map((o) => <div><dt>{o.title.split('｜')[0]}</dt><dd>{o.title.split('｜')[1]}<br>{o.lines.map((l, i) => <>{i > 0 && <br />}{l}</>)}</dd></div>)}
+        <div><dt>統一編號</dt><dd>{site.taxId}</dd></div>
+        <div><dt>ABN</dt><dd>{site.abn}</dd></div>
+        <div><dt>Email</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <ContactSection />
+</BaseLayout>

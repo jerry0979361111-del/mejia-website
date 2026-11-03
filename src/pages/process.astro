@@ -1,0 +1,51 @@
+---
+// 購房流程：七步驟、FIRB、交易成本
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Process from '../components/Process.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { steps } from '../data/content';
+import { duty } from '../data/market';
+
+const costs = [
+  ['印花稅', '過戶時繳納的州稅，依房價級距計算；預售屋多在交屋時繳納。'],
+  ['海外買家附加印花稅', `加在一般印花稅之外：${Object.entries(duty).map(([s, d]) => `${s} ${Math.round(d.foreign * 100)}%`).join('、')}。`],
+  ['FIRB 申請費', '依房價級距計算、每年調整，以 FIRB 官網當期公告為準。'],
+  ['律師費', '審閱合同、處理過戶與信託帳戶，依案件與律師而定。'],
+  ['貸款相關費用', '銀行手續費、估價費等，依貸款機構而定。'],
+  ['持有成本', '地方政府費（Council rates）、水費、管委會費（公寓）、土地稅與保險。'],
+];
+---
+<BaseLayout title="澳洲購房流程｜FIRB 與交易成本｜Mejia 美家" description="海外買家在澳洲買新建案的七個步驟、FIRB 申請與交易成本說明。">
+  <PageHead title="購房流程" eyebrow="How It Works" lead="從簽意向書到拿到鑰匙，海外買家在澳洲買新建案的完整流程、FIRB 申請與要準備的費用。" draft="FIRB 與費用說明為初稿，上線前請律師確認" />
+
+  <Process />
+
+  <section>
+    <div class="wrap" style="max-width:880px">
+      <div class="prose rv">
+        <h2>每一步要做什麼</h2>
+        <ol>{steps.map((s) => <li><strong>{s.title}</strong>：{s.body}</li>)}</ol>
+
+        <h2>FIRB 是什麼？</h2>
+        <p>FIRB（Foreign Investment Review Board，澳洲外國投資審查委員會）負責審核海外人士在澳洲的投資。非澳洲公民或永久居民購買住宅前，須先取得 FIRB 許可。</p>
+        <ul>
+          <li><strong>可以買</strong>：新建成屋、預售屋（美家主推的建案都屬於這一類）。</li>
+          <li><strong>暫停購買</strong>：2025 年 4 月 1 日至 2027 年 3 月 31 日，海外買家原則上不能購買中古住宅（少數例外）。</li>
+          <li><strong>申請時機</strong>：通常在簽約前後送件，合同會附上「取得 FIRB 許可」的條件。</li>
+        </ul>
+        <p>實際規定以 FIRB 官網公告為準，美家會與你的律師一起確認並協助送件。</p>
+
+        <h2>交易成本有哪些</h2>
+        <table>
+          <thead><tr><th>項目</th><th>說明</th></tr></thead>
+          <tbody>{costs.map(([k, v]) => <tr><td><strong>{k}</strong></td><td>{v}</td></tr>)}</tbody>
+        </table>
+        <p>想知道某個價格大概要付多少印花稅？用<a href="/calculator/#cost">試算工具</a>選城市、輸入房價就能初算。</p>
+      </div>
+      <div style="margin-top:36px" class="rv"><a href="/faq/" class="btn btn-line">看常見問題 <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+
+  <ContactSection />
+</BaseLayout>
