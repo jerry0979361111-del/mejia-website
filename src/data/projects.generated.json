@@ -103,7 +103,10 @@
     "desc": "布里斯本北區 Wooloowin 的精品連排別墅，全案僅 5 棟，步行可達 Wooloowin 與 Eagle Junction 火車站，鄰近 Clayfield College 等名校。",
     "developer": "Citimax Property Group",
     "address": "13 Hamley Street, Wooloowin QLD 4030",
-    "geo": null,
+    "geo": [
+      -27.41899,
+      153.04539
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -123,7 +126,10 @@
     "desc": "Clayfield 樹蔭大道旁的精品連排別墅，全案僅 4 棟，步行可達 Clayfield 火車站，鄰近 Clayfield College、St Margaret's 等名校。",
     "developer": "Citimax Property Group",
     "address": "7 Victoria Street, Clayfield QLD 4011",
-    "geo": null,
+    "geo": [
+      -27.41846,
+      153.05452
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -143,7 +149,10 @@
     "desc": "Rochedale 的低密度連排社區最終期，Red Door Architecture 設計，社區泳池與健身房，步行可達 Rochedale Village 購物中心，鄰近格里菲斯大學。",
     "developer": "開發商資訊待確認",
     "address": "319 Gardner Road, Rochedale QLD 4123",
-    "geo": null,
+    "geo": [
+      -27.57625,
+      153.11257
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -163,7 +172,10 @@
     "desc": "日本 Sekisui House 旗下 West Village 大型社區的最新一期，商業、住宅與公園綠地一體規劃，鄰近 South Brisbane 火車站與 South Bank。",
     "developer": "Sekisui House",
     "address": "49 Mollison Street, West End QLD 4101",
-    "geo": null,
+    "geo": [
+      -27.47715,
+      153.01209
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -183,7 +195,10 @@
     "desc": "布里斯本河岸 West End 的精品住宅，全為 3 房戶型，頂樓設有泳池與花園，鄰近渡輪碼頭可直達昆士蘭大學，車程 8 分鐘到 Brisbane State High School。",
     "developer": "開發商資訊待確認",
     "address": "17 Ferry Road, West End QLD 4101",
-    "geo": null,
+    "geo": [
+      -27.48587,
+      153.00003
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -203,7 +218,10 @@
     "desc": "Pradella 在 Yeronga 打造的綠意社區，占地超過一英畝、頂樓花園泳池，步行 5 分鐘到 Yeronga 火車站，經 Eleanor Schonell Bridge 約 10 分鐘可達昆士蘭大學。",
     "developer": "Pradella Property",
     "address": "26-36 Shottery Street, Yeronga QLD 4104",
-    "geo": null,
+    "geo": [
+      -27.516,
+      153.01601
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -223,7 +241,10 @@
     "desc": "布里斯本河東 Morningside 的 17 戶低密度精品住宅，全套 Miele 家電，鄰近 Morningside 火車站，車程約 8 分鐘到 Churchie 名校。",
     "developer": "icon.X",
     "address": "6-8 Key Street, Morningside QLD 4170",
-    "geo": null,
+    "geo": [
+      -27.46891,
+      153.07273
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -243,7 +264,10 @@
     "desc": "全案僅 9 戶的頂級精品住宅，全為 3 房大戶型，步行 600 公尺到 Taringa 火車站，鄰近 Indooroopilly Shopping Centre、昆士蘭大學與多所名校。",
     "developer": "開發商資訊待確認",
     "address": "58 Rennie Street, Indooroopilly QLD 4068",
-    "geo": null,
+    "geo": [
+      -27.49712,
+      152.98156
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -263,7 +287,10 @@
     "desc": "安靜住宅區內的 3 房連排別墅，全案僅 8 棟、附雙車位，鄰近 Greenslopes 醫院、Stones Corner 與 Westfield Mount Gravatt。",
     "developer": "icon.X",
     "address": "15 Crown Street, Holland Park West QLD 4121",
-    "geo": null,
+    "geo": [
+      -27.51988,
+      153.05845
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -283,7 +310,10 @@
     "desc": "Toowong 的自由持有大型連排別墅，全案僅 5 棟、3–4 房，部分戶型附泳池，步行 550 公尺到 Brisbane Boys' College，鄰近 Toowong 火車站。",
     "developer": "開發商資訊待確認",
     "address": "2-10 Mayne Street, Toowong QLD 4066",
-    "geo": null,
+    "geo": [
+      -27.48986,
+      152.98995
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -303,7 +333,10 @@
     "desc": "位於 Woolloongabba 奧運基礎建設核心的 30 層住宅，Sarazin 開發、Hutchinson Builders 承建，頂樓花園可俯瞰市區與河景，鄰近 Cross River Rail 新站。",
     "developer": "Sarazin",
     "address": "9 Overend Street, East Brisbane QLD 4169",
-    "geo": null,
+    "geo": [
+      -27.48855,
+      153.04013
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -323,7 +356,10 @@
     "desc": "Goldfields 開發、Rothelowman 設計的 18 層住宅，步行 300 公尺到 Milton 火車站、750 公尺到 2032 奧運場館 Suncorp Stadium，頂樓設 25 公尺泳池。預計 2028 年完工。",
     "developer": "Goldfields",
     "address": "33 Manning Street, Milton QLD 4064",
-    "geo": null,
+    "geo": [
+      -27.47043,
+      153.00554
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -343,7 +379,10 @@
     "desc": "位於 Northshore Hamilton 河岸更新計畫核心，直面布里斯本河，CARR 設計、共 123 戶，設有健康館與頂樓露台，步行可達 Portside Wharf 與渡輪碼頭。",
     "developer": "Silverstone Developments",
     "address": "330 Macarthur Avenue, Hamilton QLD 4007",
-    "geo": null,
+    "geo": [
+      -27.43977,
+      153.0705
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -363,7 +402,10 @@
     "desc": "布里斯本西區 Taringa 的 19 戶精品現房，位於 Toowong、Indooroopilly 與 St Lucia 之間，距昆士蘭大學約 3 公里，周邊有 Ironside State School 等名校。",
     "developer": "Bellevue Queensland",
     "address": "35 Swann Road, Taringa QLD 4068",
-    "geo": null,
+    "geo": [
+      -27.49562,
+      152.97896
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -383,7 +425,10 @@
     "desc": "Sunnybank 華人生活圈的 27 戶 4 房連排別墅，屬 Sunnybank State School 與 High School 學區，步行 600 公尺到 Banoon 火車站，鄰近 Sunnybank Plaza。",
     "developer": "SC Urban / SC Finance Corporation",
     "address": "255-261 Beenleigh Road, Sunnybank QLD 4109",
-    "geo": null,
+    "geo": [
+      -27.57663,
+      153.04137
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -403,7 +448,10 @@
     "desc": "布里斯本北區的 39 戶精品住宅，Gatehouse Architects 設計，頂樓共享餐廳與瑜伽草坪，鄰近 Chermside 購物中心與 Prince Charles 醫院，公車直達市中心。",
     "developer": "Effinity Projects",
     "address": "45 Maryland Street, Stafford Heights QLD 4053",
-    "geo": null,
+    "geo": [
+      -27.39442,
+      153.01183
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -423,7 +471,10 @@
     "desc": "環抱百年歷史小屋而建的雙塔住宅，DKO Architecture 設計，正對 Bowen Hills 火車站，鄰近 James Street 餐飲商圈，車程約 10 分鐘到 QUT。",
     "developer": "Core Property Partners",
     "address": "39 Abbotsford Road, Bowen Hills QLD 4006",
-    "geo": null,
+    "geo": [
+      -27.44595,
+      153.03849
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -443,7 +494,10 @@
     "desc": "Pradella 集團 Riverside West End 大型社區的最終期，位於 Brisbane State High School 學區，附 4,000㎡ 度假式公設，鄰近渡輪碼頭可達昆士蘭大學。",
     "developer": "The Pradella Group",
     "address": "41 Tondara Lane, West End QLD 4101",
-    "geo": null,
+    "geo": [
+      -27.48527,
+      153.00082
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -463,7 +517,10 @@
     "desc": "SC Urban Leaf 系列第二期，全案 36 戶，步行 180 公尺到 Mt Gravatt Plaza，鄰近 Westfield Mt Gravatt，車程約 9 分鐘到格里菲斯大學 Nathan 校區。",
     "developer": "SC Urban / SC Finance Corporation",
     "address": "38 & 42 Cortis Street, Mount Gravatt East QLD 4122",
-    "geo": null,
+    "geo": [
+      -27.54012,
+      153.08212
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -483,7 +540,10 @@
     "desc": "South Bank 藝術文化區的 224 戶住宅，Verso Projects 開發、已施工至裙樓層，步行可達 South Bank 車站與 GOMA，鄰近 Brisbane Grammar 等名校與 QUT。",
     "developer": "Verso Projects",
     "address": "35 Merivale Street, South Brisbane QLD 4101",
-    "geo": null,
+    "geo": [
+      -27.47588,
+      153.01707
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -503,7 +563,10 @@
     "desc": "Verso Projects 打造的 23 棟獨棟別墅社區，全為 5 房大戶型、六種建築師設計房型，部分臨水戶型面對自然保護區。",
     "developer": "Verso Projects",
     "address": "Priestdale Road, Rochedale QLD 4123",
-    "geo": null,
+    "geo": [
+      -27.58731,
+      153.12343
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -523,7 +586,10 @@
     "desc": "Unison Projects 打造的 56 棟 4 房連排別墅社區，設有社區泳池，鄰近 Southport、黃金海岸大學醫院與格里菲斯大學，適合家庭自住。",
     "developer": "Unison Projects",
     "address": "36 Jimmieson Avenue, Labrador QLD 4215",
-    "geo": null,
+    "geo": [
+      -27.9544,
+      153.39713
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -543,7 +609,10 @@
     "desc": "黃金海岸北部成長走廊的獨棟社區，提供固定價格「土地＋建造」套餐，單層 4 房、土地約 467㎡，鄰近 Westfield Coomera 與 Coomera 火車站。",
     "developer": "Bold Living Homes",
     "address": "45 Gordon Drive, Upper Coomera QLD 4209",
-    "geo": null,
+    "geo": [
+      -27.87066,
+      153.28096
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -563,7 +632,10 @@
     "desc": "緊鄰邦德大學的湖畔精品公寓，全案僅 156 戶，頂樓 25 公尺泳池與健康中心，步行約 8 分鐘到 Varsity Lakes 火車站。",
     "developer": "Red & Co.",
     "address": "22 Lake Street, Varsity Lakes QLD 4227",
-    "geo": null,
+    "geo": [
+      -28.07693,
+      153.41425
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -583,7 +655,10 @@
     "desc": "Meriton 在衝浪者天堂市中心打造的雙塔地標，高塔達 90 層、為黃金海岸最高建築之一，步行可達輕軌站與海灘。預計 2027 年底完工。",
     "developer": "Meriton",
     "address": "3 Cypress Avenue, Surfers Paradise QLD 4217",
-    "geo": null,
+    "geo": [
+      -27.99663,
+      153.42651
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -603,7 +678,10 @@
     "desc": "距 Palm Beach 沙灘不到 50 公尺的精品住宅，全案僅 40 戶，Cottee Parker 設計，頂樓設有冷熱鹽水池與蒸氣室，步行可達在地咖啡館與餐廳。",
     "developer": "Evoke Property Group",
     "address": "1409-1411 Gold Coast Highway, Palm Beach QLD 4221",
-    "geo": null,
+    "geo": [
+      -28.12017,
+      153.47219
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -623,7 +701,10 @@
     "desc": "Serenity 社區最後一批正湖景連排別墅，全案僅 16 棟、4 房雙車位，部分戶別附私人泳池與碼頭，鄰近 Sanctuary Cove 與 Hope Island。",
     "developer": "Keylin 與 Kinstone Group",
     "address": "6 Lake Serenity Boulevard, Helensvale QLD 4212",
-    "geo": null,
+    "geo": [
+      -27.89056,
+      153.35837
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -643,7 +724,10 @@
     "desc": "距衝浪者天堂海灘僅 100 公尺的度假式綜合社區，SPG Land 開發、Rothelowman 設計，Tower 1 全戶海景，步行 90 公尺到輕軌站。預計 2029 年底完工。",
     "developer": "SPG Land",
     "address": "103 Ferny Avenue, Surfers Paradise QLD 4217",
-    "geo": null,
+    "geo": [
+      -27.99371,
+      153.4279
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -663,7 +747,10 @@
     "desc": "澳洲首個門禁度假社區 Sanctuary Cove 內的水岸與高爾夫球場景觀土地，面積 365–1009㎡ 可自建住宅，社區內有兩座高爾夫球場與遊艇港。",
     "developer": "Mulpha Australia",
     "address": "1 Masthead Way, Sanctuary Cove QLD 4212",
-    "geo": null,
+    "geo": [
+      -27.85335,
+      153.36184
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -683,7 +770,10 @@
     "desc": "Aniko Group 大型混合式開發旗艦，步行 150 公尺到 Pacific Fair 購物中心、2 分鐘到輕軌站，頂樓設有室內恒溫泳池等度假式公設。預計 2027 年完工。",
     "developer": "Aniko Group",
     "address": "14 Seaview Avenue, Mermaid Beach QLD 4218",
-    "geo": null,
+    "geo": [
+      -28.03824,
+      153.43227
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -703,7 +793,10 @@
     "desc": "Southport 核心區的 8 層精品住宅，步行約 4 分鐘到 St Hilda's School，輕軌 12 分鐘達格里菲斯大學，鄰近 Australia Fair 與 Broadwater Parklands。",
     "developer": "Sutherland Projects",
     "address": "15-17 Waverley Street, Southport QLD 4215",
-    "geo": null,
+    "geo": [
+      -27.97387,
+      153.41313
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -723,7 +816,10 @@
     "desc": "Bundall 河岸的現代連排別墅現房，部分戶型附屋頂露台私人泳池與室內電梯，步行可達 Gold Coast Turf Club，車程約 8 分鐘到衝浪者天堂。",
     "developer": "Devlink Group",
     "address": "2 Waterford Court, Bundall QLD 4217",
-    "geo": null,
+    "geo": [
+      -27.99968,
+      153.40578
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -743,7 +839,10 @@
     "desc": "CBD 核心 67 層地標塔樓，住宅與 voco 酒店同棟，已完工交屋，步行可達 RMIT、Melbourne Central 與 QV，電車直達墨爾本大學。",
     "developer": "Brady Group",
     "address": "380 Lonsdale Street, Melbourne VIC 3000",
-    "geo": null,
+    "geo": [
+      -37.81232,
+      144.96139
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -763,7 +862,10 @@
     "desc": "正對 Fawkner Park 的頂級豪宅，Cbus Property 開發、Bates Smart 以 Art Deco 為靈感設計，全案僅 77 戶，1 公里內有 Melbourne Grammar 等多所名校。",
     "developer": "Cbus Property",
     "address": "437 St Kilda Road, Melbourne VIC 3004",
-    "geo": null,
+    "geo": [
+      -37.83909,
+      144.97751
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -783,7 +885,10 @@
     "desc": "Collins Street 百年銀行建築活化改建，結合 42 層新塔共 320 戶，Fiona Lynch Office 操刀室內，步行可達 Southern Cross 車站。預計 2029 年底完工。",
     "developer": "Sterling Global",
     "address": "607-623 Collins Street & 66-70 Spencer Street, Melbourne VIC 3000",
-    "geo": null,
+    "geo": [
+      -37.81417,
+      144.96556
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -803,7 +908,10 @@
     "desc": "保留 1925 年 Eliza Tinsley 歷史建築，結合 68 層新塔的 CBD 地標住宅，Far East Consortium 開發、Rothelowman 設計，步行可達 RMIT、Melbourne Central 與多條電車線。預計 2029 年完工。",
     "developer": "Far East Consortium",
     "address": "640 Bourke Street, Melbourne VIC 3000",
-    "geo": null,
+    "geo": [
+      -37.81648,
+      144.95456
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -823,7 +931,10 @@
     "desc": "緊鄰 Melbourne High School 的精品住宅，CASA 開發、Bates Smart 設計、Jack Merlo 操刀景觀，步行可達 South Yarra 火車站與 Chapel Street 商圈。預計 2027 年完工。",
     "developer": "CASA",
     "address": "671 Chapel Street, South Yarra VIC 3141",
-    "geo": null,
+    "geo": [
+      -37.84431,
+      144.99465
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -843,7 +954,10 @@
     "desc": "Mirvac 傳世豪宅系列新作，正對 Albert Park Lake 第一排，全案僅 98 戶低密度規劃，周邊有 Wesley College、Melbourne Grammar 等名校，已近完工。",
     "developer": "Mirvac",
     "address": "31 Queens Rd, Melbourne VIC 3004",
-    "geo": null,
+    "geo": [
+      -37.84307,
+      144.97587
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -863,7 +977,10 @@
     "desc": "ICD Property 開發、Elenberg Fraser 設計的 65 層 CBD 現房塔樓，步行 5 分鐘內可達 RMIT、Melbourne Central 與維多利亞市場，電車直達墨爾本大學。",
     "developer": "ICD Property",
     "address": "295 King Street, Melbourne VIC 3000",
-    "geo": null,
+    "geo": [
+      -37.81335,
+      144.95393
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -883,7 +1000,10 @@
     "desc": "Setia 開發的 CBD 高層住宅，設有頂層 Sky Club 與多層會所式公設，步行約 650 公尺到 State Library 地鐵新站，鄰近 RMIT 與 Flagstaff Gardens。",
     "developer": "Setia",
     "address": "383 La Trobe Street, Melbourne VIC 3000",
-    "geo": null,
+    "geo": [
+      -37.8116,
+      144.95813
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -903,7 +1023,10 @@
     "desc": "Yarra 河畔的低密度豪宅連排現房，Cbus Property 與 Sterling Global 聯手開發、CARR 設計，提供酒店式管家服務，周邊名校密集。",
     "developer": "Cbus Property & Sterling Global",
     "address": "139 Alexandra Avenue, South Yarra VIC 3141",
-    "geo": null,
+    "geo": [
+      -37.83526,
+      145.00197
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -923,7 +1046,10 @@
     "desc": "墨爾本東區 Ringwood 市中心的 47 戶精品低密度住宅，步行 300 公尺到 Eastland 購物中心、約 500 公尺到 Ringwood 火車站，尖峰約 30 分鐘直達 CBD。",
     "developer": "建築:Jesse Ant Architects;景觀:John Patrick Landscape Architects",
     "address": "44-46 Bond Street, Ringwood VIC 3134",
-    "geo": null,
+    "geo": [
+      -37.81367,
+      145.22229
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -943,7 +1069,10 @@
     "desc": "Milieu 在 Smith Street 打造的社區型新案，Fieldwork 與 Woods Bagot 分別設計兩棟建築，步行可達 Smith Street、Brunswick Street 餐飲文創商圈與電車站。",
     "developer": "Milieu Property",
     "address": "433 Smith Street, Fitzroy VIC 3065",
-    "geo": null,
+    "geo": [
+      -37.80655,
+      144.98296
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -963,7 +1092,10 @@
     "desc": "緊鄰 Flagstaff Gardens 的 25 層現房住宅，UAG 開發，頂層設有空中花園與健身房，步行可達 Flagstaff 站、維多利亞市場，墨爾本大學與 RMIT 通勤便利。",
     "developer": "UAG",
     "address": "45-55 Dudley Street, West Melbourne VIC 3003",
-    "geo": null,
+    "geo": [
+      -37.81259,
+      144.94327
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -983,7 +1115,10 @@
     "desc": "OSK Property 打造的 Melbourne Square 大型地標社區，占地 5 英畝、自帶公園與零售，設有室內泳池與共享辦公空間，步行可達 Southbank 河岸與 Crown。",
     "developer": "OSK Property",
     "address": "19 Hoff Boulevard, Southbank VIC 3006",
-    "geo": null,
+    "geo": [
+      -37.82547,
+      144.96382
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1003,7 +1138,10 @@
     "desc": "直接連接 Murrumbeena 火車站的 144 戶住宅，Fieldwork 設計、全戶朝北，5 站到 CBD，鄰近 Chadstone 購物中心與 Monash 大學 Caulfield 校區。",
     "developer": "MAKE",
     "address": "473 Neerim Road, Murrumbeena VIC 3163",
-    "geo": null,
+    "geo": [
+      -37.89094,
+      145.06996
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1023,7 +1161,10 @@
     "desc": "St Kilda Road 頂級限量現房，一層一戶、室內約 290㎡，南半球首創天際車庫設計，Rothelowman 操刀建築與室內，鄰近 Albert Park 與皇家植物園。",
     "developer": "Growland",
     "address": "613 St Kilda Road, Melbourne VIC 3004",
-    "geo": null,
+    "geo": [
+      -37.85158,
+      144.98158
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1043,7 +1184,10 @@
     "desc": "南墨爾本稀缺島型基地上的現房，Hayball 設計、Hyatt House 酒店進駐，頂樓無邊際泳池，步行可達 Melbourne Grammar 與 Mac.Robertson 等名校。",
     "developer": "Holder East",
     "address": "1-13 Cobden St, South Melbourne VIC 3205",
-    "geo": null,
+    "geo": [
+      -37.83604,
+      144.96526
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1063,7 +1207,10 @@
     "desc": "正對皇家植物園第一排的 18 層住宅，Bates Smart 建築設計，步行約 500 公尺到 Anzac 地鐵站，地面層設有 764㎡ 健康休閒設施。預計 2027 年完工。",
     "developer": "Time & Place",
     "address": "11 Dorcas St, South Melbourne VIC 3205",
-    "geo": null,
+    "geo": [
+      -37.83433,
+      144.95597
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1083,7 +1230,10 @@
     "desc": "Gamuda Land 打造的生態建築現房，Hayball 設計、共 213 戶，搭配 3,000㎡ 都市森林公園與地源熱泵系統，步行可達 South Melbourne Market。",
     "developer": "Gamuda Land",
     "address": "272 Normanby Road, South Melbourne VIC 3205",
-    "geo": null,
+    "geo": [
+      -37.82997,
+      144.94672
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1103,7 +1253,10 @@
     "desc": "Time & Place 開發的 62 層現房地標，Flack Studio 操刀室內，設有會員制 Clubhouse、泳池與屋頂露台，步行可達 Southern Cross 與 Flinders Street 車站。",
     "developer": "Time & Place",
     "address": "88 Queens Bridge Street, Southbank VIC 3006",
-    "geo": null,
+    "geo": [
+      -37.82356,
+      144.96062
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1123,7 +1276,10 @@
     "desc": "位於墨爾本藝術特區升級計畫範圍內，鄰接未來 Anzac 地鐵站，Bruce Henderson Architects 設計、共 173 戶，電車可達墨爾本大學與 RMIT。預計 2027 年第四季入住。",
     "developer": "Virgate Property Group",
     "address": "85 Coventry Street, Southbank VIC 3006",
-    "geo": null,
+    "geo": [
+      -37.82987,
+      144.96708
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1143,7 +1299,10 @@
     "desc": "Chatswood 核心 Anderson Street 的 31 層住宅，AJC Architects 設計競圖優勝方案，戶型面積寬敞，步行約 8 分鐘到 Chatswood 轉運中心。",
     "developer": "Changfa Group 與 Huirong Group 聯合開發",
     "address": "54-56 Anderson Street, Chatswood NSW 2067",
-    "geo": null,
+    "geo": [
+      -33.79398,
+      151.18214
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1163,7 +1322,10 @@
     "desc": "Aqualand 在北雪梨的地標現房，Woods Bagot 設計、共 386 戶，距 Victoria Cross 地鐵站僅 180 公尺，樓下自帶餐飲街，步行可達多所北岸名校。",
     "developer": "Aqualand",
     "address": "168 Walker Street, North Sydney NSW 2060",
-    "geo": null,
+    "geo": [
+      -33.83471,
+      151.20912
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1183,7 +1345,10 @@
     "desc": "Goldfields 在 Chatswood 的新案，步行約 5 分鐘到 Chatswood 轉運中心與 Westfield，鄰近 Chatswood Public School 與 Chatswood High School。",
     "developer": "Goldfields",
     "address": "3 Wilson StChatswood NSW 2067",
-    "geo": null,
+    "geo": [
+      -33.79674,
+      151.18143
+    ],
     "completion": "2026-12-30",
     "featured": false,
     "image": "",
@@ -1203,7 +1368,10 @@
     "desc": "Chatswood 市中心的低密度精品現房，SJB Architects 設計天然石材立面，全案約 30 戶，步行可達 Chatswood 火車與地鐵站及 Westfield Chatswood。",
     "developer": "Central Element",
     "address": "15 Ellis St, Chatswood NSW 2067",
-    "geo": null,
+    "geo": [
+      -33.79981,
+      151.17952
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1223,7 +1391,10 @@
     "desc": "Forte Property Group 在 Burwood 的現房公寓，位於雪梨內西區生活機能成熟的 Belmore Street。",
     "developer": "Forte Property Group",
     "address": "50 Belmore StBurwood NSW 2134",
-    "geo": null,
+    "geo": [
+      -33.88581,
+      151.10248
+    ],
     "completion": "2026-02-09",
     "featured": false,
     "image": "",
@@ -1243,7 +1414,10 @@
     "desc": "國際建築師 Koichi Takada 設計的精品現房，全案僅 27 戶，鄰近 Crows Nest 與 Victoria Cross 兩座地鐵站，步行可達 North Sydney Boys 與 Girls High。",
     "developer": "Abadeen Group",
     "address": "1-11 Rodborough Avenue, Crows Nest NSW 2065",
-    "geo": null,
+    "geo": [
+      -33.82827,
+      151.20794
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1263,7 +1437,10 @@
     "desc": "位於 Crows Nest 與 St Leonards 之間的 58 戶精品住宅，Rothelowman 設計，附屋頂泳池與地面零售，步行可達兩座車站，鄰近 North Sydney Girls High 等名校。",
     "developer": "Abadeen Group",
     "address": "2-6 Northcote Street, Naremburn NSW 2065",
-    "geo": null,
+    "geo": [
+      -33.81508,
+      151.19965
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1283,7 +1460,10 @@
     "desc": "St Leonards 南區 314 戶大型社區，DKO 建築、David Hicks 室內設計，恒溫泳池與屋頂花園，步行約 6 分鐘到 St Leonards 火車站。",
     "developer": "JQZ",
     "address": "27-47 Berry Road",
-    "geo": null,
+    "geo": [
+      -33.82449,
+      151.19234
+    ],
     "completion": "",
     "featured": false,
     "image": "",
@@ -1303,7 +1483,10 @@
     "desc": "TWT 打造的藝術型社區，地面層自帶 ARTIS 藝術零售區與 22 公尺大型壁畫，步行約 4 分鐘到 St Leonards 火車站。",
     "developer": "TWT Property Group",
     "address": "23-35 Atchison Street, St Leonards NSW 2065",
-    "geo": null,
+    "geo": [
+      -33.82293,
+      151.19808
+    ],
     "completion": "",
     "featured": false,
     "image": "",
