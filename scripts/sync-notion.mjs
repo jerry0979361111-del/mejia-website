@@ -8,13 +8,16 @@
 // 產出：src/data/projects.generated.json、public/img/projects/<slug>.webp
 // 地圖座標：用 OpenStreetMap Nominatim 把地址轉成經緯度，結果存在 scripts/geocode-cache.json（要修正某個點就直接改這個檔）
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import sharp from 'sharp';
+import { coverFromPdf } from './pdf-cover.mjs';
 
 const DATA_SOURCE_ID = '1804ad47-0ab1-4e95-ae97-3a95fb897d89';
 const NOTION_VERSION = '2025-09-03';
 const IMG_DIR = 'public/img/projects';
 const OUT_FILE = 'src/data/projects.generated.json';
 const GEO_CACHE = 'scripts/geocode-cache.json';
+const PDF_CACHE = '.cache/pdf-covers'; // 從 PDF 抓出的封面（PDF 沒換就不重抓）
 const STATE = { sydney: 'NSW', melbourne: 'VIC', brisbane: 'QLD', goldcoast: 'QLD', perth: 'WA' };
 
 // 沒有 NOTION_TOKEN 時不中斷：送一個佔位值，讓會自動注入授權的代理接手；真的沒授權會在第一次查詢時報錯
@@ -62,6 +65,27 @@ async function downloadImage(file, name, maxSize = 1600) {
 async function downloadCover(files, slug) {
   const img = await downloadImage(files?.[0], slug);
   return img ? { src: img.src, landscape: img.w / img.h > 1.2 } : { src: '', landscape: false };
+}
+// 沒有「封面照」時，從「建案PDF」欄位的 PDF 抓建案圖當封面（PDF 沒換就用快取）
+async function coverFromPdfFiles(files, slug) {
+  for (const f of files ?? []) {
+    const url = f?.file?.url ?? f?.external?.url;
+    if (!url || !/\.pdf$/i.test(new URL(url).pathname)) continue;
+    const key = createHash('sha1').update(new URL(url).pathname).digest('hex').slice(0, 16);
+    const cached = `${PDF_CACHE}/${key}.png`;
+    let png = await readFile(cached).catch(() => null);
+    if (!png) {
+      const res = await fetch(url);
+      if (!res.ok) { console.warn(`PDF 下載失敗（${slug}）：${res.status}`); continue; }
+      png = await coverFromPdf(Buffer.from(await res.arrayBuffer())).catch((e) => (console.warn(`PDF 讀取失敗（${slug}）：${e.message}`), null));
+      if (!png) { console.warn(`PDF 裡找不到合適的建案圖：${slug}（${f.name}）`); continue; }
+      await mkdir(PDF_CACHE, { recursive: true });
+      await writeFile(cached, png);
+    }
+    const info = await sharp(png).resize({ width: 1600, height: 1600, fit: 'inside', withoutEnlargement: true }).webp({ quality: 80 }).toFile(`${IMG_DIR}/${slug}.webp`);
+    return { src: `/img/projects/${slug}.webp`, landscape: info.width / info.height > 1.2 };
+  }
+  return { src: '', landscape: false };
 }
 // 圖庫：Notion「圖庫」欄位可放多張照片，依上傳順序顯示（最多 24 張）
 async function downloadGallery(files, slug) {
@@ -128,7 +152,9 @@ for (const r of publicRows) {
     geo: await geocode(beforeParen(text(p['地址'])), text(p['區域']), city),
     completion: p['預計完工']?.date?.start ?? '',
     featured: checked(p['首頁精選']),
-    ...(await downloadCover(p['封面照']?.files, slug).then(({ src, landscape }) => ({ image: src, landscape }))),
+    ...(await downloadCover(p['封面照']?.files, slug)
+      .then((c) => (c.src ? c : coverFromPdfFiles(p['建案PDF']?.files, slug)))
+      .then(({ src, landscape }) => ({ image: src, landscape }))),
     gallery: await downloadGallery(p['圖庫']?.files, slug),
     notionUpdated: r.last_edited_time,
   });
