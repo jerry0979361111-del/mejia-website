@@ -1344,17 +1344,17 @@
     "price": "1 房 A$115 萬起",
     "desc": "Goldfields 在 Chatswood 的新案，步行約 5 分鐘到 Chatswood 轉運中心與 Westfield，鄰近 Chatswood Public School 與 Chatswood High School。",
     "developer": "Goldfields",
-    "address": "3 Wilson StChatswood NSW 2067",
+    "address": "3 Wilson St, Chatswood NSW 2067",
     "geo": [
-      -33.79674,
-      151.18143
+      -33.79261,
+      151.18036
     ],
     "completion": "2026-12-30",
     "featured": false,
     "image": "",
     "landscape": false,
     "gallery": [],
-    "notionUpdated": "2026-09-30T17:01:00.000Z"
+    "notionUpdated": "2026-11-03T06:24:00.000Z"
   },
   {
     "slug": "ethos",
@@ -1390,17 +1390,17 @@
     "price": "1 房 A$122 萬起",
     "desc": "Forte Property Group 在 Burwood 的現房公寓，位於雪梨內西區生活機能成熟的 Belmore Street。",
     "developer": "Forte Property Group",
-    "address": "50 Belmore StBurwood NSW 2134",
+    "address": "50 Belmore St, Burwood NSW 2134",
     "geo": [
-      -33.88581,
-      151.10248
+      -33.87886,
+      151.10297
     ],
     "completion": "2026-02-09",
     "featured": false,
     "image": "",
     "landscape": false,
     "gallery": [],
-    "notionUpdated": "2026-09-30T17:01:00.000Z"
+    "notionUpdated": "2026-11-03T06:24:00.000Z"
   },
   {
     "slug": "koyo",
@@ -1459,7 +1459,7 @@
     "price": "2 房 A$159 萬起",
     "desc": "St Leonards 南區 314 戶大型社區，DKO 建築、David Hicks 室內設計，恒溫泳池與屋頂花園，步行約 6 分鐘到 St Leonards 火車站。",
     "developer": "JQZ",
-    "address": "27-47 Berry Road",
+    "address": "27-47 Berry Road, St Leonards NSW 2065",
     "geo": [
       -33.82449,
       151.19234
@@ -1469,7 +1469,7 @@
     "image": "",
     "landscape": false,
     "gallery": [],
-    "notionUpdated": "2026-09-30T17:00:00.000Z"
+    "notionUpdated": "2026-11-03T06:24:00.000Z"
   },
   {
     "slug": "the-collective",

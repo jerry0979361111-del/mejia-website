@@ -19,14 +19,6 @@
     -27.58731,
     153.12343
   ],
-  "50 Belmore StBurwood NSW 2134": [
-    -33.88581,
-    151.10248
-  ],
-  "3 Wilson StChatswood NSW 2067": [
-    -33.79674,
-    151.18143
-  ],
   "15 Ellis St, Chatswood NSW 2067": [
     -33.79981,
     151.17952
@@ -247,10 +239,6 @@
     -33.82827,
     151.20794
   ],
-  "27-47 Berry Road": [
-    -33.82449,
-    151.19234
-  ],
   "54-56 Anderson Street, Chatswood NSW 2067": [
     -33.79398,
     151.18214
@@ -258,5 +246,17 @@
   "168 Walker Street, North Sydney NSW 2060": [
     -33.83471,
     151.20912
+  ],
+  "50 Belmore St, Burwood NSW 2134": [
+    -33.87886,
+    151.10297
+  ],
+  "3 Wilson St, Chatswood NSW 2067": [
+    -33.79261,
+    151.18036
+  ],
+  "27-47 Berry Road, St Leonards NSW 2065": [
+    -33.82449,
+    151.19234
   ]
 }
