@@ -201,10 +201,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/elisi-residences.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:56:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "jardinia",
@@ -247,10 +247,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/keystone-residences.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:58:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "la-belle-indooroopilly",
@@ -293,10 +293,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/laurea.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:58:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "mayne-street-terrace-homes",
@@ -385,10 +385,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/rivergreen.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:57:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "sofia",
@@ -408,10 +408,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
+    "image": "/img/projects/sofia.webp",
     "landscape": false,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:58:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "solis",
@@ -454,10 +454,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/springvale-residences.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:57:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "the-abbotsford",
@@ -477,10 +477,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/the-abbotsford.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:57:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "the-lanes",
@@ -500,10 +500,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/the-lanes.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:56:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "the-leaf-ii",
@@ -523,10 +523,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/the-leaf-ii.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:57:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "the-marigold",
@@ -592,10 +592,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/broadhaven-residences.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:55:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "calli",
@@ -684,10 +684,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/elevaire-palm-beach.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:55:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "lakeside-villas",
@@ -753,10 +753,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/sanctuary-point.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:55:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "the-landmark",
@@ -914,10 +914,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
+    "image": "/img/projects/640-bourke-street.webp",
     "landscape": false,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:51:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "671-chapel-street",
@@ -960,10 +960,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/albertine.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:50:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "aspire-melbourne",
@@ -1029,10 +1029,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/como-terraces.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:53:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "eastwood-residences",
@@ -1121,10 +1121,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
+    "image": "/img/projects/msq-blvd-at-melbourne-square.webp",
     "landscape": false,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:53:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "murrumbeena-place",
@@ -1167,10 +1167,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/neue-grand.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:52:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "oasis-residences",
@@ -1190,10 +1190,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
+    "image": "/img/projects/oasis-residences.webp",
     "landscape": false,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:52:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "park-modern",
@@ -1213,10 +1213,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/park-modern.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:41:00.000Z"
+    "notionUpdated": "2026-11-03T06:32:00.000Z"
   },
   {
     "slug": "the-canopy-on-normanby",
