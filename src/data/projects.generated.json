@@ -270,10 +270,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/la-belle-indooroopilly.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:56:00.000Z"
+    "notionUpdated": "2026-11-03T08:30:00.000Z"
   },
   {
     "slug": "laurea",
@@ -316,10 +316,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/mayne-street-terrace-homes.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:59:00.000Z"
+    "notionUpdated": "2026-11-03T08:30:00.000Z"
   },
   {
     "slug": "murcia-residences",
@@ -546,10 +546,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/the-marigold.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:58:00.000Z"
+    "notionUpdated": "2026-11-03T08:30:00.000Z"
   },
   {
     "slug": "woodcarver",
@@ -1006,10 +1006,10 @@
     ],
     "completion": "",
     "featured": false,
-    "image": "",
-    "landscape": false,
+    "image": "/img/projects/atlas-melbourne.webp",
+    "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-09-30T16:52:00.000Z"
+    "notionUpdated": "2026-11-03T08:30:00.000Z"
   },
   {
     "slug": "como-terraces",
