@@ -1,5 +1,5 @@
 // 從 Notion「澳洲房地產建案資料庫」同步建案到網站。
-// 用法：npm run sync（需要 .env 裡的 NOTION_TOKEN）
+// 用法：npm run sync（.env 裡的 NOTION_TOKEN；沒有的話假設由外部代理注入 Notion 授權，例如雲端工作環境）
 //
 // 公開規則（見 CLAUDE.md）：
 //   (網站上架 或 首頁精選) 且 禁止公開沒有勾 → 才會寫進網站
@@ -17,11 +17,9 @@ const OUT_FILE = 'src/data/projects.generated.json';
 const GEO_CACHE = 'scripts/geocode-cache.json';
 const STATE = { sydney: 'NSW', melbourne: 'VIC', brisbane: 'QLD', goldcoast: 'QLD', perth: 'WA' };
 
-const token = process.env.NOTION_TOKEN;
-if (!token) {
-  console.error('缺少 NOTION_TOKEN：請在 .env 填入 Notion 金鑰');
-  process.exit(1);
-}
+// 沒有 NOTION_TOKEN 時不中斷：送一個佔位值，讓會自動注入授權的代理接手；真的沒授權會在第一次查詢時報錯
+const token = process.env.NOTION_TOKEN || 'proxy-injected';
+if (!process.env.NOTION_TOKEN) console.warn('未設定 NOTION_TOKEN，改用代理注入的 Notion 授權');
 
 const CITY = { 雪梨: 'sydney', 墨爾本: 'melbourne', 布里斯本: 'brisbane', 黃金海岸: 'goldcoast', 珀斯: 'perth' };
 const TYPE = { 公寓: 'apt', 連排: 'town', 獨棟: 'house' };
@@ -36,7 +34,7 @@ async function queryAll() {
       headers: { Authorization: `Bearer ${token}`, 'Notion-Version': NOTION_VERSION, 'Content-Type': 'application/json' },
       body: JSON.stringify({ page_size: 100, ...(cursor && { start_cursor: cursor }) }),
     });
-    const json = await res.json();
+    const json = await res.json().catch(() => ({ code: res.status, message: res.statusText }));
     if (json.object !== 'list') throw new Error(`Notion API 錯誤：${json.code} ${json.message}`);
     rows.push(...json.results);
     cursor = json.has_more ? json.next_cursor : undefined;
