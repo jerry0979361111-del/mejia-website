@@ -575,6 +575,29 @@
     "notionUpdated": "2026-11-03T08:16:00.000Z"
   },
   {
+    "slug": "77-oro",
+    "name": "77 ORO",
+    "city": "goldcoast",
+    "suburb": "Southport",
+    "type": "apt",
+    "stage": "pre",
+    "use": "投資",
+    "price": "2 房 A$95.75 萬起",
+    "desc": "Southport 精品公寓,全案僅 35 戶,步行 190 公尺到超市、950 公尺到輕軌站,鄰近 Broadwater 海濱公園。開發商 PSA Group 在 Southport 已交付兩棟完售項目。預計 2027 年第四季完工。",
+    "developer": "PSA Group",
+    "address": "77 Pohlman Street, Southport QLD 4215",
+    "geo": [
+      -27.97242,
+      153.40249
+    ],
+    "completion": "",
+    "featured": false,
+    "image": "/img/projects/77-oro.webp",
+    "landscape": true,
+    "gallery": [],
+    "notionUpdated": "2026-11-03T12:44:00.000Z"
+  },
+  {
     "slug": "broadhaven-residences",
     "name": "Broadhaven Residences",
     "city": "goldcoast",
@@ -826,6 +849,29 @@
     "landscape": true,
     "gallery": [],
     "notionUpdated": "2026-11-03T08:16:00.000Z"
+  },
+  {
+    "slug": "villea-palm-beach",
+    "name": "Villea Palm Beach",
+    "city": "goldcoast",
+    "suburb": "Palm Beach",
+    "type": "apt",
+    "stage": "now",
+    "use": "自住房",
+    "price": "$130.7萬起",
+    "desc": "黃金海岸南部傳統富人區現房，距Palm Beach海灘約400公尺，全棟8層僅69戶低密度複合住宅，鄰近Burleigh Heads輕軌站商圈。",
+    "developer": "Abadeen",
+    "address": "26 Mawarra St, Palm Beach QLD 4221",
+    "geo": [
+      -28.10746,
+      153.46282
+    ],
+    "completion": "",
+    "featured": false,
+    "image": "",
+    "landscape": false,
+    "gallery": [],
+    "notionUpdated": "2026-11-04T07:19:00.000Z"
   },
   {
     "slug": "380-melbourne",
@@ -1242,6 +1288,29 @@
     "notionUpdated": "2026-11-03T08:16:00.000Z"
   },
   {
+    "slug": "the-parker",
+    "name": "The Parker",
+    "city": "melbourne",
+    "suburb": "Caulfield North",
+    "type": "apt",
+    "stage": "pre",
+    "use": "自住房",
+    "price": "$67.5萬起",
+    "desc": "Caulfield公園正對面的6層樓石材精品公寓，僅24戶，Abadeen開發，鄰近Chadstone購物中心與Monash大學，2027準現房。",
+    "developer": "Abadeen",
+    "address": "219 Balaclava Rd, Caulfield North VIC 3161",
+    "geo": [
+      -37.87288,
+      145.02525
+    ],
+    "completion": "",
+    "featured": false,
+    "image": "",
+    "landscape": false,
+    "gallery": [],
+    "notionUpdated": "2026-11-04T07:19:00.000Z"
+  },
+  {
     "slug": "the-queensbridge-building",
     "name": "The Queensbridge Building",
     "city": "melbourne",
@@ -1403,6 +1472,29 @@
     "notionUpdated": "2026-11-03T06:24:00.000Z"
   },
   {
+    "slug": "harbourside-residences",
+    "name": "Harbourside Residences",
+    "city": "sydney",
+    "suburb": "Darling Harbour",
+    "type": "apt",
+    "stage": "pre",
+    "use": "自住房",
+    "price": "1 房 A$189.5 萬起",
+    "desc": "Mirvac 在達令港水岸打造的 48 層豪宅塔樓,共 263 戶,北向與東向坐擁雪梨港灣與 CBD 景觀。樓下為全新水岸商場與公園,步行可達輕軌、渡輪與規劃中的 Pyrmont 地鐵站。預計 2027 年 11 月完工。",
+    "developer": "Mirvac",
+    "address": "8 Darling Drive, Sydney NSW 2000",
+    "geo": [
+      -33.87055,
+      151.1983
+    ],
+    "completion": "",
+    "featured": false,
+    "image": "/img/projects/harbourside-residences.webp",
+    "landscape": false,
+    "gallery": [],
+    "notionUpdated": "2026-11-03T12:44:00.000Z"
+  },
+  {
     "slug": "koyo",
     "name": "Koyo",
     "city": "sydney",
@@ -1433,8 +1525,8 @@
     "type": "apt",
     "stage": "now",
     "use": "學區房",
-    "price": "1 房 A$106.5 萬起",
-    "desc": "位於 Crows Nest 與 St Leonards 之間的 58 戶精品住宅，Rothelowman 設計，附屋頂泳池與地面零售，步行可達兩座車站，鄰近 North Sydney Girls High 等名校。",
+    "price": "1房 A$116萬起",
+    "desc": "雪梨下北岸稀有現房，步行至Crows Nest地鐵與St Leonards車站商圈，8層樓低密度58戶精品住宅，全新現房，完銘倭數。",
     "developer": "Abadeen Group",
     "address": "2-6 Northcote Street, Naremburn NSW 2065",
     "geo": [
@@ -1446,7 +1538,7 @@
     "image": "/img/projects/northcote-collective.webp",
     "landscape": true,
     "gallery": [],
-    "notionUpdated": "2026-11-03T08:16:00.000Z"
+    "notionUpdated": "2026-11-04T09:39:00.000Z"
   },
   {
     "slug": "park-avenue",
@@ -1472,6 +1564,29 @@
     "notionUpdated": "2026-11-03T08:16:00.000Z"
   },
   {
+    "slug": "the-botany",
+    "name": "The Botany",
+    "city": "sydney",
+    "suburb": "Waterloo",
+    "type": "apt",
+    "stage": "now",
+    "use": "大學區房",
+    "price": "1 房 A$88.8 萬起",
+    "desc": "Waterloo 精品現房公寓,132 戶分兩棟、每層僅 3–4 戶,另有 12 棟兩層連排。步行 4 分鐘到 Green Square 站、8 分鐘到 Waterloo 地鐵站,一站到 Central、鄰近 UTS 與雪梨大學。",
+    "developer": "HYG",
+    "address": "219-231 Botany Road, Waterloo NSW 2017",
+    "geo": [
+      -33.89566,
+      151.19895
+    ],
+    "completion": "",
+    "featured": false,
+    "image": "/img/projects/the-botany.webp",
+    "landscape": false,
+    "gallery": [],
+    "notionUpdated": "2026-11-03T12:44:00.000Z"
+  },
+  {
     "slug": "the-collective",
     "name": "The Collective",
     "city": "sydney",
@@ -1493,5 +1608,28 @@
     "landscape": true,
     "gallery": [],
     "notionUpdated": "2026-11-03T08:16:00.000Z"
+  },
+  {
+    "slug": "zetland-square",
+    "name": "Zetland Square",
+    "city": "sydney",
+    "suburb": "Zetland",
+    "type": "apt",
+    "stage": "pre",
+    "use": "自住房",
+    "price": "1 房 A$80 萬起",
+    "desc": "Meriton 在 Zetland 打造的公園旁新社區,25 層地標塔樓搭配 28 棟連排別墅,社區自帶 3,500㎡ 公園、超市與托兒所。步行到 Green Square 站約 700 公尺,4 分鐘到 CBD。預計 2028 年中完工。",
+    "developer": "Meriton",
+    "address": "118-130 Epsom Road, Zetland NSW 2017",
+    "geo": [
+      -33.91213,
+      151.21227
+    ],
+    "completion": "",
+    "featured": false,
+    "image": "/img/projects/zetland-square.webp",
+    "landscape": false,
+    "gallery": [],
+    "notionUpdated": "2026-11-03T12:44:00.000Z"
   }
 ]

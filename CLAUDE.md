@@ -21,6 +21,12 @@
 - `npm run deploy`：同步 Notion → 建置 → 部署到 Cloudflare
 - `npm run market`：從 Cotality 月報更新房價數據（`src/data/market.generated.json`）；與上期差距 >15% 會以代碼 2 結束、不更新
 - `npm run monthly`：每月排程用，`market` + `deploy`（Cotality PDF 以發布月命名，OCT＝9/30 數據）
+- `python scripts/weekly/weekly_content.py`：產生「澳洲房產週報」＋「熱門話題 SEO 文章」（澳洲留學／移民／房地產／財經熱門第一名，與近期文章重複時改寫第二名），寫進 `文章/`（需要 `ANTHROPIC_API_KEY`；狀態預設「草稿」，`ARTICLE_STATUS=已核准` 則直接上架）
+
+## 自動化（GitHub Actions）
+- `deploy.yml`：main 有更新就同步 Notion → 建置 → `wrangler deploy`（審稿時在 GitHub 網頁把文章改成「已核准」並提交即會上架）
+- `weekly-content.yml`：每週一台灣 09:00 產生兩篇文章、提交到 main 並部署；repo 變數 `ARTICLE_STATUS` 決定是草稿還是直接上架
+- 需要的 repo secrets：`ANTHROPIC_API_KEY`、`NOTION_TOKEN`、`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`
 
 ## 目錄
 - `src/data/`：所有內容（公司資訊、選單、城市、建案、步驟、團隊、文章）。改內容先改這裡，不要寫死在頁面裡
@@ -28,14 +34,18 @@
 - `src/layouts/BaseLayout.astro`：所有頁面的外框與 SEO meta
 - `src/scripts/ui.ts`：`$`、`$$`、`toast` 小工具
 - `src/data/market.ts`：印花稅級距、利率、匯率（手動維護）；房價中位數與漲跌讀 `market.generated.json`（自動）
-- `文章/`：房產新聞與指南，一篇一個 .md；只有「狀態：已核准」且發布日期已到才會上正式站，`npm run dev` 會連草稿顯示
+- `文章/`：房產新聞與指南，一篇一個 .md；只有「狀態：已核准」且發布日期已到才會上正式站，`npm run dev` 會連草稿顯示。舊站 mejia.au 的 47 篇文章已搬過來（圖片在 `文章/圖片/`，舊網址的 301 轉址在 `public/_redirects`）
 - `src/data/team.ts`：顧問資料；有 `profile` 才產生 `/team/<slug>/` 個人頁
 - `src/scripts/favorites.ts`：加入最愛（localStorage，`[data-fav]` 按鈕自動同步）
 - `public/img/`：圖片
 
 ## 設計規範（不要偏離）
-- 色票定義在 `global.css` 的 `:root`：深墨 `--ink #16242b`、品牌青綠 `--teal #24a6b5`、沙色底 `--sand #f6f2ec`、點綴金 `--gold`
-- 字體：中文標題 Noto Serif TC（`--serif`），內文 Noto Sans TC（`--sans`），英文與數字 Poppins（`--latin`）
+- 依品牌 CIS v2（澳洲藍主色、香檳底色、金點綴）。色票定義在 `global.css` 的 `:root`（變數名稱沿用舊名，值已換成 CIS）：
+  - 澳洲藍 `#2E5E8C`（`--ink`／`--teal`）：導覽、標題、主要按鈕、深色區塊；深色區塊上的重點字用香檳
+  - 香檳 `#F3E6C4`（`--sand`）：大區塊底色；象牙 `#FBF8F2`（`--ivory`）：頁面底色
+  - 金 `#D9A94E`（`--gold`）只用於細線、重點數字、次要按鈕框線，不鋪大面積、不用漸層；淺底上的金色文字改用深金 `#8C6A2E`（`--gold-text`）
+  - 內文用墨 `#26313F`（`--text`），不用純黑
+- 字體：中文標題 Noto Serif TC 700（`--serif`），內文與英文內文 Noto Sans TC（`--sans`／`--latin`），英文小標、英文標語與重點數字 Cormorant Garamond（`--display`）；一頁不超過這三套字體
 - 區塊結構：`<section>` → `.wrap` → `.sec-head`（`.eyebrow` 英文小標 + `h2` 中文標題 + `.lead`）
 - 圓角 `--radius: 14px`，按鈕全圓角（`.btn-primary` / `.btn-line` / `.btn-ghost`）
 - 深色區塊（`.process`、`.contact`、`.stats`）與沙色區塊（`.cities`、`.news`）交錯，避免連續兩個同色區塊

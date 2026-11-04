@@ -1,0 +1,16 @@
+name: 部署官網（同步 Notion → 建置 → Cloudflare）
+
+# main 有更新就自動部署（例如在 GitHub 網頁把文章「狀態」改成「已核准」並提交），也可以到 Actions 手動執行。
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/_build-deploy.yml
+    secrets: inherit

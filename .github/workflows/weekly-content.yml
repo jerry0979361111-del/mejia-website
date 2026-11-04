@@ -1,0 +1,54 @@
+name: 每週文章（澳洲房產週報＋熱門話題 SEO 文章）
+
+# 每週一台灣時間 09:00 自動產生兩篇文章放進「文章/」，提交到 main 並重新部署。
+# 文章狀態由 repo 變數 ARTICLE_STATUS 決定：沒設定時是「草稿」（不會出現在網站上，審稿後改成「已核准」才上架）；
+# 設成「已核准」則產生後直接上架。
+on:
+  schedule:
+    - cron: "0 1 * * 1" # UTC 週一 01:00 ＝ 台灣週一 09:00
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "只產生其中一篇（留空＝兩篇都產生）"
+        required: false
+        type: choice
+        options: ["", digest, trending]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-content
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r scripts/weekly/requirements.txt
+      - name: 產生文章
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ARTICLE_STATUS: ${{ vars.ARTICLE_STATUS }}
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
+          ONLY: ${{ inputs.only }}
+        run: python scripts/weekly/weekly_content.py
+      - name: 提交到 main
+        run: |
+          git config user.name "mejia-weekly-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add 文章
+          git diff --cached --quiet && { echo "沒有新文章"; exit 0; }
+          git commit -m "每週文章：$(date +%Y-%m-%d)"
+          git push origin HEAD:main
+
+  deploy:
+    needs: generate
+    uses: ./.github/workflows/_build-deploy.yml
+    secrets: inherit
