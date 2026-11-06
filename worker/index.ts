@@ -3,7 +3,8 @@
 // POST /api/lead：表單名單
 //   1. 驗證 Turnstile（防垃圾）
 //   2. 寫入 D1（leads 資料表，schema 見 migrations/）
-//   3. Resend 寄通知信、LINE 推播（有設定金鑰才會送；失敗不影響寫入）
+//   3. 送到 Google 試算表（Apps Script 會新增一列並寄 Gmail 通知）、Resend 寄通知信、LINE 推播
+//      （有設定才會送；失敗不影響寫入，每筆送出結果記在 D1 的 sheet_sent／email_sent／line_sent）
 //
 // 設定（wrangler.jsonc 的 vars 或 `wrangler secret put`）：
 //   TURNSTILE_SECRET   Turnstile 密鑰（secret）。未設定時拒絕送出，除非 ALLOW_NO_TURNSTILE=1（只用於本機測試）
@@ -12,6 +13,7 @@
 //   MAIL_FROM          寄件人，例如「Mejia 美家 <noreply@mejia.au>」，網域須先在 Resend 驗證（vars）
 //   LINE_CHANNEL_TOKEN LINE Messaging API 的 Channel access token（secret）
 //   LINE_TO            推播對象：群組 ID 或使用者 ID，多個用逗號分隔（vars）
+//   SHEET_WEBHOOK_URL  Google 試算表 Apps Script 網頁應用程式網址（secret；程式在 scripts/google-sheet/）
 
 interface Env {
   DB: D1Database;
@@ -22,6 +24,7 @@ interface Env {
   NOTIFY_EMAIL?: string;
   MAIL_FROM?: string;
   LINE_CHANNEL_TOKEN?: string;
+  SHEET_WEBHOOK_URL?: string;
   LINE_TO?: string;
 }
 
@@ -112,8 +115,34 @@ function summary(id: number, l: Lead): string {
 
 async function notify(env: Env, id: number, lead: Lead) {
   const text = summary(id, lead);
-  const [mail, line] = await Promise.all([sendMail(env, lead, text), sendLine(env, text)]);
-  await env.DB.prepare('UPDATE leads SET email_sent = ?, line_sent = ? WHERE id = ?').bind(mail ? 1 : 0, line ? 1 : 0, id).run();
+  const [sheet, mail, line] = await Promise.all([sendSheet(env, id, lead), sendMail(env, lead, text), sendLine(env, text)]);
+  try {
+    await env.DB.prepare('UPDATE leads SET sheet_sent = ?, email_sent = ?, line_sent = ? WHERE id = ?')
+      .bind(sheet ? 1 : 0, mail ? 1 : 0, line ? 1 : 0, id).run();
+  } catch {
+    // 尚未套用 migrations/0002_sheet_sent.sql 時沒有 sheet_sent 欄位，改用舊欄位記錄
+    await env.DB.prepare('UPDATE leads SET email_sent = ?, line_sent = ? WHERE id = ?')
+      .bind(mail || sheet ? 1 : 0, line ? 1 : 0, id).run();
+  }
+}
+
+async function sendSheet(env: Env, id: number, lead: Lead): Promise<boolean> {
+  if (!env.SHEET_WEBHOOK_URL) return false;
+  try {
+    // Apps Script 會先回 302 轉址到結果頁，fetch 預設會跟著轉址
+    const res = await fetch(env.SHEET_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, ...lead, createdAt: new Date().toISOString() }),
+    });
+    const body = await res.text();
+    const ok = res.ok && body.includes('"ok":true');
+    if (!ok) console.error('Google 試算表寫入失敗', res.status, body.slice(0, 300));
+    return ok;
+  } catch (e) {
+    console.error('Google 試算表寫入失敗', e);
+    return false;
+  }
 }
 
 async function sendMail(env: Env, lead: Lead, text: string): Promise<boolean> {
