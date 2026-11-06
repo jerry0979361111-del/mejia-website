@@ -15,10 +15,12 @@ jobs:
           node-version: "22"
           cache: npm
       - run: npm ci
-      - name: 從 Notion 同步建案
+      - name: 從 Notion 同步建案（沒設定 NOTION_TOKEN 時略過，沿用 repo 裡已同步的資料）
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-        run: node scripts/sync-notion.mjs
+        run: |
+          if [ -z "$NOTION_TOKEN" ]; then echo "未設定 NOTION_TOKEN，略過同步"; exit 0; fi
+          node scripts/sync-notion.mjs
       - run: npm run build
       - name: 部署到 Cloudflare
         env:

@@ -21,12 +21,12 @@
 - `npm run deploy`：同步 Notion → 建置 → 部署到 Cloudflare
 - `npm run market`：從 Cotality 月報更新房價數據（`src/data/market.generated.json`）；與上期差距 >15% 會以代碼 2 結束、不更新
 - `npm run monthly`：每月排程用，`market` + `deploy`（Cotality PDF 以發布月命名，OCT＝9/30 數據）
-- `python scripts/weekly/weekly_content.py`：產生「澳洲房產週報」＋「熱門話題 SEO 文章」（澳洲留學／移民／房地產／財經熱門第一名，與近期文章重複時改寫第二名），寫進 `文章/`（需要 `ANTHROPIC_API_KEY`；狀態預設「草稿」，`ARTICLE_STATUS=已核准` 則直接上架）
+- `python scripts/weekly/weekly_content.py`：產生「澳洲房產週報」＋「熱門話題 SEO 文章」（澳洲留學／移民／房地產／財經熱門第一名，與近期文章重複時改寫第二名），寫進 `文章/`（需要 `OPENAI_API_KEY` 或 `ANTHROPIC_API_KEY`，兩個都有時用 OpenAI，模型可用 `OPENAI_MODEL`／`CLAUDE_MODEL` 調整；狀態預設「草稿」，`ARTICLE_STATUS=已核准` 則直接上架）
 
 ## 自動化（GitHub Actions）
 - `deploy.yml`：main 有更新就同步 Notion → 建置 → `wrangler deploy`（審稿時在 GitHub 網頁把文章改成「已核准」並提交即會上架）
 - `weekly-content.yml`：每週一台灣 09:00 產生兩篇文章、提交到 main 並部署；repo 變數 `ARTICLE_STATUS` 決定是草稿還是直接上架
-- 需要的 repo secrets：`ANTHROPIC_API_KEY`、`NOTION_TOKEN`、`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`
+- 需要的 repo secrets：`OPENAI_API_KEY`（或 `ANTHROPIC_API_KEY`）、`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`；`NOTION_TOKEN` 選填（沒設定時部署不同步 Notion，沿用 repo 裡的建案資料，要在本機或雲端工作環境執行 `npm run sync` 後提交）
 
 ## 目錄
 - `src/data/`：所有內容（公司資訊、選單、城市、建案、步驟、團隊、文章）。改內容先改這裡，不要寫死在頁面裡

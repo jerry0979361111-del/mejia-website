@@ -34,6 +34,9 @@ jobs:
       - run: pip install -r scripts/weekly/requirements.txt
       - name: 產生文章
         env:
+          # OPENAI_API_KEY 與 ANTHROPIC_API_KEY 設一個就好（兩個都有時用 OpenAI）
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ARTICLE_STATUS: ${{ vars.ARTICLE_STATUS }}
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}

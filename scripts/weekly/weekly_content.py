@@ -3,10 +3,10 @@
   2. 熱門話題 SEO 文章（過去 7 天澳洲留學／移民／房地產／財經的熱門第一名；若與週報或近期文章重複則改寫第二名）
 
 用法：python scripts/weekly/weekly_content.py
-環境變數：
-  ANTHROPIC_API_KEY  必填
+環境變數（二擇一，兩個都有時用 OpenAI）：
+  OPENAI_API_KEY     用 OpenAI 產生（模型預設 gpt-5.5，可用 OPENAI_MODEL 改）
+  ANTHROPIC_API_KEY  用 Claude 產生（模型預設 claude-opus-5-5，可用 CLAUDE_MODEL 改）
   ARTICLE_STATUS     文章狀態，預設「草稿」（審稿後改成「已核准」才會上架）；設成「已核准」則自動上架
-  CLAUDE_MODEL       預設 claude-opus-5-5
   ONLY               只產生其中一篇：digest 或 trending（測試用）
 """
 import json
@@ -16,18 +16,20 @@ import sys
 from datetime import date, timedelta
 from pathlib import Path
 
-import anthropic
-
 ROOT = Path(__file__).resolve().parents[2]
 ART_DIR = ROOT / "文章"
-MODEL = os.getenv("CLAUDE_MODEL", "").strip() or "claude-opus-5-5"
+PROVIDER = "openai" if os.getenv("OPENAI_API_KEY", "").strip() else "anthropic" if os.getenv("ANTHROPIC_API_KEY", "").strip() else ""
+if not PROVIDER:
+    raise SystemExit("缺少 OPENAI_API_KEY 或 ANTHROPIC_API_KEY，至少要設定一個")
+if PROVIDER == "openai":
+    MODEL = os.getenv("OPENAI_MODEL", "").strip() or "gpt-5.5"
+else:
+    MODEL = os.getenv("CLAUDE_MODEL", "").strip() or "claude-opus-5-5"
 STATUS = os.getenv("ARTICLE_STATUS", "").strip() or "草稿"
 CATEGORIES = ["市場觀點", "買家指南", "政策稅務", "建案動態", "城市生活"]
 if STATUS not in ("草稿", "需修改", "已核准"):
     raise SystemExit(f"ARTICLE_STATUS 只能是 草稿／需修改／已核准，目前是：{STATUS}")
 
-client = anthropic.Anthropic()
-WEB_SEARCH = {"type": "web_search_20260209", "name": "web_search", "max_uses": 20}
 
 STYLE_RULES = """寫作規則（違反視為失敗）：
 1. 讀者是台灣的海外置產者、留學生家庭與移民申請人。全文用繁體中文、台灣用語、全形標點。
@@ -52,15 +54,43 @@ OUTPUT_SPEC = """完成後，只輸出一個 JSON 物件（不要有其他文字
 }"""
 
 
-def run(system: str, prompt: str) -> dict:
-    """跑一次含 web search 的請求（處理 pause_turn），回傳解析後的 JSON。"""
+def parse_json(text: str) -> dict:
+    start, end = text.find("{"), text.rfind("}")
+    if start == -1 or end <= start:
+        raise ValueError(f"找不到 JSON：{text[:400]}")
+    return json.loads(text[start : end + 1])
+
+
+def run_openai(system: str, prompt: str) -> dict:
+    """OpenAI Responses API＋web_search。"""
+    from openai import OpenAI
+
+    client = OpenAI(timeout=1800)
+    resp = client.responses.create(
+        model=MODEL,
+        instructions=system,
+        input=prompt,
+        tools=[{"type": "web_search", "search_context_size": "high"}],
+        reasoning={"effort": "high"},
+        max_output_tokens=64000,
+    )
+    if resp.status != "completed":
+        raise RuntimeError(f"OpenAI 回應未完成：{resp.status} {resp.incomplete_details}")
+    return parse_json(resp.output_text)
+
+
+def run_anthropic(system: str, prompt: str) -> dict:
+    """Claude Messages API＋web_search（處理 pause_turn）。"""
+    import anthropic
+
+    client = anthropic.Anthropic()
     messages = [{"role": "user", "content": prompt}]
     for _ in range(12):
         with client.beta.messages.stream(
             model=MODEL,
             max_tokens=64000,
             system=system,
-            tools=[WEB_SEARCH],
+            tools=[{"type": "web_search_20260209", "name": "web_search", "max_uses": 20}],
             output_config={"effort": "high"},
             betas=["server-side-fallback-2026-07-01"],
             fallbacks="default",
@@ -74,12 +104,12 @@ def run(system: str, prompt: str) -> dict:
             raise RuntimeError(f"模型拒絕產生內容：{resp.stop_details}")
         if resp.stop_reason == "max_tokens":
             raise RuntimeError("輸出超過長度上限，請重試")
-        text = "".join(b.text for b in resp.content if b.type == "text")
-        start, end = text.find("{"), text.rfind("}")
-        if start == -1 or end <= start:
-            raise ValueError(f"找不到 JSON：{text[:400]}")
-        return json.loads(text[start : end + 1])
+        return parse_json("".join(b.text for b in resp.content if b.type == "text"))
     raise RuntimeError("搜尋迴圈超過上限仍未完成")
+
+
+def run(system: str, prompt: str) -> dict:
+    return run_openai(system, prompt) if PROVIDER == "openai" else run_anthropic(system, prompt)
 
 
 def recent_titles(days: int = 60) -> list[str]:
@@ -166,7 +196,7 @@ def main() -> None:
     only = os.getenv("ONLY", "").strip()
     made = []
     if only in ("", "digest"):
-        print(f"產生週報中（{MODEL}，含網路搜尋，約 3–5 分鐘）…")
+        print(f"產生週報中（{PROVIDER}／{MODEL}，含網路搜尋，約 3–10 分鐘）…")
         d = digest()
         made.append(write_article(d, f"AI 自動產生的週報（焦點關鍵字：{d.get('focus_keyword', '')}），請審核數據與來源後改成「已核准」"))
     if only in ("", "trending"):
