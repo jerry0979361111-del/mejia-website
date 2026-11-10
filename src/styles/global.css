@@ -311,7 +311,21 @@ footer{background:#1F3D5C;color:rgba(255,255,255,.6);padding:64px 0 28px;font-si
 /* 物件地圖 */
 .pmap-sec{background:var(--sand)}
 .pmap{display:grid;grid-template-columns:1fr 360px;border-radius:var(--radius);overflow:hidden;background:#fff;box-shadow:var(--shadow);border:1px solid var(--line)}
+.pmap-mapwrap{position:relative;min-width:0}
 .pmap-map{height:560px;background:var(--sand-2);z-index:0}
+.pmap-legend{position:absolute;left:12px;bottom:12px;z-index:500;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;max-width:calc(100% - 24px);padding:8px 14px;background:rgba(255,255,255,.94);border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-size:13px;color:var(--text)}
+.pmap-legend[hidden]{display:none}
+.pmap-legend .lg{display:inline-flex;align-items:center;gap:6px;cursor:default}
+.pmap-legend label.lg{cursor:pointer}
+.pmap-legend input{width:15px;height:15px;accent-color:#C8102E;margin:0}
+.pmap-legend i{display:inline-block;flex:none}
+.lg-pin{width:12px;height:12px;border-radius:50% 50% 50% 0;background:var(--teal);transform:rotate(-45deg)}
+.lg-uni{width:14px;height:14px;border-radius:50%;background:#C8102E;border:2px solid #fff;box-shadow:0 0 0 1px #C8102E}
+.lg-high{width:10px;height:10px;border-radius:50%;background:#C8102E;border:1.5px solid #fff;box-shadow:0 0 0 1px #C8102E}
+.lg-hint{font-size:12px;color:var(--muted)}
+.lg-hint:empty{display:none}
+.pmap-uni span{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#C8102E;color:#fff;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.pmap-pop .loc.school{color:#C8102E}
 .pmap-map .leaflet-tile-pane{filter:grayscale(.75) contrast(.95) brightness(1.03)}
 .pmap-failed{display:grid;place-items:center;color:var(--muted)}.pmap-failed::after{content:"地圖暫時無法載入，請重新整理頁面；右側仍可瀏覽全部建案。";padding:24px;text-align:center}
 .pmap-list{display:flex;flex-direction:column;border-left:1px solid var(--line);max-height:560px}
@@ -341,7 +355,7 @@ footer{background:#1F3D5C;color:rgba(255,255,255,.6);padding:64px 0 28px;font-si
 .leaflet-popup-content{margin:12px}
 .leaflet-container{font-family:var(--sans)}
 @media (max-width:1024px){.pmap{grid-template-columns:1fr}.pmap-list{border-left:0;border-top:1px solid var(--line);max-height:360px}.pmap-map{height:440px}}
-@media (max-width:760px){.pmap-map{height:360px}}
+@media (max-width:760px){.pmap-map{height:360px}.pmap-legend{border-radius:12px;font-size:12px;gap:4px 10px}}
 
 /* ===== 子頁面共用 ===== */
 .page-head{background:var(--sand);padding:clamp(48px,7vw,88px) 0 clamp(36px,5vw,56px)}

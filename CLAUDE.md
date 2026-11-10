@@ -21,6 +21,7 @@
 - `npm run deploy`：同步 Notion → 建置 → 部署到 Cloudflare
 - `npm run market`：從 Cotality 月報更新房價數據（`src/data/market.generated.json`）；與上期差距 >15% 會以代碼 2 結束、不更新
 - `npm run monthly`：每月排程用，`market` + `deploy`（Cotality PDF 以發布月命名，OCT＝9/30 數據）
+- `python3 scripts/schools/build_schools.py`：更新物件地圖的大學／高中紅色標記（OpenStreetMap，寫到 `public/data/schools.json`；大學在城市層級、高中放大到區域層級才顯示）
 - `python scripts/weekly/weekly_content.py`：產生「澳洲房產週報」＋「熱門話題 SEO 文章」（澳洲留學／移民／房地產／財經熱門第一名，與近期文章重複時改寫第二名），寫進 `文章/`（需要 `OPENAI_API_KEY` 或 `ANTHROPIC_API_KEY`，兩個都有時用 OpenAI，模型可用 `OPENAI_MODEL`／`CLAUDE_MODEL` 調整；狀態預設「草稿」，`ARTICLE_STATUS=已核准` 則直接上架）
 
 ## 自動化（GitHub Actions）

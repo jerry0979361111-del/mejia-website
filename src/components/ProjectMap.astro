@@ -1,6 +1,7 @@
 ---
 // 物件地圖：所有公開建案的地圖。拖曳／縮放時，右側清單只列出畫面範圍內的建案。
 // 圖資：OpenStreetMap（免費、需標示來源）。地圖程式在進入畫面時才載入，不拖慢首頁。
+// 大學與高中用紅色標記（資料 public/data/schools.json，由 scripts/schools/build_schools.py 產生）：大學在城市層級顯示，高中放大到區域層級才顯示。
 import { cities, cityName } from '../data/cities';
 import { projects, projectUrl, stageLabel, typeLabel } from '../data/projects';
 
@@ -18,7 +19,7 @@ const cityButtons = cities.filter((c) => points.some((p) => p.city === c.id));
       <div>
         <div class="eyebrow">Project Map</div>
         <h2>物件地圖</h2>
-        <p class="lead">拖曳、縮放地圖找你想住的區域，右側會列出範圍內的建案。</p>
+        <p class="lead">拖曳、縮放地圖找你想住的區域，右側會列出範圍內的建案；紅色標記是附近的大學與高中。</p>
       </div>
       <div class="tabs" id="pmap-tabs">
         <button class="tab on" data-city="all">全部</button>
@@ -26,7 +27,15 @@ const cityButtons = cities.filter((c) => points.some((p) => p.city === c.id));
       </div>
     </div>
     <div class="pmap rv">
-      <div class="pmap-map" id="pmap" data-points={JSON.stringify(points)} role="region" aria-label="建案地圖"></div>
+      <div class="pmap-mapwrap">
+        <div class="pmap-map" id="pmap" data-points={JSON.stringify(points)} role="region" aria-label="建案地圖"></div>
+        <div class="pmap-legend" id="pmap-legend" hidden>
+          <span class="lg"><i class="lg-pin"></i>建案</span>
+          <label class="lg"><input type="checkbox" id="pmap-uni" checked><i class="lg-uni"></i>大學</label>
+          <label class="lg"><input type="checkbox" id="pmap-high" checked><i class="lg-high"></i>高中</label>
+          <span class="lg-hint" id="pmap-hint">放大地圖即可看到高中</span>
+        </div>
+      </div>
       <div class="pmap-list">
         <div class="pmap-count" id="pmap-count" aria-live="polite">地圖範圍內 {points.length} 個建案</div>
         {/* 先在伺服器端列出全部建案：地圖還沒載入或載入失敗時，清單也不會是空的 */}
@@ -93,6 +102,36 @@ const cityButtons = cities.filter((c) => points.some((p) => p.city === c.id));
       );
       return m;
     });
+
+    // 大學（城市層級起顯示）與高中（區域層級起顯示）：紅色標記，畫在建案圖釘下方
+    type School = { t: 'u' | 'h'; name: string; zh?: string; geo: [number, number] };
+    const UNI_ZOOM = 9, HIGH_ZOOM = 12;
+    map.createPane('schools').style.zIndex = '450';
+    const uniLayer = L.layerGroup(), highLayer = L.layerGroup();
+    const uniIcon = L.divIcon({ className: 'pmap-uni', html: '<span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zM5 13.2v4L12 21l7-3.8v-4L12 17l-7-3.8z"/></svg></span>', iconSize: [24, 24], iconAnchor: [12, 12], popupAnchor: [0, -10] });
+    fetch('/data/schools.json').then((r) => r.json() as Promise<School[]>).then((list) => {
+      for (const s of list) {
+        const label = s.t === 'u' ? `<span class="loc school">大學</span><b>${esc(s.zh || s.name)}</b>${s.zh ? `<span class="price">${esc(s.name)}</span>` : ''}` : `<span class="loc school">高中</span><b>${esc(s.name)}</b>`;
+        const m = s.t === 'u'
+          ? L.marker(s.geo, { icon: uniIcon, title: s.zh || s.name, alt: s.zh || s.name, pane: 'schools', zIndexOffset: -1000 })
+          : L.circleMarker(s.geo, { pane: 'schools', radius: 5, color: '#fff', weight: 1.5, fillColor: '#C8102E', fillOpacity: 0.9 });
+        m.bindPopup(`<div class="pmap-pop">${label}</div>`, { maxWidth: 240 });
+        (s.t === 'u' ? uniLayer : highLayer).addLayer(m);
+      }
+      $('#pmap-legend').hidden = false;
+      updateSchools();
+    }).catch(() => {});
+    function updateSchools() {
+      const z = map.getZoom();
+      const showUni = ($('#pmap-uni') as HTMLInputElement).checked && z >= UNI_ZOOM;
+      const showHigh = ($('#pmap-high') as HTMLInputElement).checked && z >= HIGH_ZOOM;
+      showUni ? uniLayer.addTo(map) : uniLayer.remove();
+      showHigh ? highLayer.addTo(map) : highLayer.remove();
+      $('#pmap-hint').textContent = z < UNI_ZOOM ? '放大地圖即可看到大學與高中' : z < HIGH_ZOOM ? '再放大一些即可看到高中' : '';
+    }
+    map.on('zoomend', updateSchools);
+    $('#pmap-uni').addEventListener('change', updateSchools);
+    $('#pmap-high').addEventListener('change', updateSchools);
 
     const all = () => L.latLngBounds(points.map((p) => p.geo));
     // 程式移動地圖時（城市按鈕）不要清掉按鈕狀態；使用者自己拖曳／縮放才清掉
