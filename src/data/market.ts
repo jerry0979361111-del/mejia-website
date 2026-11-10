@@ -25,7 +25,8 @@ export const medianSource = { name: gen.source, period: `截至 ${asAtZh}`, url:
 export function marketSummary(names: Record<string, string>): string {
   const sign = (n: number | null) => (n === null ? '—' : `${n > 0 ? '+' : ''}${n}%`);
   const n = gen.national;
-  const ranked = (Object.entries(medians).filter(([, v]) => v && v.annual !== null) as [CityId, CityStat][])
+  // 只比較網站上有顯示的城市（例如珀斯隱藏時不列入）
+  const ranked = (Object.entries(medians).filter(([id, v]) => v && v.annual !== null && names[id]) as [CityId, CityStat][])
     .sort((a, b) => b[1].annual! - a[1].annual!);
   const [top] = ranked, bottom = ranked[ranked.length - 1];
   const dir = n.month! < 0 ? '下跌' : n.month! > 0 ? '上漲' : '持平';

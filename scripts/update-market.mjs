@@ -21,8 +21,9 @@ async function findReport() {
   for (const back of [0, 1]) {
     const d = new Date(now.getFullYear(), now.getMonth() - back, 1);
     const name = `COTALITY HVI ${MONTHS[d.getMonth()]} ${d.getFullYear()} FINAL`;
-    for (const suffix of ['', ' (1)', ' (2)']) {
-      const url = `https://discover.cotality.com/hubfs/Article-Reports/${encodeURIComponent(name + suffix)}.pdf`;
+    // Cotality 有時放在 hubfs/Article-Reports/，有時直接放在 hubfs/（例如 2026 年 11 月號）
+    for (const [dir, suffix] of ['Article-Reports/', ''].flatMap((d) => ['', ' (1)', ' (2)'].map((s) => [d, s]))) {
+      const url = `https://discover.cotality.com/hubfs/${dir}${encodeURIComponent(name + suffix)}.pdf`;
       const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (MejiaWebsite market update)' } });
       if (res.ok && (res.headers.get('content-type') ?? '').includes('pdf')) return { url, buf: new Uint8Array(await res.arrayBuffer()) };
     }

@@ -1,42 +1,42 @@
 {
-  "asAt": "30 September 2026",
+  "asAt": "31 October 2026",
   "source": "Cotality Home Value Index",
-  "sourceUrl": "https://discover.cotality.com/hubfs/Article-Reports/COTALITY%20HVI%20OCT%202026%20FINAL.pdf",
-  "updated": "2026-10-01",
+  "sourceUrl": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+  "updated": "2026-11-10",
   "national": {
-    "month": -1.1,
-    "annual": 0
+    "month": -1.2,
+    "annual": -2.8
   },
   "cities": {
     "sydney": {
-      "house": 1466060,
-      "unit": 867597,
-      "month": -1.4,
-      "annual": -7
+      "house": 1438090,
+      "unit": 857872,
+      "month": -1.6,
+      "annual": -9.4
     },
     "melbourne": {
-      "house": 915119,
-      "unit": 624740,
-      "month": -0.7,
-      "annual": -6.2
+      "house": 906067,
+      "unit": 620996,
+      "month": -0.8,
+      "annual": -7.6
     },
     "brisbane": {
-      "house": 1146078,
-      "unit": 834627,
-      "month": -1.5,
-      "annual": 5.9
+      "house": 1111530,
+      "unit": 811084,
+      "month": -2,
+      "annual": 0.4
     },
     "adelaide": {
-      "house": 990531,
-      "unit": 674188,
-      "month": -1.3,
-      "annual": 6.5
+      "house": 977551,
+      "unit": 661647,
+      "month": -1.2,
+      "annual": 3.7
     },
     "perth": {
-      "house": 1017734,
-      "unit": 714265,
-      "month": -1.2,
-      "annual": 10.1
+      "house": 982146,
+      "unit": 692036,
+      "month": -1.7,
+      "annual": 3.9
     }
   }
 }
