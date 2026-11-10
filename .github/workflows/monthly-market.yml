@@ -1,0 +1,49 @@
+name: 每月房價數據（Cotality 月報）
+
+# 每月 2 號台灣時間 09:00 抓 Cotality Home Value Index 月報，更新首頁「幾座城市，幾種生活」的
+# 中位價與漲跌（src/data/market.generated.json），有變動就提交到 main 並重新部署。
+# 與上期差距 >15% 時腳本以代碼 2 結束、不更新，這個流程會顯示失敗，請到 Actions 頁面看訊息人工確認。
+on:
+  schedule:
+    - cron: "0 1 2 * *" # UTC 每月 2 號 01:00 ＝ 台灣 2 號 09:00
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: monthly-market
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: 更新房價數據
+        run: npm run market
+      - name: 提交到 main
+        id: commit
+        run: |
+          git config user.name "mejia-market-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/data/market.generated.json
+          if git diff --cached --quiet; then echo "數據沒有變動"; echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          git commit -m "每月房價數據：$(date +%Y-%m)"
+          git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: update
+    if: needs.update.outputs.changed == 'true'
+    uses: ./.github/workflows/_build-deploy.yml
+    secrets: inherit

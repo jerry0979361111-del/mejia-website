@@ -9,6 +9,9 @@ import { cities, projectCities, cityList, cityCountZh } from '../data/cities';
 import { featuredLayout } from '../data/projects';
 import { medians, medianSource, foreignDuty, wan, marketUpdated, marketSummary } from '../data/market';
 const cityNames = Object.fromEntries(cities.map((c) => [c.id, c.zh]));
+// 「幾座城市，幾種生活」區塊只放有房價數據的城市（黃金海岸目前沒有月更數據，先不顯示）
+const marketCities = cities.filter((c) => medians[c.id]);
+const marketCountZh = '零一二三四五六七八九十'[marketCities.length];
 import { news, features } from '../data/content';
 import { team, teamUrl } from '../data/team';
 
@@ -103,12 +106,12 @@ const stats: { to: number; plus?: boolean; unit: string; text: string }[] = [
   <section class="cities" id="cities">
     <div class="wrap">
       <div class="sec-head rv">
-        <div><div class="eyebrow">Where to Live</div><h2>{cityCountZh}座城市，{cityCountZh}種生活</h2></div>
+        <div><div class="eyebrow">Where to Live</div><h2>{marketCountZh}座城市，{marketCountZh}種生活</h2></div>
         <p class="lead" style="margin-top:0">先想清楚要過什麼樣的日子，再決定買在哪裡。</p>
       </div>
       <p class="market-note rv"><span>本月市場</span>{marketSummary(cityNames)}</p>
       <div class="city-list rv">
-        {cities.map((c, i) => (
+        {marketCities.map((c, i) => (
           <div class="city" data-go={c.id} role="button" tabindex="0">
             <span class="no">{String(i + 1).padStart(2, '0')}</span>
             <div class="name"><span>{c.en}</span>{c.zh}</div>

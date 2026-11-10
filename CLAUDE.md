@@ -26,6 +26,7 @@
 
 ## 自動化（GitHub Actions）
 - `deploy.yml`：main 有更新就同步 Notion → 建置 → `wrangler deploy`（審稿時在 GitHub 網頁把文章改成「已核准」並提交即會上架）
+- `monthly-market.yml`：每月 2 號台灣 09:00 跑 `npm run market`，數據有變就提交到 main 並部署（差距 >15% 時流程顯示失敗，要人工確認）
 - `weekly-content.yml`：每週一台灣 09:00 產生兩篇文章、提交到 main 並部署；repo 變數 `ARTICLE_STATUS` 決定是草稿還是直接上架
 - 需要的 repo secrets：`OPENAI_API_KEY`（或 `ANTHROPIC_API_KEY`）、`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`；`NOTION_TOKEN` 選填（沒設定時部署不同步 Notion，沿用 repo 裡的建案資料，要在本機或雲端工作環境執行 `npm run sync` 後提交）
 
@@ -34,7 +35,7 @@
 - `src/components/`：共用元件（Header、Footer、AiChat、PropertyCard、Process、Calculator、ContactSection、PageHead、ServicePage）
 - `src/layouts/BaseLayout.astro`：所有頁面的外框與 SEO meta
 - `src/scripts/ui.ts`：`$`、`$$`、`toast` 小工具
-- `src/data/market.ts`：印花稅級距、利率、匯率（手動維護）；房價中位數與漲跌讀 `market.generated.json`（自動）
+- `src/data/market.ts`：印花稅級距、利率、匯率（手動維護）；房價中位數與漲跌讀 `market.generated.json`（自動）；首頁城市區塊只顯示有數據的城市（黃金海岸沒有月更數據，暫不顯示）
 - `文章/`：房產新聞與指南，一篇一個 .md；只有「狀態：已核准」且發布日期已到才會上正式站，`npm run dev` 會連草稿顯示。舊站 mejia.au 的 47 篇文章已搬過來（圖片在 `文章/圖片/`，舊網址的 301 轉址在 `public/_redirects`）
 - `src/data/team.ts`：顧問資料；有 `profile` 才產生 `/team/<slug>/` 個人頁
 - `src/scripts/favorites.ts`：加入最愛（localStorage，`[data-fav]` 按鈕自動同步）
