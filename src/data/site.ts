@@ -2,8 +2,8 @@
 export const site = {
   name: 'Mejia 美家',
   tagline: '實現你的澳洲夢想家',
-  // 預覽階段禁止搜尋引擎收錄；正式上線時改成 false
-  noindex: true,
+  // 已正式上線（2026-11-18），允許搜尋引擎收錄
+  noindex: false,
   tel: '+886 2 2932 1111',
   email: 'admin@mejia.au',
   offices: [

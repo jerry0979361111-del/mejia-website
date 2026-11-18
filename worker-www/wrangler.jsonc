@@ -1,0 +1,8 @@
+// www.mejia.au 轉址用的小 Worker。部署：npx wrangler deploy -c worker-www/wrangler.jsonc
+{
+  "name": "mejia-www-redirect",
+  "main": "./index.ts",
+  "compatibility_date": "2026-09-26",
+  "routes": [{ "pattern": "www.mejia.au", "custom_domain": true }],
+  "workers_dev": false
+}

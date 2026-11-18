@@ -1,3 +1,5 @@
-# 預覽階段：禁止搜尋引擎收錄。正式上線時改成 Allow: / 並加上 Sitemap。
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /favorites/
+
+Sitemap: https://mejia.au/sitemap-index.xml

@@ -5,6 +5,10 @@
   "name": "mejia-website",
   "main": "./worker/index.ts",
   "compatibility_date": "2026-09-26",
+  // 正式網域 mejia.au（www.mejia.au 由 worker-www/ 另一個小 Worker 轉到 mejia.au）；workers.dev 與預覽網址保留給測試
+  "routes": [{ "pattern": "mejia.au", "custom_domain": true }],
+  "workers_dev": true,
+  "preview_urls": true,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
