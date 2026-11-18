@@ -11,6 +11,7 @@
 //   RESEND_API_KEY     Resend 金鑰（secret）
 //   NOTIFY_EMAIL       收件信箱，多個用逗號分隔（vars）
 //   MAIL_FROM          寄件人，例如「Mejia 美家 <noreply@mejia.au>」，網域須先在 Resend 驗證（vars）
+//   MAIL_FALLBACK_TO   MAIL_FROM 寄送失敗時，改用 Resend 測試寄件人寄到這個信箱（須是 Resend 註冊信箱，vars）
 //   LINE_CHANNEL_TOKEN LINE Messaging API 的 Channel access token（secret）
 //   LINE_TO            推播對象：群組 ID 或使用者 ID，多個用逗號分隔（vars）
 //   SHEET_WEBHOOK_URL  Google 試算表 Apps Script 網頁應用程式網址（secret；程式在 scripts/google-sheet/）
@@ -23,6 +24,7 @@ interface Env {
   RESEND_API_KEY?: string;
   NOTIFY_EMAIL?: string;
   MAIL_FROM?: string;
+  MAIL_FALLBACK_TO?: string;
   LINE_CHANNEL_TOKEN?: string;
   SHEET_WEBHOOK_URL?: string;
   LINE_TO?: string;
@@ -149,18 +151,24 @@ async function sendMail(env: Env, lead: Lead, text: string): Promise<boolean> {
   const to = list(env.NOTIFY_EMAIL);
   if (!env.RESEND_API_KEY || !env.MAIL_FROM || !to.length) return false;
   const subject = `官網新名單：${lead.name}${lead.project ? `（${lead.project}）` : lead.agent ? `（指定 ${lead.agent}）` : ''}`;
-  try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from: env.MAIL_FROM, to, subject, text, ...(lead.email && { reply_to: lead.email }) }),
-    });
-    if (!res.ok) console.error('Resend 寄信失敗', res.status, await res.text());
-    return res.ok;
-  } catch (e) {
-    console.error('Resend 寄信失敗', e);
-    return false;
-  }
+  const send = async (from: string, rcpt: string[]) => {
+    try {
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ from, to: rcpt, subject, text, ...(lead.email && { reply_to: lead.email }) }),
+      });
+      if (!res.ok) console.error('Resend 寄信失敗', from, res.status, await res.text());
+      return res.ok;
+    } catch (e) {
+      console.error('Resend 寄信失敗', from, e);
+      return false;
+    }
+  };
+  if (await send(env.MAIL_FROM, to)) return true;
+  // 寄件網域有問題（例如 Resend 網域驗證失效）時，改用測試寄件人寄到備援信箱，名單不漏接
+  const fallback = list(env.MAIL_FALLBACK_TO);
+  return fallback.length > 0 && (await send('Mejia 美家官網 <onboarding@resend.dev>', fallback));
 }
 
 async function sendLine(env: Env, text: string): Promise<boolean> {

@@ -20,8 +20,9 @@
   ],
   // 非機密設定。金鑰用 `npx wrangler secret put <名稱>`：TURNSTILE_SECRET、RESEND_API_KEY、LINE_CHANNEL_TOKEN
   "vars": {
-    "NOTIFY_EMAIL": "jerry0979361111@gmail.com",
-    "MAIL_FROM": "Mejia 美家官網 <onboarding@resend.dev>", // mejia.au 在 Resend 驗證前用測試寄件人（只能寄給 Resend 註冊信箱）；驗證後改成 noreply@mejia.au
+    "NOTIFY_EMAIL": "jerry0979361111@gmail.com,admin@mejia.au",
+    "MAIL_FROM": "Mejia 美家官網 <noreply@mejia.au>", // mejia.au 已由 Resend 自動設定 DNS（2026-11-18）
+    "MAIL_FALLBACK_TO": "jerry0979361111@gmail.com", // MAIL_FROM 寄送失敗時改用 Resend 測試寄件人寄到這裡（須是 Resend 註冊信箱）
     "LINE_TO": ""
   },
   "observability": { "enabled": true }
