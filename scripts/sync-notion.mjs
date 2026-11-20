@@ -156,11 +156,13 @@ for (const r of publicRows) {
       .then((c) => (c.src ? c : coverFromPdfFiles(p['建案PDF']?.files, slug)))
       .then(({ src, landscape }) => ({ image: src, landscape }))),
     gallery: await downloadGallery(p['圖庫']?.files, slug),
+    notionCreated: r.created_time, // 上傳到 Notion 的時間，網站依此排序（新的在前）
     notionUpdated: r.last_edited_time,
   });
 }
 
-projects.sort((a, b) => Number(b.featured) - Number(a.featured) || a.city.localeCompare(b.city) || a.name.localeCompare(b.name));
+// 依上傳到 Notion 的日期排序，越新越前面（同時間再依名稱）
+projects.sort((a, b) => b.notionCreated.localeCompare(a.notionCreated) || a.name.localeCompare(b.name));
 await writeFile(OUT_FILE, JSON.stringify(projects, null, 2) + '\n');
 await writeFile(GEO_CACHE, JSON.stringify(geoCache, null, 2) + '\n');
 
