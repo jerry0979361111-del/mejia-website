@@ -284,7 +284,199 @@
     153.40249
   ],
   "380 Queen St, Melbourne VIC 3000": [
-    -37.87218,
-    144.77939
+    -37.81493,
+    144.96076
+  ],
+  "Melbourne CBD, VIC": [
+    -37.81417,
+    144.96556
+  ],
+  "Caulfield North, VIC": [
+    -37.87083,
+    145.0218
+  ],
+  "Palm Beach, QLD": [
+    -28.11553,
+    153.45839
+  ],
+  "Darling Harbour, NSW": [
+    -33.86755,
+    151.19956
+  ],
+  "Waterloo, NSW": [
+    -33.90028,
+    151.20731
+  ],
+  "Zetland, NSW": [
+    -33.90766,
+    151.20822
+  ],
+  "Southport, QLD": [
+    -27.96878,
+    153.40667
+  ],
+  "Rochedale, QLD": [
+    -27.57017,
+    153.12691
+  ],
+  "Burwood, NSW": [
+    -33.88581,
+    151.10248
+  ],
+  "Chatswood, NSW": [
+    -33.79674,
+    151.18143
+  ],
+  "Brisbane CBD, QLD": [
+    -27.46683,
+    153.02737
+  ],
+  "South Melbourne, VIC": [
+    -37.83344,
+    144.95705
+  ],
+  "St Kilda Road, VIC": [
+    -37.85347,
+    144.98161
+  ],
+  "Surfers Paradise, QLD": [
+    -27.99899,
+    153.42398
+  ],
+  "Fitzroy, VIC": [
+    -37.80104,
+    144.97926
+  ],
+  "Helensvale, QLD": [
+    -27.90531,
+    153.33246
+  ],
+  "Bundall, QLD": [
+    -28.01128,
+    153.40809
+  ],
+  "Varsity Lakes, QLD": [
+    -28.09713,
+    153.39923
+  ],
+  "Labrador, QLD": [
+    -27.94276,
+    153.39871
+  ],
+  "Mermaid Beach, QLD": [
+    -28.04839,
+    153.43655
+  ],
+  "Upper Coomera, QLD": [
+    -27.85298,
+    153.29828
+  ],
+  "Sanctuary Cove, QLD": [
+    -27.85326,
+    153.36218
+  ],
+  "West End, QLD": [
+    -27.4833,
+    153.0075
+  ],
+  "Indooroopilly, QLD": [
+    -27.50656,
+    152.98228
+  ],
+  "Milton, QLD": [
+    -27.46947,
+    153.00553
+  ],
+  "Holland Park West, QLD": [
+    -27.52633,
+    153.06317
+  ],
+  "Yeronga, QLD": [
+    -27.51333,
+    153.01177
+  ],
+  "Wooloowin, QLD": [
+    -27.41944,
+    153.04123
+  ],
+  "Clayfield, QLD": [
+    -27.41871,
+    153.05558
+  ],
+  "Toowong, QLD": [
+    -27.47897,
+    152.98532
+  ],
+  "East Brisbane, QLD": [
+    -27.48312,
+    153.04643
+  ],
+  "Bowen Hills, QLD": [
+    -27.44344,
+    153.03731
+  ],
+  "Stafford Heights, QLD": [
+    -27.39611,
+    153.01103
+  ],
+  "Mount Gravatt East, QLD": [
+    -27.53263,
+    153.08307
+  ],
+  "Hamilton, QLD": [
+    -27.43947,
+    153.06423
+  ],
+  "South Brisbane, QLD": [
+    -27.47926,
+    153.02008
+  ],
+  "Sunnybank, QLD": [
+    -27.57528,
+    153.05572
+  ],
+  "Taringa, QLD": [
+    -27.49524,
+    152.9854
+  ],
+  "Morningside, QLD": [
+    -27.4616,
+    153.07545
+  ],
+  "Southbank, VIC": [
+    -37.82536,
+    144.96402
+  ],
+  "West Melbourne, VIC": [
+    -37.80875,
+    144.92382
+  ],
+  "Ringwood, VIC": [
+    -37.81587,
+    145.22911
+  ],
+  "South Yarra, VIC": [
+    -37.83777,
+    144.99185
+  ],
+  "Murrumbeena, VIC": [
+    -37.89032,
+    145.0676
+  ],
+  "Naremburn, NSW": [
+    -33.81727,
+    151.20122
+  ],
+  "St Leonards, NSW": [
+    -33.82257,
+    151.19234
+  ],
+  "Crows Nest, NSW": [
+    -33.82563,
+    151.20147
+  ],
+  "North Sydney, NSW": [
+    -33.83432,
+    151.2092
   ]
 }

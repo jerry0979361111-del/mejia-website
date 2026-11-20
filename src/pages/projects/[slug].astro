@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PropertyCard from '../../components/PropertyCard.astro';
 import ContactSection from '../../components/ContactSection.astro';
 import FavButton from '../../components/FavButton.astro';
+import ProjectLocation from '../../components/ProjectLocation.astro';
 import { cityName } from '../../data/cities';
 import { projects, typeLabel, stageLabel, type Project } from '../../data/projects';
 import { site } from '../../data/site';
@@ -62,6 +63,7 @@ const related = projects.filter((x) => x.city === p.city && x.slug !== p.slug).s
               </div>
             </div>
           )}
+          <ProjectLocation project={p} />
         </div>
 
         <aside class="pj-side">

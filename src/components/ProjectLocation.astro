@@ -1,0 +1,105 @@
+---
+// 建案內頁的位置地圖：以這個建案為中心，同時標出附近的其他建案與大學／高中（紅色）。
+// 圖資與學校資料同首頁物件地圖（ProjectMap.astro）；進入畫面時才載入地圖程式。
+import { cityName } from '../data/cities';
+import { projects, projectUrl, type Project } from '../data/projects';
+
+interface Props { project: Project }
+const { project: p } = Astro.props;
+
+const others = projects
+  .filter((x) => x.geo && x.slug !== p.slug && x.city === p.city)
+  .map((x) => ({ name: x.name, url: projectUrl(x), image: x.image, price: x.price, loc: `${cityName(x.city)} · ${x.suburb}`, geo: x.geo }));
+const here = { name: p.name, loc: `${cityName(p.city)} · ${p.suburb}`, geo: p.geo };
+const gmap = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.address || `${p.name} ${p.suburb}`)}`;
+---
+{p.geo && (
+  <div class="pj-map">
+    <h2 class="gallery-title">位置地圖 <span>{p.address || `${cityName(p.city)} · ${p.suburb}`}</span></h2>
+    <div class="pmap-mapwrap">
+      <div class="pmap-map pj-map-map" id="pjmap" data-here={JSON.stringify(here)} data-others={JSON.stringify(others)} role="region" aria-label={`${p.name} 位置地圖`}></div>
+      <div class="pmap-legend" id="pjmap-legend" hidden>
+        <span class="lg"><i class="lg-here"></i>本建案</span>
+        {others.length > 0 && <span class="lg"><i class="lg-pin"></i>其他建案</span>}
+        <label class="lg"><input type="checkbox" id="pjmap-uni" checked><i class="lg-uni"></i>大學</label>
+        <label class="lg"><input type="checkbox" id="pjmap-high" checked><i class="lg-high"></i>高中</label>
+      </div>
+    </div>
+    <p class="pj-map-note">位置依地址標示，僅供參考。<a href={gmap} target="_blank" rel="noopener">在 Google 地圖開啟 →</a></p>
+  </div>
+)}
+
+<script>
+  import { $ } from '../scripts/ui';
+
+  type Pt = { name: string; url?: string; image?: string; price?: string; loc: string; geo: [number, number] };
+  const el = document.getElementById('pjmap');
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+
+  let started = false;
+  async function init() {
+    if (!el || started) return;
+    started = true;
+    const mods = await Promise.all([import('leaflet'), import('leaflet/dist/leaflet.css')]).catch(() => null);
+    if (!mods) { el.classList.add('pmap-failed', 'pj-map-failed'); return; }
+    const [{ default: L }] = mods;
+    const here: Pt = JSON.parse(el.dataset.here!);
+    const others: Pt[] = JSON.parse(el.dataset.others!);
+
+    const map = L.map(el, { scrollWheelZoom: false, dragging: !L.Browser.mobile }).setView(here.geo, 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+    map.on('focus click', () => map.scrollWheelZoom.enable());
+    map.on('mouseout', () => map.scrollWheelZoom.disable());
+
+    // 附近其他建案（小圖釘）
+    const pin = L.divIcon({ className: 'pmap-pin pj-pin-other', html: '<span></span>', iconSize: [20, 20], iconAnchor: [10, 20], popupAnchor: [0, -18] });
+    for (const o of others) {
+      L.marker(o.geo, { icon: pin, title: o.name, alt: o.name }).addTo(map).bindPopup(
+        `<a class="pmap-pop" href="${o.url}">${o.image ? `<img src="${o.image}" alt="">` : ''}<span class="loc">${esc(o.loc)}</span><b>${esc(o.name)}</b>${o.price ? `<span class="price">${esc(o.price)}</span>` : ''}<span class="go">查看建案 →</span></a>`,
+        { maxWidth: 240, minWidth: 200 },
+      );
+    }
+    // 本建案（大圖釘，永遠在最上層）
+    const hereIcon = L.divIcon({ className: 'pmap-pin pj-pin-here', html: '<span></span>', iconSize: [36, 36], iconAnchor: [18, 36], popupAnchor: [0, -32] });
+    L.marker(here.geo, { icon: hereIcon, title: here.name, alt: here.name, zIndexOffset: 1000 }).addTo(map)
+      .bindPopup(`<div class="pmap-pop"><span class="loc">${esc(here.loc)}</span><b>${esc(here.name)}</b></div>`, { maxWidth: 240 });
+
+    // 大學與高中（紅色），畫在建案圖釘下方
+    type School = { t: 'u' | 'h'; name: string; zh?: string; geo: [number, number] };
+    const UNI_ZOOM = 9, HIGH_ZOOM = 12;
+    map.createPane('schools').style.zIndex = '450';
+    const uniLayer = L.layerGroup(), highLayer = L.layerGroup();
+    const uniIcon = L.divIcon({ className: 'pmap-uni', html: '<span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zM5 13.2v4L12 21l7-3.8v-4L12 17l-7-3.8z"/></svg></span>', iconSize: [24, 24], iconAnchor: [12, 12], popupAnchor: [0, -10] });
+    const uniBox = $('#pjmap-uni') as HTMLInputElement, highBox = $('#pjmap-high') as HTMLInputElement;
+    const update = () => {
+      const z = map.getZoom();
+      uniBox.checked && z >= UNI_ZOOM ? uniLayer.addTo(map) : uniLayer.remove();
+      highBox.checked && z >= HIGH_ZOOM ? highLayer.addTo(map) : highLayer.remove();
+    };
+    fetch('/data/schools.json').then((r) => r.json() as Promise<School[]>).then((list) => {
+      for (const s of list) {
+        const label = s.t === 'u' ? `<span class="loc school">大學</span><b>${esc(s.zh || s.name)}</b>${s.zh ? `<span class="price">${esc(s.name)}</span>` : ''}` : `<span class="loc school">高中</span><b>${esc(s.name)}</b>`;
+        const m = s.t === 'u'
+          ? L.marker(s.geo, { icon: uniIcon, title: s.zh || s.name, alt: s.zh || s.name, pane: 'schools' })
+          : L.circleMarker(s.geo, { pane: 'schools', radius: 5, color: '#fff', weight: 1.5, fillColor: '#C8102E', fillOpacity: 0.9 });
+        m.bindPopup(`<div class="pmap-pop">${label}</div>`, { maxWidth: 240 });
+        (s.t === 'u' ? uniLayer : highLayer).addLayer(m);
+      }
+      $('#pjmap-legend').hidden = false;
+      update();
+    }).catch(() => {});
+    map.on('zoomend', update);
+    uniBox.addEventListener('change', update);
+    highBox.addEventListener('change', update);
+  }
+
+  if (el) {
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); init(); } }, { rootMargin: '300px' });
+      io.observe(el);
+    } else init();
+  }
+</script>

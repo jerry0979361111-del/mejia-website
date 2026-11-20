@@ -111,13 +111,35 @@ async function nominatim(q) {
   const [hit] = res?.ok ? await res.json() : [];
   return hit ? [Number(Number(hit.lat).toFixed(5)), Number(Number(hit.lon).toFixed(5))] : null;
 }
+// 地址轉座標，並用「區域」檢查：Nominatim 常把同名街道對到別的區（例如墨爾本市區的 Queen St 對到 Altona Meadows），
+// 離區域中心超過 GEO_MAX_KM 就換查詢方式，都不對時改標在區域中心並提醒。人工修正可直接改 geocode-cache.json。
+const GEO_MAX_KM = 6;
+const km = ([a, b], [c, d]) => {
+  const r = Math.PI / 180, x = (d - b) * r * Math.cos(((a + c) / 2) * r), y = (c - a) * r;
+  return Math.hypot(x, y) * 6371;
+};
+async function areaPoint(suburb, city) {
+  if (!suburb) return null;
+  const key = `${suburb}, ${STATE[city]}`;
+  if (!geoCache[key]) {
+    const pt = await nominatim(`${suburb} ${STATE[city]} Australia`);
+    if (pt) geoCache[key] = pt;
+  }
+  return geoCache[key] ?? null;
+}
 async function geocode(address, suburb, city) {
-  const key = address || `${suburb}, ${STATE[city]}`;
-  if (geoCache[key]) return geoCache[key];
-  const point = (address && (await nominatim(address))) || (suburb && (await nominatim(`${suburb} ${STATE[city]} Australia`)));
-  if (point) geoCache[key] = point;
-  else console.warn(`找不到座標：${key}（可手動加到 ${GEO_CACHE}）`);
-  return point;
+  const area = await areaPoint(suburb, city);
+  if (!address) return area;
+  const near = (pt) => pt && (!area || km(pt, area) <= GEO_MAX_KM);
+  if (near(geoCache[address])) return geoCache[address];
+  for (const q of [address, `${address}, ${suburb} ${STATE[city]}, Australia`, `${address.replace(/,.*$/, '')}, ${suburb} ${STATE[city]}`]) {
+    const pt = await nominatim(q);
+    if (near(pt)) { geoCache[address] = pt; return pt; }
+  }
+  if (area) console.warn(`地址座標與區域不符，先標在區域中心：${address}（${suburb}）`);
+  else console.warn(`找不到座標：${address}（可手動加到 ${GEO_CACHE}）`);
+  delete geoCache[address];
+  return area;
 }
 
 const rows = await queryAll();

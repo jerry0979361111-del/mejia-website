@@ -345,6 +345,16 @@ footer{background:#1F3D5C;color:rgba(255,255,255,.6);padding:64px 0 28px;font-si
 .pmap-empty{display:none;padding:28px 20px;font-size:14px;color:var(--muted)}
 .pmap-pin span{display:block;width:28px;height:28px;border-radius:50% 50% 50% 0;background:var(--teal);border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.35);transform:rotate(-45deg)}
 .pmap-pin:hover span{background:var(--teal-deep)}
+/* 建案內頁位置地圖 */
+.pj-map{margin-top:40px}
+.pj-map .pmap-map{height:420px;border-radius:var(--radius);overflow:hidden}
+.pj-map-failed::after{content:"地圖暫時無法載入，請重新整理頁面。"}
+.pj-pin-here span{width:36px;height:36px;background:var(--ink);border:3px solid var(--gold)}
+.pj-pin-other span{width:20px;height:20px;border-width:2px;background:var(--brand-2);opacity:.9}
+.lg-here{width:14px;height:14px;border-radius:50% 50% 50% 0;background:var(--ink);border:2px solid var(--gold);transform:rotate(-45deg)}
+.pj-map-note{margin-top:10px;font-size:13px;color:var(--muted)}
+.pj-map-note a{color:var(--teal-deep);margin-left:6px}
+@media (max-width:760px){.pj-map .pmap-map{height:320px}}
 .pmap-pop{display:block;color:var(--ink)!important;font-family:var(--sans)}
 .pmap-pop img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;margin-bottom:8px}
 .pmap-pop .loc{display:block;font-size:11.5px;color:var(--teal-deep);letter-spacing:.06em}
