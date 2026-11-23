@@ -33,11 +33,22 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>
   <meta property="og:image" content={new URL(image, Astro.site)}>
+  {site.gtmId && <script is:inline define:vars={{ id: site.gtmId }}>
+    // Google Tag Manager（GA4 等在容器裡設定）
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',id);
+  </script>}
+  {site.openaiPixelId && <script is:inline define:vars={{ pixelId: site.openaiPixelId }}>
+    // ChatGPT 廣告像素：載入、記錄瀏覽頁面；表單送出成功時在 ContactSection 記錄 lead_created
+    !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f);}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+    oaiq("init",{pixelId:pixelId});
+    oaiq("measure","page_viewed",{type:"contents",contents:[{id:location.pathname,name:document.title,content_type:"page"}]});
+  </script>}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  {site.gtmId && <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${site.gtmId}`} height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>}
   <Header />
   <main>
     <slot />

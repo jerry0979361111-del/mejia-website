@@ -66,6 +66,10 @@ const { project, agent } = Astro.props;
       const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
       const out = await res.json().catch(() => ({ ok: false }));
       if (!out.ok) { toast(errors[out.error] ?? `送出失敗，請稍後再試，或直接來電 ${form.dataset.tel}`); return; }
+      // 轉換追蹤：GTM 用 generate_lead 事件（在 GTM 設定 GA4／Google Ads 轉換），ChatGPT 廣告用 lead_created
+      const w = window as any;
+      (w.dataLayer = w.dataLayer || []).push({ event: 'generate_lead', form_page: location.pathname });
+      w.oaiq?.('measure', 'lead_created', { type: 'customer_action' }, { event_id: crypto.randomUUID?.() ?? String(Date.now()) });
       form.reset();
       toast('已收到，顧問會在一個工作天內與你聯繫。');
     } catch {
