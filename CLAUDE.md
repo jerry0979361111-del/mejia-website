@@ -33,7 +33,7 @@
 ## 目錄
 - `src/data/`：所有內容（公司資訊、選單、城市、建案、步驟、團隊、文章）。改內容先改這裡，不要寫死在頁面裡
 - `src/components/`：共用元件（Header、Footer、AiChat、PropertyCard、Process、Calculator、ContactSection、PageHead、ServicePage）
-- `src/layouts/BaseLayout.astro`：所有頁面的外框與 SEO meta；追蹤碼（Google Tag Manager、ChatGPT 廣告像素）的 ID 在 `src/data/site.ts`。表單送出成功時推 `generate_lead`（dataLayer）與 `lead_created`（OpenAI 像素），GA4／Google Ads 轉換在 GTM 容器裡設定
+- `src/layouts/BaseLayout.astro`：所有頁面的外框與 SEO meta；追蹤碼（GA4 直接安裝、Google Tag Manager、ChatGPT 廣告像素）的 ID 在 `src/data/site.ts`。表單送出成功時送 `generate_lead`（GA4＋GTM dataLayer）與 `lead_created`（OpenAI 像素）；GTM 容器不要再加 GA4 代碼（會重複計算），只放 Google Ads 等其他代碼
 - `src/scripts/ui.ts`：`$`、`$$`、`toast` 小工具
 - `src/data/market.ts`：印花稅級距、利率、匯率（手動維護）；房價中位數與漲跌讀 `market.generated.json`（自動）；首頁城市區塊只顯示有數據的城市（黃金海岸沒有月更數據，暫不顯示）
 - `文章/`：房產新聞與指南，一篇一個 .md；只有「狀態：已核准」且發布日期已到才會上正式站，`npm run dev` 會連草稿顯示。舊站 mejia.au 的 47 篇文章已搬過來（圖片在 `文章/圖片/`，舊網址的 301 轉址在 `public/_redirects`）

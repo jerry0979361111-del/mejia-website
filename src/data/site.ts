@@ -12,7 +12,9 @@ export const site = {
   ],
   // Cloudflare Turnstile 的 site key（公開）。留空時表單不顯示驗證框，只適合本機測試
   turnstileSiteKey: '0x4AAAAAAF10gNwfMnzPANwP',
-  // 追蹤碼（留空即不載入）。GA4、Google Ads 等都在 Google Tag Manager 容器裡設定
+  // 追蹤碼（留空即不載入）
+  // GA4 直接用 gtag 安裝（不要再在 GTM 容器裡加 GA4 代碼，否則會重複計算）；Google Ads 等其他代碼放 GTM
+  ga4Id: 'G-CH75EW8XS1',
   gtmId: 'GTM-WQX5GRB6',
   // ChatGPT 廣告（OpenAI Ads）像素
   openaiPixelId: 'Jt2jdeaFonv4UMpK4QNnVq',
