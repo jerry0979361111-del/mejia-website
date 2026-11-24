@@ -106,7 +106,6 @@ const base: { slug: string; name: string; profile?: Profile }[] = [
       projects: ['first-light', 'the-one', 'the-oscar', 'iconica'],
     },
   },
-  { slug: 'lucy', name: 'Lucy' },
   {
     slug: 'lynn',
     name: 'Lynn',
@@ -189,6 +188,25 @@ const base: { slug: string; name: string; profile?: Profile }[] = [
         facebook: 'https://www.facebook.com/61578494275861/',
       },
       projects: ['first-light', 'the-one', 'the-oscar', 'iconica'],
+    },
+  },
+  {
+    slug: 'wesley',
+    name: 'Wesley',
+    profile: {
+      title: '房產顧問',
+      quote: '走過四年墨爾本留學路，最懂家長對孩子居住安全與生活圈的期待',
+      bio: [
+        '高中畢業後，我便獨自前往墨爾本求學並生活四年，畢業於墨爾本大學（University of Melbourne）都市規劃（Urban Planning）系。這段從高中畢業即赴澳展開留學生活的親身經歷，讓我深刻理解亞洲家庭在送孩子出國時，最在意的學區距離、生活機能以及居住環境品質。',
+        '我擅長運用都市規劃的專業思維協助留學家庭評估房產，從學校周邊交通動線、生活圈便利度到區域未來發展潛力，幫助家長跳脫單一物件的眼光，為孩子挑選「住得安心、兼具長期保值空間」的理想居所。同時，我也致力於用清晰、好懂的方式溝通當地法規與市場資訊，讓跨海為孩子置產或規劃「以房養學」不再充滿距離感。',
+        '對我而言，為留學家庭買房不只是完成一筆交易，更是為孩子的求學之路打造穩固而溫暖的後盾。我希望能結合四年的墨爾本留學生活經驗與都市規劃視角，陪伴每一位家長在澳洲做出安心、有遠見的置產選擇。',
+      ],
+      specialties: ['留學家庭置產規劃', '學區與生活圈評估', '都市規劃與區域發展分析', '以房養學規劃'],
+      languages: ['中文', '英文'],
+      credentials: ['墨爾本大學 都市規劃系畢業', '墨爾本留學生活 4 年'],
+      contact: { phone: CO.phone, phoneTw: CO.phoneTw },
+      social: { line: CO.line, whatsapp: CO.whatsapp, facebook: CO.facebook, instagram: CO.instagram, youtube: CO.youtube },
+      projects: ['640-bourke-street', 'aurum', 'verde-southbank', 'albertine'],
     },
   },
   {
