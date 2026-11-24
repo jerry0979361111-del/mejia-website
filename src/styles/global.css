@@ -127,19 +127,11 @@ header.scrolled{border-color:var(--line);box-shadow:0 8px 30px -20px rgba(0,0,0,
 .card:has(.card-link:focus-visible){outline:2px solid var(--teal);outline-offset:3px}
 
 /* 加入最愛 */
-.fav svg{fill:none;stroke:currentColor;stroke-width:1.8;transition:.2s}
-.fav.on svg{fill:currentColor}
-.fav-icon{position:absolute;top:14px;right:14px;z-index:2;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.94);color:var(--ink);display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.18);transition:.2s}
-.fav-icon:hover{transform:scale(1.08)}
-.fav-icon.on{color:#e0565b}
-.fav-full{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border:1px solid var(--line);border-radius:999px;font-size:14.5px;color:var(--ink);margin-bottom:10px;transition:.2s}
-.fav-full:hover{border-color:#e0565b}
-.fav-full.on{color:#e0565b;border-color:#e0565b;background:#fff5f5}
-.nav-fav{position:relative;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;color:var(--ink-2)}
-.nav-fav:hover{color:#e0565b}
-.nav-fav svg{fill:none;stroke:currentColor;stroke-width:1.8}
-.nav-fav .n{position:absolute;top:2px;right:0;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#e0565b;color:#fff;font:600 10.5px/17px var(--latin);text-align:center}
-.nav-fav .n[hidden]{display:none}
+.share svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.share-icon{position:absolute;top:14px;right:14px;z-index:2;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.94);color:var(--ink);display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.18);transition:.2s}
+.share-icon:hover{transform:scale(1.08);color:var(--teal-deep)}
+.share-full{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border:1px solid var(--line);border-radius:999px;font-size:14.5px;color:var(--ink);margin-bottom:10px;transition:.2s}
+.share-full:hover{border-color:var(--gold);color:var(--teal-deep)}
 .empty{display:none;grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);border:1px dashed var(--line);border-radius:var(--radius)}
 
 /* cities */
@@ -373,8 +365,8 @@ footer{background:#1F3D5C;color:rgba(255,255,255,.6);padding:64px 0 28px;font-si
 .pmap-list .meta{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
 .pmap-list li{position:relative}
 .pmap-list li a{padding-right:52px}
-.pmap-fav{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--muted)}
-.pmap-fav:hover,.pmap-fav.on{color:#e0565b}
+.pmap-share{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--muted)}
+.pmap-share:hover{color:var(--teal-deep)}
 .pmap-empty{display:none;padding:28px 20px;font-size:14px;color:var(--muted)}
 .pmap-pin span{display:block;width:28px;height:28px;border-radius:50% 50% 50% 0;background:var(--teal);border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.35);transform:rotate(-45deg)}
 .pmap-pin:hover span{background:var(--teal-deep)}

@@ -3,10 +3,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PropertyCard from '../../components/PropertyCard.astro';
 import ContactSection from '../../components/ContactSection.astro';
-import FavButton from '../../components/FavButton.astro';
+import ShareButton from '../../components/ShareButton.astro';
 import ProjectLocation from '../../components/ProjectLocation.astro';
 import { cityName } from '../../data/cities';
-import { projects, typeLabel, stageLabel, type Project } from '../../data/projects';
+import { projects, projectUrl, typeLabel, stageLabel, type Project } from '../../data/projects';
 import { site } from '../../data/site';
 
 export function getStaticPaths() {
@@ -70,7 +70,7 @@ const related = projects.filter((x) => x.city === p.city && x.slug !== p.slug).s
           <div class="label">價格</div>
           <div class="price">{p.price || '價格請洽顧問'}</div>
           <a href="#contact" class="btn btn-primary">索取樓書與房價表 <span class="arrow">→</span></a>
-          <FavButton slug={p.slug} name={p.name} variant="full" />
+          <ShareButton url={projectUrl(p)} title={`${p.name}｜${cityName(p.city)}新建案`} text={`${p.name}｜${cityName(p.city)} ${p.suburb}${p.price ? `，${p.price}` : ''}`} slug={p.slug} variant="full" />
           <a href={`tel:${site.tel.replace(/\s/g, '')}`} class="btn btn-line">致電 {site.tel}</a>
           <p class="note">價格依開發商最新房價表為準，實際可售戶別與優惠請洽顧問。海外買家另需留意 FIRB 與各州附加印花稅。</p>
         </aside>

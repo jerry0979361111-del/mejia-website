@@ -1,0 +1,11 @@
+---
+// 一鍵分享按鈕。variant="icon" 用在卡片右上角；variant="full" 用在建案內頁。
+// 手機（支援系統分享）直接叫出分享選單（LINE、訊息、Facebook…）；電腦則複製連結（src/scripts/share.ts）。
+interface Props { url: string; title: string; text?: string; slug?: string; variant?: 'icon' | 'full' }
+const { url, title, text = '', slug = '', variant = 'icon' } = Astro.props;
+const abs = new URL(url, Astro.site).toString();
+---
+<button type="button" class:list={['share', `share-${variant}`]} data-share-url={abs} data-share-title={title} data-share-text={text} data-share-id={slug} aria-label={`分享 ${title}`} title="分享">
+  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5M5 13v6a2 2 0 002 2h10a2 2 0 002-2v-6"/></svg>
+  {variant === 'full' && <span>分享這個建案</span>}
+</button>

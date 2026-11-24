@@ -68,9 +68,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
   <script>
     import { $$, toast } from '../scripts/ui';
-    import { initFavs } from '../scripts/favorites';
+    import { initShare } from '../scripts/share';
 
-    initFavs();
+    initShare();
 
     // 尚未完成的子頁面連結：先顯示提示，不跳頁
     $$<HTMLElement>('[data-demo]').forEach((a) =>

@@ -1,9 +1,9 @@
 ---
-// 建案卡片（整張可點，連到建案內頁；右上角可加入最愛）。首頁精選、建案列表、收藏頁都共用。
+// 建案卡片（整張可點，連到建案內頁；右上角可一鍵分享）。首頁精選、建案列表、城市頁都共用。
 import type { Project } from '../data/projects';
 import { typeLabel, stageLabel, projectUrl } from '../data/projects';
 import { cityName } from '../data/cities';
-import FavButton from './FavButton.astro';
+import ShareButton from './ShareButton.astro';
 
 interface Props { project: Project; wide?: boolean }
 const { project: p, wide = false } = Astro.props;
@@ -22,5 +22,5 @@ const { project: p, wide = false } = Astro.props;
       {p.use && <span>用途 <b>{p.use}</b></span>}
     </div>
   </div>
-  <FavButton slug={p.slug} name={p.name} />
+  <ShareButton url={projectUrl(p)} title={`${p.name}｜${cityName(p.city)}新建案`} text={`${p.name}｜${cityName(p.city)} ${p.suburb}${p.price ? `，${p.price}` : ''}`} slug={p.slug} />
 </article>

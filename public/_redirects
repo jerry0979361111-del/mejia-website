@@ -739,3 +739,7 @@
 /es_neighborhood/zetland/ /cities/sydney/ 301
 /es_neighborhood/woolloongabba /cities/brisbane/ 301
 /es_neighborhood/woolloongabba/ /cities/brisbane/ 301
+
+# 收藏功能改為一鍵分享（2026-11）
+/favorites/ /projects/ 301
+/favorites /projects/ 301

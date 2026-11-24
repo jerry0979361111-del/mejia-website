@@ -55,7 +55,6 @@ const cityButtons = cities.filter((c) => points.some((p) => p.city === c.id));
 
 <script>
   import { $, $$ } from '../scripts/ui';
-  import { sync as syncFavs } from '../scripts/favorites';
 
   type Point = { slug: string; name: string; url: string; image: string; price: string; city: string; loc: string; tags: string; geo: [number, number] };
   const el = $('#pmap');
@@ -154,8 +153,7 @@ const cityButtons = cities.filter((c) => points.some((p) => p.city === c.id));
         <li><a href="${p.url}" data-i="${i}">
           <span class="th">${p.image ? `<img src="${p.image}" alt="" loading="lazy">` : ''}</span>
           <span class="tx"><span class="loc">${esc(p.loc)}</span><b>${esc(p.name)}</b><span class="meta">${esc(p.tags)}${p.price ? ` · ${esc(p.price)}` : ''}</span></span>
-        </a><button type="button" class="fav pmap-fav" data-fav="${p.slug}" aria-pressed="false" aria-label="把 ${esc(p.name)} 加入最愛" title="加入最愛"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 2.9 1.4-1.8 3-2.9 5-2.9 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg></button></li>`).join('');
-      syncFavs();
+        </a><button type="button" class="share pmap-share" data-share-url="${location.origin}${p.url}" data-share-title="${esc(p.name)}" data-share-text="${esc(p.name)}｜${esc(p.loc)}${p.price ? `，${esc(p.price)}` : ''}" data-share-id="${p.slug}" aria-label="分享 ${esc(p.name)}" title="分享"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5M5 13v6a2 2 0 002 2h10a2 2 0 002-2v-6"/></svg></button></li>`).join('');
       // 滑過清單時，在地圖上標出對應的建案
       $$('#pmap-items a').forEach((a) => {
         const m = markers[+a.dataset.i!];
