@@ -1,13 +1,13 @@
 ---
-// 購房七步驟（可點選）。首頁與之後的 /process/ 頁共用。
+// 購房步驟（可點選，步驟數依 content.ts 的 steps 自動調整）。首頁與之後的 /process/ 頁共用。
 import { steps } from '../data/content';
 ---
 <section class="process" id="process">
   <div class="wrap">
     <div class="sec-head rv">
-      <div><div class="eyebrow">How It Works</div><h2>澳洲購房七步驟</h2><p class="lead">點選任一步驟查看說明。</p></div>
+      <div><div class="eyebrow">How It Works</div><h2>澳洲購房{'零一二三四五六七八九十'[steps.length]}步驟</h2><p class="lead">點選任一步驟查看說明。</p></div>
     </div>
-    <div class="steps rv" id="steps">
+    <div class="steps rv" id="steps" style={`--n:${steps.length}`}>
       {steps.map((s, i) => (
         <div class:list={['step', { on: i === 0 }]} data-i={i} role="button" tabindex="0">
           <div class="dot">{String(i + 1).padStart(2, '0')}</div>
