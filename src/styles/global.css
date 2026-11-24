@@ -565,7 +565,8 @@ a.member{display:block}
   body:not(.chat-top) .toast{bottom:calc(70px + env(safe-area-inset-bottom))}
   /* 手機 chatMobile='top'：頁首放搜尋鈕，點開後全螢幕，輸入框在最上方（鍵盤不會擋住） */
   body.chat-top .fab{display:none}
-  body.chat-top .nav-search{display:flex}
+  body.chat-top .hsearch{display:flex}
+  body.chat-top .nav{height:64px}
   body.chat-top .chat{inset:0;width:100%;max-height:none;height:100dvh;border-radius:0;z-index:90;padding-top:env(safe-area-inset-top)}
   body.chat-top .chat.open{animation:drop .22s ease}
   body.chat-top .chat-head{order:0}
@@ -577,8 +578,11 @@ a.member{display:block}
   body.chat-top .chat-note{order:5;padding:8px 16px calc(10px + env(safe-area-inset-bottom))}
 }
 @keyframes drop{from{opacity:0;transform:translateY(-14px)}}
-.nav-search{display:none;align-items:center;gap:6px;height:42px;padding:0 14px;border-radius:999px;border:1px solid var(--line);color:var(--ink);font-size:14px;background:#fff}
-.nav-search:active{background:var(--sand)}
+.hsearch{display:none;align-items:center;gap:10px;width:100%;height:46px;margin:0 0 10px;padding:0 6px 0 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:15px;text-align:left;box-shadow:0 2px 10px -6px rgba(20,38,58,.35)}
+.hsearch svg{flex:none;color:var(--ink)}
+.hsearch span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hsearch b{flex:none;display:grid;place-items:center;height:34px;padding:0 14px;border-radius:999px;background:var(--teal);color:#fff;font:600 13px/1 var(--latin);letter-spacing:.04em}
+.hsearch:active{background:var(--sand)}
 /* 表單防垃圾：隱藏欄位與 Turnstile */
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .cf-turnstile{margin:6px 0 14px}

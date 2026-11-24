@@ -11,10 +11,15 @@ import { nav, site } from '../data/site';
       <div class="right">
         <span class="tel">{site.tel}</span>
         <a href="/contact/" class="btn btn-primary">預約諮詢</a>
-        <button type="button" class="nav-search" data-open-chat aria-label="搜尋建案或問 AI 顧問" title="搜尋・問 AI 顧問"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>AI 搜尋</span></button>
         <button class="burger" id="burger" aria-label="選單" aria-expanded="false" aria-controls="mm"><span></span><span></span><span></span></button>
       </div>
     </div>
+    <!-- 手機（site.ts chatMobile='top'）：頁首下方整條搜尋列，點了開啟全螢幕 AI 搜尋 -->
+    <button type="button" class="hsearch" data-open-chat aria-label="搜尋建案、文章，或問 AI 顧問">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <span>搜尋建案、文章，或問 AI 顧問</span>
+      <b>AI</b>
+    </button>
     <nav class="mobile-menu" id="mm">
       {nav.map((n) => <a href={n.href}>{n.label}</a>)}
       <a href="/contact/">預約諮詢</a>
