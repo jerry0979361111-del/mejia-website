@@ -7,6 +7,7 @@
 - Astro 5 產生靜態網站，部署到 Cloudflare Workers 靜態資產（即新版 Cloudflare Pages，名稱 `mejia-website`，設定在 `wrangler.jsonc`）
 - 不要加 `@astrojs/cloudflare` adapter；`wrangler pages ...` 指令已被 Cloudflare 導向 Workers，一律用 `wrangler deploy`
 - 後端：`worker/index.ts` 只處理 `/api/*`（`run_worker_first`），其餘由 `dist/` 靜態服務
+  - `POST /api/chat`：右下角 AI 對話框（`worker/chat.ts`）。用站內搜尋（`src/scripts/search.ts`，索引 `dist/search-index.json` 由 `scripts/build-search-index.mjs` 在 `npm run build` 時產生）找出相關內容，再交給 OpenAI 只根據這些內容回答。金鑰 `OPENAI_API_KEY`（secret），模型 `CHAT_MODEL`（vars，預設 gpt-5-mini），每 IP／全站每日上限 `CHAT_DAILY_PER_IP`／`CHAT_DAILY_TOTAL`；提問記在 D1 `chat_log`（IP 只存雜湊）。`npm run sync` 會把「禁止公開」建案名稱寫到 `worker/hidden-projects.json`，AI 回答提到就擋下
   - `POST /api/lead`：Turnstile 驗證 → 寫入 D1 `mejia-leads` 的 `leads` 表（schema 在 `migrations/`）→ Resend 寄信、LINE 推播
   - 設定在 `wrangler.jsonc` 的 `vars`（NOTIFY_EMAIL、MAIL_FROM、LINE_TO）；金鑰用 `npx wrangler secret put`（TURNSTILE_SECRET、RESEND_API_KEY、LINE_CHANNEL_TOKEN）。Turnstile 的公開 site key 填在 `src/data/site.ts`
   - 本機測試：`.dev.vars` 寫 `ALLOW_NO_TURNSTILE=1`，`npx wrangler d1 migrations apply mejia-leads --local`，`npm run build && npx wrangler dev`

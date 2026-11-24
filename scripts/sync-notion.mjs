@@ -186,6 +186,8 @@ for (const r of publicRows) {
 // 依上傳到 Notion 的日期排序，越新越前面（同時間再依名稱）
 projects.sort((a, b) => b.notionCreated.localeCompare(a.notionCreated) || a.name.localeCompare(b.name));
 await writeFile(OUT_FILE, JSON.stringify(projects, null, 2) + '\n');
+// 「禁止公開」的建案名稱：只給 worker 的 AI 回答做最後把關（回答提到就擋下），不會出現在網站上
+await writeFile('worker/hidden-projects.json', JSON.stringify(rows.filter((r) => !isPublic(r.properties)).map((r) => beforeParen(text(r.properties['建案名']))).filter(Boolean), null, 2) + '\n');
 await writeFile(GEO_CACHE, JSON.stringify(geoCache, null, 2) + '\n');
 
 const excluded = rows.filter((r) => checked(r.properties['禁止公開'])).length;

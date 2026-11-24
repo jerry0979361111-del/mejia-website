@@ -1,5 +1,6 @@
 // Cloudflare Worker：處理 /api/*，其餘請求由靜態資產（dist/）直接服務（wrangler.jsonc 的 run_worker_first）。
 //
+// POST /api/chat：站內搜尋＋AI 回答（worker/chat.ts）
 // POST /api/lead：表單名單
 //   1. 驗證 Turnstile（防垃圾）
 //   2. 寫入 D1（leads 資料表，schema 見 migrations/）
@@ -16,7 +17,9 @@
 //   LINE_TO            推播對象：群組 ID 或使用者 ID，多個用逗號分隔（vars）
 //   SHEET_WEBHOOK_URL  Google 試算表 Apps Script 網頁應用程式網址（secret；程式在 scripts/google-sheet/）
 
-interface Env {
+import { handleChat, type ChatEnv } from './chat';
+
+interface Env extends ChatEnv {
   DB: D1Database;
   ASSETS: Fetcher;
   TURNSTILE_SECRET?: string;
@@ -45,6 +48,10 @@ export default {
     if (url.pathname === '/api/lead') {
       if (request.method !== 'POST') return json({ ok: false, error: 'method' }, 405);
       return handleLead(request, env, ctx);
+    }
+    if (url.pathname === '/api/chat') {
+      if (request.method !== 'POST') return json({ ok: false, error: 'method' }, 405);
+      return handleChat(request, env, ctx);
     }
     return json({ ok: false, error: 'not_found' }, 404);
   },
