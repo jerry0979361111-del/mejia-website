@@ -55,6 +55,7 @@ import { chatAnswers } from '../data/content';
     if (open) { loadIndex(); setTimeout(() => input.focus(), 50); }
   }
   fab.addEventListener('click', () => openChat());
+  document.querySelectorAll('[data-open-chat]').forEach((b) => b.addEventListener('click', () => openChat()));
   $('chat-x').addEventListener('click', () => openChat(false));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && chat.classList.contains('open')) openChat(false); });
 

@@ -12,6 +12,8 @@ export const site = {
   ],
   // Cloudflare Turnstile 的 site key（公開）。留空時表單不顯示驗證框，只適合本機測試
   turnstileSiteKey: '0x4AAAAAAF10gNwfMnzPANwP',
+  // 手機版 AI 顧問位置：'bottom'＝畫面最下方整條按鈕；'top'＝頁首搜尋圖示，點開後全螢幕、輸入框在上方
+  chatMobile: 'top' as 'top' | 'bottom',
   // 追蹤碼（留空即不載入）
   // GA4 直接用 gtag 安裝（不要再在 GTM 容器裡加 GA4 代碼，否則會重複計算）；Google Ads 等其他代碼放 GTM
   ga4Id: 'G-CH75EW8XS1',

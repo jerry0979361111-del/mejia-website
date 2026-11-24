@@ -557,13 +557,28 @@ a.member{display:block}
   .row2{grid-template-columns:1fr}
   .foot{grid-template-columns:1fr}
   .nav .right .btn{display:none}
-  /* 手機：AI 顧問改成固定在畫面最下方的整條按鈕，對話框從按鈕上方展開 */
-  body{padding-bottom:calc(54px + env(safe-area-inset-bottom))}
-  .fab{left:0;right:0;bottom:0;justify-content:center;border-radius:16px 16px 0 0;padding:15px 16px calc(15px + env(safe-area-inset-bottom));font-size:16px;box-shadow:0 -8px 24px -12px rgba(20,38,58,.45);border-top:1px solid var(--gold)}
-  .fab:hover{transform:none}
-  .chat{left:0;right:0;width:100%;bottom:calc(54px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;max-height:calc(100dvh - 54px - env(safe-area-inset-bottom) - 56px)}
-  .toast{bottom:calc(70px + env(safe-area-inset-bottom))}
+  /* 手機 chatMobile='bottom'：AI 顧問固定在畫面最下方的整條按鈕，對話框從按鈕上方展開 */
+  body:not(.chat-top){padding-bottom:calc(54px + env(safe-area-inset-bottom))}
+  body:not(.chat-top) .fab{left:0;right:0;bottom:0;justify-content:center;border-radius:16px 16px 0 0;padding:15px 16px calc(15px + env(safe-area-inset-bottom));font-size:16px;box-shadow:0 -8px 24px -12px rgba(20,38,58,.45);border-top:1px solid var(--gold)}
+  body:not(.chat-top) .fab:hover{transform:none}
+  body:not(.chat-top) .chat{left:0;right:0;width:100%;bottom:calc(54px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;max-height:calc(100dvh - 54px - env(safe-area-inset-bottom) - 56px)}
+  body:not(.chat-top) .toast{bottom:calc(70px + env(safe-area-inset-bottom))}
+  /* 手機 chatMobile='top'：頁首放搜尋鈕，點開後全螢幕，輸入框在最上方（鍵盤不會擋住） */
+  body.chat-top .fab{display:none}
+  body.chat-top .nav-search{display:flex}
+  body.chat-top .chat{inset:0;width:100%;max-height:none;height:100dvh;border-radius:0;z-index:90;padding-top:env(safe-area-inset-top)}
+  body.chat-top .chat.open{animation:drop .22s ease}
+  body.chat-top .chat-head{order:0}
+  body.chat-top .chat-form{order:1;border-top:0;border-bottom:1px solid var(--line)}
+  body.chat-top .chat-res{order:2;max-height:none;flex:1;border-top:0}
+  body.chat-top .chat:has(.chat-res:not([hidden])) .chat-body{display:none}
+  body.chat-top .quick{order:3;padding-top:4px}
+  body.chat-top .chat-body{order:4}
+  body.chat-top .chat-note{order:5;padding:8px 16px calc(10px + env(safe-area-inset-bottom))}
 }
+@keyframes drop{from{opacity:0;transform:translateY(-14px)}}
+.nav-search{display:none;align-items:center;gap:6px;height:42px;padding:0 14px;border-radius:999px;border:1px solid var(--line);color:var(--ink);font-size:14px;background:#fff}
+.nav-search:active{background:var(--sand)}
 /* 表單防垃圾：隱藏欄位與 Turnstile */
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .cf-turnstile{margin:6px 0 14px}
