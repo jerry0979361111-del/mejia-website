@@ -351,7 +351,6 @@ footer{background:#1F3D5C;color:rgba(255,255,255,.6);padding:64px 0 28px;font-si
 .lg-hint:empty{display:none}
 .pmap-uni span{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#C8102E;color:#fff;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35)}
 .pmap-pop .loc.school{color:#C8102E}
-.pmap-map .leaflet-tile-pane{filter:grayscale(.75) contrast(.95) brightness(1.03)}
 .pmap-failed{display:grid;place-items:center;color:var(--muted)}.pmap-failed::after{content:"地圖暫時無法載入，請重新整理頁面；右側仍可瀏覽全部建案。";padding:24px;text-align:center}
 .pmap-list{display:flex;flex-direction:column;border-left:1px solid var(--line);max-height:560px}
 .pmap-count{padding:16px 20px;font-size:13px;color:var(--muted);letter-spacing:.06em;border-bottom:1px solid var(--line)}

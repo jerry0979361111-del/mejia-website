@@ -55,6 +55,7 @@ const cityButtons = cities.filter((c) => points.some((p) => p.city === c.id));
 
 <script>
   import { $, $$ } from '../scripts/ui';
+  import { addBasemap } from '../scripts/basemap';
 
   type Point = { slug: string; name: string; url: string; image: string; price: string; city: string; loc: string; tags: string; geo: [number, number] };
   const el = $('#pmap');
@@ -84,15 +85,12 @@ const cityButtons = cities.filter((c) => points.some((p) => p.city === c.id));
     const [{ default: L }] = mods;
     // 手機上單指滑動要能捲頁面，所以關掉單指拖曳，改用雙指縮放／移動
     const map = L.map(el, { scrollWheelZoom: false, zoomControl: true, dragging: !L.Browser.mobile }).setView([-31, 147], 5);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(map);
+    await addBasemap(L, map);
     // 滑鼠移到地圖上才啟用滾輪縮放，避免捲動頁面時卡在地圖
     map.on('focus click', () => map.scrollWheelZoom.enable());
     map.on('mouseout', () => map.scrollWheelZoom.disable());
 
-    const pin = L.divIcon({ className: 'pmap-pin', html: '<span></span>', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -26] });
+    const pin = L.divIcon({ className: 'pmap-pin', html: '<span></span>', iconSize: [28, 28], iconAnchor: [14, 34], popupAnchor: [0, -30] });
     const markers = points.map((p) => {
       const m = L.marker(p.geo, { icon: pin, title: p.name, alt: p.name }).addTo(map);
       m.bindPopup(

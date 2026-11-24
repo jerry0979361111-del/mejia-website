@@ -31,6 +31,7 @@ const gmap = `https://www.google.com/maps/search/?api=1&query=${encodeURICompone
 
 <script>
   import { $ } from '../scripts/ui';
+  import { addBasemap } from '../scripts/basemap';
 
   type Pt = { name: string; url?: string; image?: string; price?: string; loc: string; geo: [number, number] };
   const el = document.getElementById('pjmap');
@@ -47,15 +48,12 @@ const gmap = `https://www.google.com/maps/search/?api=1&query=${encodeURICompone
     const others: Pt[] = JSON.parse(el.dataset.others!);
 
     const map = L.map(el, { scrollWheelZoom: false, dragging: !L.Browser.mobile }).setView(here.geo, 14);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(map);
+    await addBasemap(L, map);
     map.on('focus click', () => map.scrollWheelZoom.enable());
     map.on('mouseout', () => map.scrollWheelZoom.disable());
 
     // 附近其他建案（小圖釘）
-    const pin = L.divIcon({ className: 'pmap-pin pj-pin-other', html: '<span></span>', iconSize: [20, 20], iconAnchor: [10, 20], popupAnchor: [0, -18] });
+    const pin = L.divIcon({ className: 'pmap-pin pj-pin-other', html: '<span></span>', iconSize: [20, 20], iconAnchor: [10, 24], popupAnchor: [0, -22] });
     for (const o of others) {
       L.marker(o.geo, { icon: pin, title: o.name, alt: o.name }).addTo(map).bindPopup(
         `<a class="pmap-pop" href="${o.url}">${o.image ? `<img src="${o.image}" alt="">` : ''}<span class="loc">${esc(o.loc)}</span><b>${esc(o.name)}</b>${o.price ? `<span class="price">${esc(o.price)}</span>` : ''}<span class="go">查看建案 →</span></a>`,
@@ -63,7 +61,7 @@ const gmap = `https://www.google.com/maps/search/?api=1&query=${encodeURICompone
       );
     }
     // 本建案（大圖釘，永遠在最上層）
-    const hereIcon = L.divIcon({ className: 'pmap-pin pj-pin-here', html: '<span></span>', iconSize: [36, 36], iconAnchor: [18, 36], popupAnchor: [0, -32] });
+    const hereIcon = L.divIcon({ className: 'pmap-pin pj-pin-here', html: '<span></span>', iconSize: [36, 36], iconAnchor: [18, 43], popupAnchor: [0, -38] });
     L.marker(here.geo, { icon: hereIcon, title: here.name, alt: here.name, zIndexOffset: 1000 }).addTo(map)
       .bindPopup(`<div class="pmap-pop"><span class="loc">${esc(here.loc)}</span><b>${esc(here.name)}</b></div>`, { maxWidth: 240 });
 
