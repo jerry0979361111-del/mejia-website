@@ -51,6 +51,7 @@ import { chatAnswers } from '../data/content';
   function openChat(open = !chat.classList.contains('open')) {
     chat.classList.toggle('open', open);
     fab.setAttribute('aria-expanded', String(open));
+    fab.querySelector('span')!.textContent = open ? '收起對話' : '搜尋・問 AI 顧問';
     if (open) { loadIndex(); setTimeout(() => input.focus(), 50); }
   }
   fab.addEventListener('click', () => openChat());

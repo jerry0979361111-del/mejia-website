@@ -566,8 +566,12 @@ a.member{display:block}
   .row2{grid-template-columns:1fr}
   .foot{grid-template-columns:1fr}
   .nav .right .btn{display:none}
-  .fab span{display:none}
-  .fab{padding:16px}
+  /* 手機：AI 顧問改成固定在畫面最下方的整條按鈕，對話框從按鈕上方展開 */
+  body{padding-bottom:calc(54px + env(safe-area-inset-bottom))}
+  .fab{left:0;right:0;bottom:0;justify-content:center;border-radius:16px 16px 0 0;padding:15px 16px calc(15px + env(safe-area-inset-bottom));font-size:16px;box-shadow:0 -8px 24px -12px rgba(20,38,58,.45);border-top:1px solid var(--gold)}
+  .fab:hover{transform:none}
+  .chat{left:0;right:0;width:100%;bottom:calc(54px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;max-height:calc(100dvh - 54px - env(safe-area-inset-bottom) - 56px)}
+  .toast{bottom:calc(70px + env(safe-area-inset-bottom))}
 }
 /* 表單防垃圾：隱藏欄位與 Turnstile */
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
