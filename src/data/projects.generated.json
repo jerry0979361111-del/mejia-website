@@ -7,8 +7,8 @@
     "type": "apt",
     "stage": "pre",
     "use": "投資",
-    "price": "$60.7萬起",
-    "desc": "正對維多利亞女王市場（Queen Victoria Market），鄰旗樿花園、州立圖書館與中央市場商圈，步行可達墨大與RMIT，馬来西亞上市集團Sime Darby Property首度躏入澳洲。",
+    "price": "A$60.7 萬起",
+    "desc": "正對維多利亞女王市場（Queen Victoria Market），鄰旗杆花園、州立圖書館與中央市場商圈，步行可達墨大與RMIT，馬來西亞上市集團Sime Darby Property首度踏入澳洲。",
     "developer": "Sime Darby Property Berhad",
     "address": "380 Queen St, Melbourne VIC 3000",
     "geo": [
@@ -21,7 +21,7 @@
     "landscape": true,
     "gallery": [],
     "notionCreated": "2026-11-20T02:23:00.000Z",
-    "notionUpdated": "2026-11-20T03:26:00.000Z"
+    "notionUpdated": "2026-11-24T03:07:00.000Z"
   },
   {
     "slug": "the-parker",
@@ -31,7 +31,7 @@
     "type": "apt",
     "stage": "pre",
     "use": "自住房",
-    "price": "$67.5萬起",
+    "price": "A$67.5 萬起",
     "desc": "Caulfield公園正對面的6層樓石材精品公寓，僅24戶，Abadeen開發，鄰近Chadstone購物中心與Monash大學，2027準現房。",
     "developer": "Abadeen",
     "address": "219 Balaclava Rd, Caulfield North VIC 3161",
@@ -45,7 +45,7 @@
     "landscape": false,
     "gallery": [],
     "notionCreated": "2026-11-04T07:19:00.000Z",
-    "notionUpdated": "2026-11-20T03:26:00.000Z"
+    "notionUpdated": "2026-11-24T03:07:00.000Z"
   },
   {
     "slug": "villea-palm-beach",
@@ -55,7 +55,7 @@
     "type": "apt",
     "stage": "now",
     "use": "自住房",
-    "price": "$130.7萬起",
+    "price": "A$130.7 萬起",
     "desc": "黃金海岸南部傳統富人區現房，距Palm Beach海灘約400公尺，全棟8層僅69戶低密度複合住宅，鄰近Burleigh Heads輕軌站商圈。",
     "developer": "Abadeen",
     "address": "26 Mawarra St, Palm Beach QLD 4221",
@@ -69,7 +69,7 @@
     "landscape": false,
     "gallery": [],
     "notionCreated": "2026-11-04T07:19:00.000Z",
-    "notionUpdated": "2026-11-20T03:27:00.000Z"
+    "notionUpdated": "2026-11-24T03:07:00.000Z"
   },
   {
     "slug": "harbourside-residences",
@@ -536,7 +536,7 @@
     "stage": "pre",
     "use": "投資",
     "price": "2 房 A$131 萬起",
-    "desc": "Aniko Group 大型混合式開發旗艦，步行 150 公尺到 Pacific Fair 購物中心、2 分鐘到輕軌站，頂樓設有室內恒溫泳池等度假式公設。預計 2027 年完工。",
+    "desc": "Aniko Group 大型混合式開發旗艦，步行 150 公尺到 Pacific Fair 購物中心、2 分鐘到輕軌站，頂樓設有室內恆溫泳池等度假式公設。預計 2027 年完工。",
     "developer": "Aniko Group",
     "address": "14 Seaview Avenue, Mermaid Beach QLD 4218",
     "geo": [
@@ -549,7 +549,7 @@
     "landscape": true,
     "gallery": [],
     "notionCreated": "2026-07-20T19:58:00.000Z",
-    "notionUpdated": "2026-11-03T08:16:00.000Z"
+    "notionUpdated": "2026-11-24T03:07:00.000Z"
   },
   {
     "slug": "the-waverley-residences",
@@ -1664,7 +1664,7 @@
     "stage": "pre",
     "use": "學區房",
     "price": "2 房 A$159 萬起",
-    "desc": "St Leonards 南區 314 戶大型社區，DKO 建築、David Hicks 室內設計，恒溫泳池與屋頂花園，步行約 6 分鐘到 St Leonards 火車站。",
+    "desc": "St Leonards 南區 314 戶大型社區，DKO 建築、David Hicks 室內設計，恆溫泳池與屋頂花園，步行約 6 分鐘到 St Leonards 火車站。",
     "developer": "JQZ",
     "address": "27-47 Berry Road, St Leonards NSW 2065",
     "geo": [
@@ -1677,7 +1677,7 @@
     "landscape": true,
     "gallery": [],
     "notionCreated": "2026-07-20T10:23:00.000Z",
-    "notionUpdated": "2026-11-03T08:16:00.000Z"
+    "notionUpdated": "2026-11-24T03:07:00.000Z"
   },
   {
     "slug": "anderson",
