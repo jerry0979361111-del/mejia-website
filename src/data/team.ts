@@ -60,6 +60,28 @@ const base: { slug: string; name: string; profile?: Profile }[] = [
     },
   },
   {
+    slug: 'betty',
+    name: 'Betty',
+    profile: {
+      title: '房產顧問',
+      quote: '看見房子以外的價值。',
+      bio: [
+        '我始終相信，做出好的選擇，需要的不只是資訊，更需要理解資訊背後的意義。',
+        '擁有澳洲行銷碩士學歷，並累積多年品牌策略、市場研究及數位行銷等領域的實務經驗。過去的工作經歷，讓我習慣從市場趨勢、消費者行為與品牌定位等不同角度思考問題，也培養了對市場變化的敏銳度。',
+        '曾在澳洲布里斯本生活與求學，讓我有機會親身感受當地的文化、教育環境與生活方式。這段經歷也成為我投入澳洲房地產領域的重要起點。',
+        '目前專注於澳洲房地產市場，關注不同城市的區域發展、住宅產品與市場趨勢。我特別重視每位客戶背後不同的購屋動機，無論是為孩子提前規劃海外教育生活、尋找理想的海外居所，或是進行長期資產配置，都值得透過充分的資訊與比較，找到合適的方向。',
+        '我希望將市場研究的思維與對澳洲生活的理解結合，讓複雜的海外購屋資訊變得更容易理解，陪伴客戶從認識市場、評估選項到做出購屋決策。',
+        '我的工作不只是介紹房產，而是讓每一個選擇，都建立在更充分的理解之上。',
+      ],
+      specialties: ['澳洲房地產市場研究', '城市發展與區域分析', '市場數據與消費者需求分析', '海外置產需求評估'],
+      languages: ['中文', '英文'],
+      credentials: ['行銷碩士', '品牌策略與數位行銷實務經驗', '市場研究與市場開發經驗', '高端品牌行銷與產品管理經驗'],
+      contact: { phone: CO.phone, phoneTw: CO.phoneTw },
+      social: { line: CO.line, whatsapp: CO.whatsapp, facebook: CO.facebook, instagram: CO.instagram, youtube: CO.youtube },
+      projects: ['the-oscar', 'the-lanes', 'quartet-milton', 'callista-on-park'],
+    },
+  },
+  {
     slug: 'ivan',
     name: 'Ivan',
     profile: {

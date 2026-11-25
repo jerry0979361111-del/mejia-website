@@ -230,7 +230,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 .n-item h3{font-size:16.5px;font-family:var(--sans);font-weight:500;line-height:1.6;margin-top:4px}
 
 /* team */
-.team-row{display:grid;grid-template-columns:repeat(9,1fr);gap:16px}
+.team-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:16px} /* 人數變動時自動排成一列 */
 .member{text-align:center}
 .member .ph{aspect-ratio:1/1;border-radius:50%;overflow:hidden;background:var(--sand-2);border:4px solid #fff;box-shadow:0 8px 24px -12px rgba(0,0,0,.35);transition:.3s}
 .member:hover .ph{transform:translateY(-6px);border-color:var(--teal)}
@@ -531,7 +531,8 @@ a.member{display:block}
   .step{display:grid;grid-template-columns:46px 1fr;gap:18px;padding:0 0 26px}
   .step h3{margin-top:10px}
   .step p{grid-column:2}
-  .team-row{grid-template-columns:repeat(3,1fr);gap:26px 18px}
+  .team-row{display:flex;flex-wrap:wrap;justify-content:center;gap:26px 18px}
+  .team-row>*{width:calc((100% - 72px)/5)}
   .foot{grid-template-columns:1fr 1fr}
 }
 @media (max-width:760px){
@@ -558,6 +559,7 @@ a.member{display:block}
   .foot{grid-template-columns:1fr}
   .nav .right .btn{display:none}
   /* 手機 chatMobile='bottom'：AI 顧問固定在畫面最下方的整條按鈕，對話框從按鈕上方展開 */
+  .team-row>*{width:calc((100% - 36px)/3)}
   body:not(.chat-top){padding-bottom:calc(54px + env(safe-area-inset-bottom))}
   body:not(.chat-top) .fab{left:0;right:0;bottom:0;justify-content:center;border-radius:16px 16px 0 0;padding:15px 16px calc(15px + env(safe-area-inset-bottom));font-size:16px;box-shadow:0 -8px 24px -12px rgba(20,38,58,.45);border-top:1px solid var(--gold)}
   body:not(.chat-top) .fab:hover{transform:none}
