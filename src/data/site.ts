@@ -14,7 +14,7 @@ export const site = {
   turnstileSiteKey: '0x4AAAAAAF10gNwfMnzPANwP',
   // 手機版 AI 顧問位置：'bottom'＝畫面最下方整條按鈕；'top'＝頁首搜尋圖示，點開後全螢幕、輸入框在上方
   // 建置時可用環境變數 PUBLIC_CHAT_MOBILE=top 覆蓋（預覽站評估用）
-  chatMobile: ((import.meta.env.PUBLIC_CHAT_MOBILE as string) || 'bottom') as 'top' | 'bottom',
+  chatMobile: ((import.meta.env.PUBLIC_CHAT_MOBILE as string) || 'top') as 'top' | 'bottom',
   // 追蹤碼（留空即不載入）
   // GA4 直接用 gtag 安裝（不要再在 GTM 容器裡加 GA4 代碼，否則會重複計算）；Google Ads 等其他代碼放 GTM
   ga4Id: 'G-CH75EW8XS1',
