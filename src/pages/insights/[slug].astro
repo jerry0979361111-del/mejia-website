@@ -3,6 +3,10 @@
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContactSection from '../../components/ContactSection.astro';
+import PropertyCard from '../../components/PropertyCard.astro';
+import { team, teamUrl } from '../../data/team';
+import { projects } from '../../data/projects';
+import { site } from '../../data/site';
 import { getInsights, insightSlug, insightUrl, insightCover, fmtDate, type Insight } from '../../data/insights';
 
 export async function getStaticPaths() {
@@ -15,8 +19,29 @@ const { post, posts } = Astro.props;
 const { Content } = await render(post);
 const d = post.data;
 const more = posts.filter((p) => p.id !== post.id).slice(0, 3);
+// 作者：對應顧問個人頁（沒有個人頁的顧問或沒填時用編輯部）
+const author = team.find((m) => m.slug === d.作者 && m.profile);
+const related = d.相關建案.map((s) => projects.find((p) => p.slug === s)).filter(Boolean) as typeof projects; // 禁止公開的建案不在 projects 裡，會自動略過
+const url = new URL(insightUrl(post), Astro.site).toString();
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: d.標題,
+  description: d.摘要,
+  image: [new URL(insightCover(post), Astro.site).toString()],
+  datePublished: d.發布日期.toISOString(),
+  dateModified: (d.更新日期 ?? d.發布日期).toISOString(),
+  mainEntityOfPage: url,
+  inLanguage: 'zh-Hant-TW',
+  articleSection: d.分類,
+  author: author
+    ? { '@type': 'Person', name: author.name, jobTitle: author.profile!.title, url: new URL(teamUrl(author), Astro.site).toString(), worksFor: { '@type': 'Organization', name: site.name } }
+    : { '@type': 'Organization', name: 'Mejia 美家編輯部', url: Astro.site?.toString() },
+  publisher: { '@type': 'Organization', name: site.name, logo: { '@type': 'ImageObject', url: new URL('/img/logo.webp', Astro.site).toString() } },
+};
 ---
 <BaseLayout title={`${d.標題}｜Mejia 美家`} description={d.摘要} image={insightCover(post)}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <article>
     <section class="post-head">
       <div class="wrap narrow">
@@ -30,7 +55,11 @@ const more = posts.filter((p) => p.id !== post.id).slice(0, 3);
         <span class="tag">{d.分類}</span>
         <h1>{d.標題}</h1>
         <p class="post-lead">{d.摘要}</p>
-        <div class="post-meta"><time datetime={d.發布日期.toISOString()}>{fmtDate(d.發布日期)}</time><span>Mejia 美家編輯部</span></div>
+        <div class="post-meta">
+          <time datetime={d.發布日期.toISOString()}>{fmtDate(d.發布日期)}</time>
+          {d.更新日期 && <span>更新於 <time datetime={d.更新日期.toISOString()}>{fmtDate(d.更新日期)}</time></span>}
+          {author ? <a href={teamUrl(author)}>作者：{author.name}｜{author.profile!.title}</a> : <span>Mejia 美家編輯部</span>}
+        </div>
       </div>
     </section>
     <div class="wrap narrow">
@@ -44,9 +73,29 @@ const more = posts.filter((p) => p.id !== post.id).slice(0, 3);
           <ol>{d.參考來源.map((s) => <li>{s.網址 ? <a href={s.網址} target="_blank" rel="noopener">{s.名稱}</a> : s.名稱}</li>)}</ol>
         </aside>
       )}
+      {author && (
+        <aside class="author-box">
+          <a href={teamUrl(author)} class="ph"><img src={author.img} alt={author.name} loading="lazy"></a>
+          <div>
+            <span class="eyebrow">About the Author</span>
+            <b><a href={teamUrl(author)}>{author.name}</a>｜{author.profile!.title}</b>
+            <p>{author.profile!.quote}</p>
+            <a href={`${teamUrl(author)}#contact`} class="more">預約 {author.name} 諮詢 <span class="arrow">→</span></a>
+          </div>
+        </aside>
+      )}
       <p class="note">本文為一般資訊整理，不構成投資、稅務或法律建議；實際情況請洽美家顧問與專業律師、會計師。</p>
     </div>
   </article>
+
+  {related.length > 0 && (
+    <section style="padding-bottom:0">
+      <div class="wrap">
+        <div class="sec-head"><div><div class="eyebrow">Related Projects</div><h2>文中提到的建案</h2></div><a href="/projects/" class="more">看全部建案 <span class="arrow">→</span></a></div>
+        <div class="grid-prop even">{related.slice(0, 3).map((x) => <PropertyCard project={x} />)}</div>
+      </div>
+    </section>
+  )}
 
   {more.length > 0 && (
     <section>

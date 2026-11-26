@@ -28,7 +28,8 @@
 ## 自動化（GitHub Actions）
 - `deploy.yml`：main 有更新就同步 Notion → 建置 → `wrangler deploy`（審稿時在 GitHub 網頁把文章改成「已核准」並提交即會上架）
 - `monthly-market.yml`：每月 2 號台灣 09:00 跑 `npm run market`，數據有變就提交到 main 並部署（差距 >15% 時流程顯示失敗，要人工確認）
-- `weekly-content.yml`：每週一台灣 09:00 產生兩篇文章、提交到 main 並部署；repo 變數 `ARTICLE_STATUS` 決定是草稿還是直接上架
+- `weekly-content.yml`：舊的 OpenAI 自動產文，排程已停用（只保留手動執行）
+- SEO 文章改由 Claude 排程：每週一、四依 `文章/寫作規範.md` 撰寫並直接發布（素材來自 Notion「文章素材」與 `文章/主題清單.md`）；每月 3 號產出 SEO 月報並直接執行優化
 - 需要的 repo secrets：`OPENAI_API_KEY`（或 `ANTHROPIC_API_KEY`）、`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`；`NOTION_TOKEN` 選填（沒設定時部署不同步 Notion，沿用 repo 裡的建案資料，要在本機或雲端工作環境執行 `npm run sync` 後提交）
 
 ## 目錄

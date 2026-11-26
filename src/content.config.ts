@@ -13,6 +13,9 @@ const insights = defineCollection({
     分類: z.enum(categories),
     摘要: z.string(),
     發布日期: z.coerce.date(),
+    更新日期: z.coerce.date().optional(), // 內容有實質更新時填，Google 會看到「最後更新」
+    作者: z.string().optional(), // 顧問 slug（src/data/team.ts），例如 wesley；沒填顯示「Mejia 美家編輯部」
+    相關建案: z.array(z.string()).default([]), // 建案 slug，文末顯示建案卡片
     封面照: z.string().optional(),
     參考來源: z.array(z.object({ 名稱: z.string(), 網址: z.string().url().optional() })).default([]),
     審稿意見: z.string().optional(),
