@@ -3,13 +3,13 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 export type Insight = CollectionEntry<'insights'>;
 
-// 沒放封面照時依分類用預設圖
+// 沒放封面照時依分類用預設圖（澳洲城市照片，Pexels 免費授權，來源見 素材/圖片來源.md）
 const fallback: Record<string, string> = {
-  市場觀點: '/img/news-3.webp',
-  買家指南: '/img/news-1.webp',
-  政策稅務: '/img/news-4.webp',
-  建案動態: '/img/news-2.webp',
-  城市生活: '/img/sydney.webp',
+  市場觀點: '/img/cover-market.webp', // 墨爾本 Yarra River 夜景
+  買家指南: '/img/cover-guide.webp', // 雪梨住宅區與市景
+  政策稅務: '/img/cover-policy.webp', // 雪梨港灣大橋
+  建案動態: '/img/cover-project.webp', // 黃金海岸天際線
+  城市生活: '/img/cover-city.webp', // 布里斯本 Story Bridge
 };
 
 export const isPublished = (a: Insight) => a.data.狀態 === '已核准' && a.data.發布日期 <= new Date();

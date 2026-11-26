@@ -5,7 +5,6 @@
 摘要: "澳洲 2027 年 3 月起，二簽與三簽打工度假簽證改為先登記、獲邀請才能申請，二簽指定工作延長為四個月。本文整理新制時程、過渡期規定，以及台灣青年與留學家庭在簽證、留學與澳洲置產規劃上該注意的地方。"
 發布日期: 2026-11-26
 作者: lynn
-封面照: australia-working-holiday-visa-changes-taiwan.webp
 參考來源:
   - 名稱: "澳洲內政部長辦公室｜A fairer and more sustainable Working Holiday Maker program（2026/11/17）"
     網址: https://minister.homeaffairs.gov.au/TonyBurke/Pages/a-fairer-and-more-sustainable-working-holiday-maker-program.aspx
