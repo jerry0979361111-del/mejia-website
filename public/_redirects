@@ -743,3 +743,14 @@
 # 收藏功能改為一鍵分享（2026-11）
 /favorites/ /projects/ 301
 /favorites /projects/ 301
+
+# 舊站（WordPress）sitemap 網址：Search Console 已登錄過，轉到新站 sitemap
+/sitemap_index.xml /sitemap-index.xml 301
+/sitemap.xml /sitemap-index.xml 301
+/cm_market_news-sitemap.xml /sitemap-index.xml 301
+/cm_activity-sitemap.xml /sitemap-index.xml 301
+/post-sitemap.xml /sitemap-index.xml 301
+/page-sitemap.xml /sitemap-index.xml 301
+/properties-sitemap.xml /sitemap-index.xml 301
+/docs-sitemap.xml /sitemap-index.xml 301
+/category-sitemap.xml /sitemap-index.xml 301
